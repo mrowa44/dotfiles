@@ -1,0 +1,31 @@
+[user]
+ name = Justyna Rachowicz
+ email = mrowa44@gmail.com
+[alias]
+  co = checkout
+  cm = commit
+  br = branch
+  df = diff
+  st = status -sb
+  lg = log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'
+  ll = log --graph --pretty=oneline --abbrev-commit
+  lol = log --graph --decorate --oneline --all
+  last = log -1 HEAD
+  elog = ! git log --oneline --graph --color | emojify | less
+[grep]
+ lineNumber = true
+[push]
+ default = current
+[color]
+ ui = auto
+ status = auto
+ branch = auto
+ diff = auto
+[filter "media"]
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
+[log]
+	decorate = true
+[help]
+	autocorrect = 1
