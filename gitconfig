@@ -29,3 +29,5 @@
 	decorate = true
 [help]
 	autocorrect = 1
+[core]
+	excludesfile = ~/.gitignore
