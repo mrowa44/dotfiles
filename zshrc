@@ -9,9 +9,15 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(git tmux)
 
 source $ZSH/oh-my-zsh.sh
-source /usr/local/bin/tmuxinator.zsh
 export EDITOR=vim
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+fpath=(~/.zsh $fpath)
+
+# tmuxinator
+fpath=($HOME/.tmuxinator/completion ${fpath})
+autoload -U compinit
+compinit
 
 alias -g v='vim'
 alias -g cat='ccat'
@@ -19,3 +25,4 @@ alias -g H='| head'
 alias -g T='| tail'
 alias fd='find . -type d -iname'
 alias ff='find . -type f -iname'
+alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"

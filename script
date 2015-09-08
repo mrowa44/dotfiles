@@ -4,6 +4,7 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # zsh
 ln -s ${BASEDIR}/zshrc ~/.zshrc
+ln -s ${BASEDIR}/zsh/ ~/.zsh
 
 # vim
 # Don't forget to install newer vim...
@@ -18,3 +19,6 @@ ln -s ${BASEDIR}/gitignore ~/.gitignore
 # tmuxinator
 ln -s ${BASEDIR}/tmux.conf ~/.tmux.conf
 ln -s ${BASEDIR}/tmux/ ~/.tmux
+
+# postgresql
+ln -s ${BASEDIR}/psqlrc ~/.psqlrc

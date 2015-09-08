@@ -6,7 +6,7 @@
   cm = commit
   br = branch
   df = diff
-  st = status -sb
+  st = status
   lg = log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'
   ll = log --graph --pretty=oneline --abbrev-commit
   lol = log --graph --decorate --oneline --all

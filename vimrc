@@ -66,10 +66,21 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" Autocomplete brackets
+inoremap ( ()<esc>i
+inoremap [ []<esc>i
+inoremap { {}<esc>i
+inoremap " ""<esc>i
+
 execute pathogen#infect()
 
 " Reload .vimrc with every save
 autocmd bufwritepost .vimrc source ~/.vimrc
+
+" Always show sign column (git-gutter)
+let g:gitgutter_sign_column_always = 1
+" Don't set any git-gutter mappings
+let g:gitgutter_map_keys = 0
 
 " Smart tab - if at the bol <tab>, else autocompletion.
 set wildmode=list:longest,list:full
