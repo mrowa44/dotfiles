@@ -4,6 +4,8 @@ filetype on
 filetype plugin on
 filetype indent on
 
+execute pathogen#infect()
+
 set number                      " Lines numbers
 set showmode                    " Show which mode
 set ruler                       " Lines info at the bottom
@@ -29,19 +31,25 @@ set scrolloff=8                 " Always show 8 lines below and above
 set splitbelow                  " More logical splitting
 set splitright                  " Same as above
 set undofile                    " Save undos, after quit vim
+set lazyredraw                  " Redraw only when we need to
+set encoding=utf-8
 
 " Status line
-set stl=%F\                     " Full path to the file
-set stl+=%y                     " Filetype
-set stl+=%=                     " Right align
-set stl+=Line:\ %l/%L\ [%p%%]   " Lines info
+" set stl=%F\                     " Full path to the file
+" set stl+=%y                     " Filetype
+" set stl+=%=                     " Right align
+" set stl+=Line:\ %l/%L\ [%p%%]   " Lines info
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
 
 " Display extra whitespace
 set list listchars=tab:»·,trail:·,nbsp:·
 
 " Colors
-set background=dark
-color zenburn
+" set background=dark
+colorscheme molokai
 
 " Leader, escape (escape key on mac is too small)
 " Long lines
@@ -66,21 +74,15 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" Autocomplete brackets
-inoremap ( ()<esc>i
-inoremap [ []<esc>i
-inoremap { {}<esc>i
-inoremap " ""<esc>i
-
-execute pathogen#infect()
-
 " Reload .vimrc with every save
-autocmd bufwritepost .vimrc source ~/.vimrc
+" autocmd bufwritepost .vimrc source ~/.vimrc
 
 " Always show sign column (git-gutter)
 let g:gitgutter_sign_column_always = 1
 " Don't set any git-gutter mappings
 let g:gitgutter_map_keys = 0
+" Same column color
+let g:gitgutter_override_sign_column_highlight = 0
 
 " Smart tab - if at the bol <tab>, else autocompletion.
 set wildmode=list:longest,list:full

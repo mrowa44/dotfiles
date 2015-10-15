@@ -6,13 +6,13 @@ export UPDATE_ZSH_DAYS=14
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
 
-plugins=(git tmux)
+plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 export EDITOR=vim
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-fpath=(~/.zsh $fpath)
+fpath=($HOME/.zsh ${fpath})
 
 # tmuxinator
 fpath=($HOME/.tmuxinator/completion ${fpath})
@@ -25,4 +25,5 @@ alias -g H='| head'
 alias -g T='| tail'
 alias fd='find . -type d -iname'
 alias ff='find . -type f -iname'
+
 alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"
