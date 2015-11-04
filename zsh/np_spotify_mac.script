@@ -17,6 +17,10 @@ if process_list contains "Spotify" then
 			else
 				set now_playing_trim to characters 1 thru trim_length of now_playing as string
 			end if
+    else
+      set now_playing_trim to "‖ Paused"
 		end if
 	end tell
+else
+    set now_playing_trim to "◼  Off"
 end if

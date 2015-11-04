@@ -22,3 +22,6 @@ ln -s ${BASEDIR}/tmux/ ~/.tmux
 
 # postgresql
 ln -s ${BASEDIR}/psqlrc ~/.psqlrc
+
+# mutt
+ln -s ${BASEDIR}/mutt/ ~/.mutt
