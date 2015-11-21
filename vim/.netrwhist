@@ -1,4 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/Users/Justyna/.zsh'
 let g:netrw_dirhist_2='/Users/Justyna/.tmuxinator'
+let g:netrw_dirhist_3='/Users/Justyna/dotfiles/vim/bundle/ctrlp.vim'
+let g:netrw_dirhist_4='/Users/Justyna/dotfiles/vim/bundle/ctrlp.vim/autoload/ctrlp'

@@ -1,27 +1,13 @@
 #!/bin/bash
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# zsh
-ln -s ${BASEDIR}/zshrc ~/.zshrc
-ln -s ${BASEDIR}/zsh/ ~/.zsh
+ln -sf ${DIR}/zshrc ~/.zshrc
+ln -sf ${DIR}/vimrc ~/.vimrc
+ln -sfn ${DIR}/vim ~/.vim
+ln -sf ${DIR}/gitconfig ~/.gitconfig
+ln -sf ${DIR}/gitignore ~/.gitignore
+ln -sf ${DIR}/tmux.conf ~/.tmux.conf
+ln -sf ${DIR}/psqlrc ~/.psqlrc
 
-# vim
-# Don't forget to install newer vim...
-ln -s ${BASEDIR}/vimrc ~/.vimrc
-ln -s ${BASEDIR}/vim/ ~/.vim
-
-# git
-ln -s ${BASEDIR}/gitconfig ~/.gitconfig
-ln -s ${BASEDIR}/gitignore ~/.gitignore
-
-# tmux
-# tmuxinator
-ln -s ${BASEDIR}/tmux.conf ~/.tmux.conf
-ln -s ${BASEDIR}/tmux/ ~/.tmux
-
-# postgresql
-ln -s ${BASEDIR}/psqlrc ~/.psqlrc
-
-# mutt
-ln -s ${BASEDIR}/mutt/ ~/.mutt
+git submodule foreach git pull

@@ -4,8 +4,6 @@ filetype on
 filetype plugin on
 filetype indent on
 
-execute pathogen#infect()
-
 set number                      " Lines numbers
 set showmode                    " Show which mode
 set ruler                       " Lines info at the bottom
@@ -22,7 +20,6 @@ set smartcase                   " ^ Unless you type a capital letter
 set hlsearch                    " Search highlighting
 set visualbell                  " Shut the fuck up
 set cursorline                  " Highlight current line
-set wildmenu                    " Visual autocomplete for command menu
 set showmatch                   " Highlight matching [{()}]
 set laststatus=2                " Always leave status line
 set autoindent                  " Auto indention
@@ -32,28 +29,26 @@ set splitbelow                  " More logical splitting
 set splitright                  " Same as above
 set undofile                    " Save undos, after quit vim
 set lazyredraw                  " Redraw only when we need to
-set encoding=utf-8
+set encoding=utf-8              " Encoding
+set wildmenu                    " Visual autocomplete
+set wildmode=longest:full,full
+set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
 
-" Status line
-" set stl=%F\                     " Full path to the file
-" set stl+=%y                     " Filetype
-" set stl+=%=                     " Right align
-" set stl+=Line:\ %l/%L\ [%p%%]   " Lines info
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
-set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
-
-" Colors
-" set background=dark
+set list listchars=tab:»·,trail:·,nbsp:·    " Display extra whitespace
+execute pathogen#infect()
 colorscheme molokai
 
-" Leader, escape (escape key on mac is too small)
-" Long lines
-let mapleader = " "
+""" Status line
+" colors: http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
+hi StatusLine          ctermfg=2     ctermbg=235   cterm=NONE
+hi StatusLineNC        ctermfg=2     ctermbg=0     cterm=NONE
+set stl=%F\ \ \                     " Full path to the file
+set stl+=%y                         " Filetype
+set stl+=%=                         " Right align
+set stl+=Line:\ %l/%L\ [\ %p%%\ ]   " Lines info
+
+""" Keys
+let mapleader = "\<Space>"
 imap § <Esc>
 nmap § <Esc>
 vmap § <Esc>
@@ -61,29 +56,19 @@ nmap <Leader><Leader> :w<cr>
 nmap \ <C-p>
 nmap j gj
 nmap k gk
-" Turn off annoying search highlighting
-nnoremap <Leader>H :nohlsearch<cr>
+nmap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
 
-" Quicker window movement
+""" Movement
 nmap <Leader>h <C-w>h
 nmap <Leader>j <C-w>j
 nmap <Leader>k <C-w>k
 nmap <Leader>l <C-w>l
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
 
-" Reload .vimrc with every save
-" autocmd bufwritepost .vimrc source ~/.vimrc
-
-" Always show sign column (git-gutter)
-let g:gitgutter_sign_column_always = 1
-" Don't set any git-gutter mappings
-let g:gitgutter_map_keys = 0
-" Same column color
-let g:gitgutter_override_sign_column_highlight = 0
-
+""" Other
 " Smart tab - if at the bol <tab>, else autocompletion.
 set wildmode=list:longest,list:full
 function! InsertTabWrapper()
@@ -109,8 +94,7 @@ if exists('+colorcolumn')
 endif
 
 " When editing a file, always jump to the last known cursor position.
-" Don't do it for commit messages, when the position is invalid, or when
-" inside an event handler (happens when dropping a file on gvim).
+" Don't do it for commit messages or when the position is invalid
 autocmd BufReadPost *
   \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
   \   exe "normal g`\"" |
@@ -119,14 +103,26 @@ autocmd BufReadPost *
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 autocmd FileType markdown setlocal spell
-
 " Automatically wrap at 72 characters and spell check git commit messages
 autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit setlocal colorcolumn=50
 
-" Strip all whitespace in a file with leader-s
-function! StripWhitespace ()
-    exec ':%s/ \+$//g'
-endfunction
-map <leader>s :call StripWhitespace ()<CR>
+""" Plugin specific
+" Always show sign column (git-gutter)
+let g:gitgutter_sign_column_always = 1
+" Don't set any git-gutter mappings
+let g:gitgutter_map_keys = 0
+" Same column color
+let g:gitgutter_override_sign_column_highlight = 0
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
+nnoremap <Leader>g :Ack<Space>
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+" Reload .vimrc with every save
+autocmd! bufwritepost $MYVIMRC source $MYVIMRC
