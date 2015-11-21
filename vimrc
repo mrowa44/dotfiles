@@ -115,4 +115,4 @@ if executable('ag')
 endif
 
 " Reload .vimrc with every save
-autocmd! bufwritepost $MYVIMRC source $MYVIMRC
+autocmd bufwritepost .vimrc source $MYVIMRC
