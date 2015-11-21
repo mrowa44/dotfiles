@@ -1,16 +1,12 @@
-set nocompatible                " Vim rather than Vi settings
 syntax on
 filetype on
 filetype plugin on
 filetype indent on
 
+set nocompatible                " Vim rather than Vi settings
 set number                      " Lines numbers
 set showmode                    " Show which mode
 set ruler                       " Lines info at the bottom
-set expandtab                   " Turns tabs into spaces
-set tabstop=2                   " 2 spaces to be exact
-set shiftwidth=2                " Indention
-set backspace=indent,eol,start  " Working backspace
 set autoread                    " If file changed outside of vim autoload
 set noswapfile                  " No swap files
 set linebreak                   " Wrap lines at convenient point
@@ -21,25 +17,27 @@ set hlsearch                    " Search highlighting
 set visualbell                  " Shut the fuck up
 set cursorline                  " Highlight current line
 set showmatch                   " Highlight matching [{()}]
-set laststatus=2                " Always leave status line
 set autoindent                  " Auto indention
 set smartindent                 " Smart indent
-set scrolloff=8                 " Always show 8 lines below and above
 set splitbelow                  " More logical splitting
 set splitright                  " Same as above
 set undofile                    " Save undos, after quit vim
 set lazyredraw                  " Redraw only when we need to
-set encoding=utf-8              " Encoding
 set wildmenu                    " Visual autocomplete
+set expandtab                   " Turns tabs into spaces
+set tabstop=2                   " 2 spaces to be exact
+set scrolloff=8                 " Always show 8 lines below and above
+set shiftwidth=2                " Indention
+set laststatus=2                " Always leave status line
+set encoding=utf-8              " Encoding
+set backspace=indent,eol,start  " Working backspace
 set wildmode=longest:full,full
-set shiftround    " use multiple of shiftwidth when indenting with '<' and '>'
+set list listchars=tab:»·,trail:·,nbsp:·
 
-set list listchars=tab:»·,trail:·,nbsp:·    " Display extra whitespace
 execute pathogen#infect()
 colorscheme molokai
 
 """ Status line
-" colors: http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
 hi StatusLine          ctermfg=2     ctermbg=235   cterm=NONE
 hi StatusLineNC        ctermfg=2     ctermbg=0     cterm=NONE
 set stl=%F\ \ \                     " Full path to the file
@@ -54,15 +52,11 @@ nmap § <Esc>
 vmap § <Esc>
 nmap <Leader><Leader> :w<cr>
 nmap \ <C-p>
-nmap j gj
-nmap k gk
 nmap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
 
 """ Movement
-nmap <Leader>h <C-w>h
-nmap <Leader>j <C-w>j
-nmap <Leader>k <C-w>k
-nmap <Leader>l <C-w>l
+nmap j gj
+nmap k gk
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-h> <C-w>h
@@ -70,7 +64,6 @@ nmap <C-l> <C-w>l
 
 """ Other
 " Smart tab - if at the bol <tab>, else autocompletion.
-set wildmode=list:longest,list:full
 function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
@@ -83,10 +76,7 @@ inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
 " Auto resize splits after window resize
-augroup Misc
-    autocmd!
-    autocmd VimResized * exe "normal! \<c-w>="
-augroup END
+autocmd! VimResized * exe "normal! \<c-w>="
 
 " Show 80th column
 if exists('+colorcolumn')
