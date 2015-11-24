@@ -35,11 +35,12 @@ set wildmode=longest:full,full
 set list listchars=tab:»·,trail:·,nbsp:·
 
 execute pathogen#infect()
-colorscheme molokai
+" colorscheme dracula
 
 """ Status line
-hi StatusLine          ctermfg=2     ctermbg=235   cterm=NONE
-hi StatusLineNC        ctermfg=2     ctermbg=0     cterm=NONE
+hi StatusLine                cterm=NONE
+hi StatusLineNC              cterm=NONE
+
 set stl=%F\ \ \                     " Full path to the file
 set stl+=%y                         " Filetype
 set stl+=%=                         " Right align
@@ -65,12 +66,12 @@ nmap <C-l> <C-w>l
 """ Other
 " Smart tab - if at the bol <tab>, else autocompletion.
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
@@ -80,15 +81,16 @@ autocmd! VimResized * exe "normal! \<c-w>="
 
 " Show 80th column
 if exists('+colorcolumn')
-    set colorcolumn=80
+  set colorcolumn=80
+  highlight ColorColumn ctermbg=60
 endif
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it for commit messages or when the position is invalid
 autocmd BufReadPost *
-  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal g`\"" |
-  \ endif
+      \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+      \   exe "normal g`\"" |
+      \ endif
 
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
@@ -104,7 +106,7 @@ let g:gitgutter_sign_column_always = 1
 " Don't set any git-gutter mappings
 let g:gitgutter_map_keys = 0
 " Same column color
-let g:gitgutter_override_sign_column_highlight = 0
+" let g:gitgutter_override_sign_column_highlight = 0
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
 nnoremap <Leader>g :Ack<Space>
@@ -116,3 +118,5 @@ endif
 
 " Reload .vimrc with every save
 autocmd bufwritepost .vimrc source $MYVIMRC
+
+autocmd filetype crontab setlocal nobackup nowritebackup
