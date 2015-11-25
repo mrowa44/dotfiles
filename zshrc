@@ -8,6 +8,8 @@ setopt menu_complete
 setopt always_to_end
 unsetopt complete_in_word
 
+source "/usr/local/rvm/scripts/rvm"
+
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
