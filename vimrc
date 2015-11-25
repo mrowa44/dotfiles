@@ -99,6 +99,9 @@ autocmd FileType markdown setlocal spell
 autocmd FileType gitcommit setlocal textwidth=72
 autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit setlocal colorcolumn=50
+" Filetype specific
+au BufRead,BufNewFile *.hamlc set ft=haml
+autocmd filetype crontab setlocal nobackup nowritebackup
 
 """ Plugin specific
 " Always show sign column (git-gutter)
@@ -111,12 +114,16 @@ let g:gitgutter_map_keys = 0
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:25,results:25'
 nnoremap <Leader>g :Ack<Space>
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+  let g:ackprg = 'ag'
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
 
+" hamlc syntax
+au! BufRead,BufNewFile *.hamlc set ft=haml
+
 " Reload .vimrc with every save
 autocmd bufwritepost .vimrc source $MYVIMRC
 
-autocmd filetype crontab setlocal nobackup nowritebackup
+abbr kurwa console.log('kurczaki')
+abbr cll console.log()

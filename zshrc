@@ -21,6 +21,8 @@ export KEYTIMEOUT=1
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
 
+alias -g ls='ls --color=auto'
+alias -g be='bundle exec'
 alias -g H='| head'
 alias -g T='| tail'
 alias ff='find . -type f -iname'
