@@ -5,9 +5,6 @@ export CLICOLOR='exfxcxdxbxegedabagacad'
 
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
   source "/usr/local/rvm/scripts/rvm"
-  echo 'rvm :)'
-else
-  echo 'rvm :('
 fi
 
 setopt prompt_subst
