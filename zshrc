@@ -3,12 +3,17 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export PS1='%B%F{2}%~%b%f%F{6}$(parse_git_branch)%f '
 export CLICOLOR='exfxcxdxbxegedabagacad'
 
+if [[ -a /usr/local/rvm/scripts/rvm ]]; then
+  source "/usr/local/rvm/scripts/rvm"
+  echo 'rvm :)'
+else
+  echo 'rvm :('
+fi
+
 setopt prompt_subst
 setopt menu_complete
 setopt always_to_end
 unsetopt complete_in_word
-
-source "/usr/local/rvm/scripts/rvm"
 
 autoload -U compinit
 compinit
@@ -23,7 +28,7 @@ export KEYTIMEOUT=1
 bindkey '^A' beginning-of-line
 bindkey '^E' end-of-line
 
-alias -g ls='ls --color=auto'
+alias -g ls='ls'
 alias -g be='bundle exec'
 alias -g H='| head'
 alias -g T='| tail'
