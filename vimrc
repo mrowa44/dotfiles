@@ -125,5 +125,5 @@ au! BufRead,BufNewFile *.hamlc set ft=haml
 " Reload .vimrc with every save
 autocmd bufwritepost .vimrc source $MYVIMRC
 
-abbr kurwa console.log('kurczaki')
+abbr kurwa console.log('banany')
 abbr cll console.log()
