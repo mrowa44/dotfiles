@@ -54,6 +54,7 @@ vmap § <Esc>
 nmap <Leader><Leader> :w<cr>
 nmap \ <C-p>
 nmap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
+nnoremap K i<cr><esc>k$             " Split lines
 
 """ Movement
 nmap j gj
