@@ -9,5 +9,7 @@ ln -sf ${DIR}/gitconfig ~/.gitconfig
 ln -sf ${DIR}/gitignore ~/.gitignore
 ln -sf ${DIR}/tmux.conf ~/.tmux.conf
 ln -sf ${DIR}/psqlrc ~/.psqlrc
+ln -sf ${DIR}/ctags ~/.ctags
+
 
 git submodule foreach git pull

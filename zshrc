@@ -31,6 +31,8 @@ alias -g H='| head'
 alias -g T='| tail'
 alias ff='find . -type f -iname'
 alias fd='find . -type d -iname'
+alias '..'='cd ..'
+alias '...'='cd ../..'
 
 alias ga='git add'
 alias gaa='git add --all'
