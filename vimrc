@@ -62,6 +62,8 @@ nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 nmap Q @q                               " qq to record, Q to replay
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
+map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 
 """ Movement
 nmap j gj
@@ -135,7 +137,7 @@ let g:gitgutter_sign_column_always = 1
 let g:gitgutter_map_keys = 0
 " let g:gitgutter_override_sign_column_highlight = 0
 
-let g:AutoPairsFlyMode = 1
+" let g:AutoPairsFlyMode = 1
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
