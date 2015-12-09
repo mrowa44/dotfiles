@@ -82,16 +82,16 @@ nnoremap <silent> # #zz
 
 """ Other
 " Smart tab - if at the bol <tab>, else autocompletion.
-" function! InsertTabWrapper()
-"   let col = col('.') - 1
-"   if !col || getline('.')[col - 1] !~ '\k'
-"     return "\<tab>"
-"   else
-"     return "\<c-p>"
-"   endif
-" endfunction
-" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-" inoremap <S-Tab> <c-n>
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-n>
 
 " Auto resize splits after window resize
 autocmd! VimResized * exe "normal! \<c-w>="
@@ -104,7 +104,7 @@ au! FocusLost * :wa<cr>
 
 " Show 80th column
 if exists('+colorcolumn')
-  set colorcolumn=80
+  set colorcolumn=81
 endif
 
 " When editing a file, always jump to the last known cursor position.
