@@ -129,6 +129,7 @@ autocmd FileType gitcommit setlocal spell
 autocmd FileType gitcommit setlocal colorcolumn=50
 
 au! BufRead,BufNewFile *.hamlc set ft=haml
+au! BufRead,BufNewFile *.jbuilder set ft=ruby
 autocmd filetype crontab setlocal nobackup nowritebackup
 
 
