@@ -39,16 +39,16 @@ set list listchars=tab:»·,trail:·,nbsp:·
 execute pathogen#infect()
 
 " Colors
-hi StatusLine                cterm=NONE  ctermfg=60
-hi StatusLineNC              cterm=NONE  ctermfg=60
-hi LineNr                    ctermfg=60
+" hi StatusLine                cterm=NONE  ctermfg=60
+" hi StatusLineNC              cterm=NONE  ctermfg=60
+" hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
 
 """ Status line
-set stl=%F\ \ \                     " Full path to the file
-set stl+=%y                         " Filetype
-set stl+=%=                         " Right align
-set stl+=Line:\ %l/%L\ [\ %p%%\ ]   " Lines info
+" set stl=%F\ \ \                     " Full path to the file
+" set stl+=%y                         " Filetype
+" set stl+=%=                         " Right align
+" set stl+=Line:\ %l/%L\ [\ %p%%\ ]   " Lines info
 
 """ Keys
 let mapleader = "\<Space>"
@@ -139,6 +139,29 @@ let g:gitgutter_map_keys = 0
 " let g:gitgutter_override_sign_column_highlight = 0
 
 " let g:AutoPairsFlyMode = 1
+
+let g:airline_theme='powerlineish'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline#extensions#syntastic#enabled = 1
+
+let g:tmuxline_theme = 'powerline'
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin' : ['#I', '#W'],
+      \'y'    : ['%Y-%m-%d'],
+      \'z'    : '#h'}
+let g:tmuxline_separators = {
+    \ 'left' : '',
+    \ 'left_alt': '',
+    \ 'right' : '',
+    \ 'right_alt' : '',
+    \ 'space' : ' '}
 
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
