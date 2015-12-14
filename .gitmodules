@@ -25,9 +25,3 @@
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic
-[submodule "vim/bundle/vim-airline"]
-	path = vim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline
-[submodule "vim/bundle/tmuxline.vim"]
-	path = vim/bundle/tmuxline.vim
-	url = https://github.com/edkolev/tmuxline.vim
