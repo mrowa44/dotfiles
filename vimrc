@@ -151,11 +151,11 @@ let g:airline#extensions#syntastic#enabled = 1
 
 let g:tmuxline_theme = 'powerline'
 let g:tmuxline_preset = {
-      \'a'    : '#S',
+      \'a'    : '#H',
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W'],
+      \'x'    : ['%H:%M'],
       \'y'    : ['%Y-%m-%d'],
-      \'z'    : '#h',
       \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
 let g:tmuxline_separators = {
     \ 'left' : '',
