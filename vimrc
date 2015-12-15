@@ -157,9 +157,9 @@ let g:tmuxline_preset = {
       \'y'    : ['%Y-%m-%d'],
       \'z'    : '#h'}
 let g:tmuxline_separators = {
-    \ 'left' : '',
+    \ 'left' : '',
     \ 'left_alt': '',
-    \ 'right' : '',
+    \ 'right' : '',
     \ 'right_alt' : '',
     \ 'space' : ' '}
 

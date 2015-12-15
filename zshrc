@@ -34,6 +34,7 @@ alias fd='find . -type d -iname'
 alias '..'='cd ..'
 alias '...'='cd ../..'
 
+alias -g r='rails'
 alias ga='git add'
 alias gaa='git add --all'
 alias gb="git branch"
