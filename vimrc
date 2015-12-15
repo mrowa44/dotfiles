@@ -41,7 +41,7 @@ execute pathogen#infect()
 " Colors
 " hi StatusLine                cterm=NONE  ctermfg=60
 " hi StatusLineNC              cterm=NONE  ctermfg=60
-" hi LineNr                    ctermfg=60
+hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
 
 """ Status line
@@ -155,7 +155,8 @@ let g:tmuxline_preset = {
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W'],
       \'y'    : ['%Y-%m-%d'],
-      \'z'    : '#h'}
+      \'z'    : '#h',
+      \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
 let g:tmuxline_separators = {
     \ 'left' : '',
     \ 'left_alt': '',
