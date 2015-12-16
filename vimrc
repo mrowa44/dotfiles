@@ -164,12 +164,6 @@ let g:tmuxline_separators = {
     \ 'right_alt' : '',
     \ 'space' : ' '}
 
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-let g:UltiSnipsEditSplit="horizontal"
-nmap <leader>u :UltiSnipsEdit<cr>
-
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
