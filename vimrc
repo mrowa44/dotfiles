@@ -155,12 +155,12 @@ let g:tmuxline_preset = {
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W'],
       \'x'    : ['%H:%M'],
-      \'y'    : ['%Y-%m-%d'],
+      \'z'    : ['%Y-%m-%d'],
       \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
 let g:tmuxline_separators = {
     \ 'left' : '',
     \ 'left_alt': '',
-    \ 'right' : '',
+    \ 'right' : '',
     \ 'right_alt' : '',
     \ 'space' : ' '}
 
