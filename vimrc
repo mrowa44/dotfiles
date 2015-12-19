@@ -39,8 +39,8 @@ set list listchars=tab:»·,trail:·,nbsp:·
 execute pathogen#infect()
 
 " Colors
-" hi StatusLine                cterm=NONE  ctermfg=60
-" hi StatusLineNC              cterm=NONE  ctermfg=60
+hi StatusLine                cterm=NONE  ctermfg=60
+hi StatusLineNC              cterm=NONE  ctermfg=60
 hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
 
@@ -62,8 +62,6 @@ nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 nmap Q @q                               " qq to record, Q to replay
-map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
-map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 
 """ Movement
 nmap j gj
@@ -98,9 +96,6 @@ autocmd! VimResized * exe "normal! \<c-w>="
 
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
-
-" Save on losing focus
-au! FocusLost * :wa<cr>
 
 " Show 80th column
 if exists('+colorcolumn')
@@ -151,14 +146,14 @@ let g:airline#extensions#syntastic#enabled = 1
 
 let g:tmuxline_theme = 'powerline'
 let g:tmuxline_preset = {
-      \'a'    : '#H',
+      \'c'    : '#h',
       \'win'  : ['#I', '#W'],
       \'cwin' : ['#I', '#W'],
       \'x'    : ['%H:%M'],
-      \'z'    : ['%Y-%m-%d'],
+      \'y'    : ['%Y-%m-%d'],
       \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
 let g:tmuxline_separators = {
-    \ 'left' : '',
+    \ 'left' : '',
     \ 'left_alt': '',
     \ 'right' : '',
     \ 'right_alt' : '',
@@ -174,6 +169,7 @@ let g:syntastic_coffescript_checkers = ['coffee']
 let g:syntastic_haml_checkers = ['haml']
 let g:syntastic_javascript_checkers = ['standard']
 
+map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor *<cr>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <leader>l :CtrlPLine<cr>
