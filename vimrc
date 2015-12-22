@@ -62,6 +62,7 @@ nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 nmap Q @q                               " qq to record, Q to replay
+set pastetoggle=<F2>                    " Toggle paste with f2
 
 """ Movement
 nmap j gj
