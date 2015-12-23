@@ -1,22 +1,35 @@
-export EDITOR='vim'
+export EDITOR=vim
+export VISUAL=vim
 export PATH="$PATH:$HOME/.rvm/bin"
-export PS1='%B%F{2}%~%b%f%F{6}$(parse_git_branch)%f '
-export CLICOLOR='exfxcxdxbxegedabagacad'
 
-if [[ -a /usr/local/rvm/scripts/rvm ]]; then
-  source "/usr/local/rvm/scripts/rvm"
-fi
+setopt promptsubst
+PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
-setopt prompt_subst
-setopt menu_complete
-setopt always_to_end
-unsetopt complete_in_word
+autoload -U colors
+colors
+export CLICOLOR=1
+
+setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
+DIRSTACKSIZE=5
+setopt extendedglob
+unsetopt nomatch
 
 autoload -U compinit
 compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' list-colors $CLICOLOR
 zstyle ':completion::complete:*' use-cache 1
+
+if [[ -a /usr/local/rvm/scripts/rvm ]]; then
+  source "/usr/local/rvm/scripts/rvm"
+fi
+
+git_prompt_info() {
+  current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
+  if [[ -n $current_branch ]]; then
+    echo "(%{$fg_bold[green]%}$current_branch%{$reset_color%})"
+  fi
+}
 
 # bindkey -v
 export KEYTIMEOUT=1
@@ -58,9 +71,3 @@ alias glo='git log --oneline --decorate --color'
 alias glog='git log --oneline --decorate --color --graph'
 alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"
 
-function parse_git_dirty {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean" ]] && echo "*"
-}
-function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(\1$(parse_git_dirty))/"
-}
