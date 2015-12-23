@@ -27,8 +27,11 @@ fi
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   if [[ -n $current_branch ]]; then
-    echo "(%{$fg_bold[green]%}$current_branch%{$reset_color%})"
+    echo "(%{$fg_bold[green]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
   fi
+}
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean"  ]] && echo "*"
 }
 
 # bindkey -v

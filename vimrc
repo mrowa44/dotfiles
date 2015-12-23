@@ -1,40 +1,172 @@
-syntax on
-filetype on
-filetype plugin on
-filetype indent on
+" Leader
+let mapleader = " "
+
+set backspace=indent,eol,start  " Working backspace
+set nobackup
+set nowritebackup
+set noswapfile
+set history=50
+set ruler         " show the cursor position all the time
+set showcmd       " display incomplete commands
+set incsearch     " jump to search word as you type
+set laststatus=2  " Always display the status line
+set autowrite     " Automatically :write before running commands
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
+  syntax on
+endif
+
+filetype plugin indent on
+
+augroup vimrcEx
+  autocmd!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+  autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+augroup END
+
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+" Use one space, not two, after punctuation.
+set nojoinspaces
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+  let &grepprg = 'ag --nogroup --nocolor --column'
+else
+  let &grepprg = 'grep -rn $* *'
+endif
+
+nnoremap <Leader>g :Ack<Space>
+command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+
+set textwidth=80
+set colorcolumn=+1
+
+set number
+set numberwidth=5
+let g:gitgutter_sign_column_always = 1
+let g:gitgutter_map_keys = 0
+" let g:gitgutter_override_sign_column_highlight = 0
+
+" Tab completion
+" will insert tab at beginning of line,
+" will use completion if not at beginning
+set wildmode=list:longest,list:full
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-n>
+
+" " Switch between the last two files
+" nnoremap <leader><leader> <c-^>
+
+" " vim-rspec mappings
+" nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+" nnoremap <Leader>s :call RunNearestSpec()<CR>
+" nnoremap <Leader>l :call RunLastSpec()<CR>
+
+" " Run commands that require an interactive shell
+" nnoremap <Leader>r :RunInInteractiveShell<space>
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+set splitbelow
+set splitright
+
+" Auto resize splits after window resize
+autocmd! VimResized * exe "normal! \<c-w>="
+
+autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+nmap j gj
+nmap k gk
+
+" Auto center searching
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+
+""" Keys
+imap § <Esc>
+nmap § <Esc>
+vmap § <Esc>
+cmap § <Esc>
+nnoremap <Leader><Leader> :w<cr>
+nmap \ <C-p>
+nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
+nnoremap K i<cr><esc>k$                 " Split lines
+nnoremap Y y$                           " Y
+map Q <Nop>
+nmap Q @q                               " qq to record, Q to replay
+set pastetoggle=<F2>                    " Toggle paste with f2
+
+" configure syntastic syntax checking to check on open as well as save
+let g:syntastic_check_on_open=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {"regex": "possibly useless use of a variable in void context"}
+
 
 set nocompatible                " Vim rather than Vi settings
-set number                      " Lines numbers
-set showmode                    " Show which mode
-set ruler                       " Lines info at the bottom
 set autoread                    " If file changed outside of vim autoload
-set noswapfile                  " No swap files
 set linebreak                   " Wrap lines at convenient point
-set incsearch                   " Incremental searching
 set ignorecase                  " Ignore case when searching
 set smartcase                   " ^ Unless you type a capital letter
 set hlsearch                    " Search highlighting
 set visualbell                  " Shut the fuck up
 set cursorline                  " Highlight current line
 set showmatch                   " Highlight matching [{()}]
-set autoindent                  " Auto indention
-set smartindent                 " Smart indent
-set splitbelow                  " More logical splitting
-set splitright                  " Same as above
 set undofile                    " Save undos, after quit vim
-set lazyredraw                  " Redraw only when we need to
 set wildmenu                    " Visual autocomplete
-set expandtab                   " Turns tabs into spaces
 set hidden                      " Causes files to be hidden instead of closed
 set gdefault                    " Use :%s/foo/bar/ instead of :%s/foo/bar/g
-set tabstop=2                   " 2 spaces to be exact
+set noshowmode                  " Don't show default modes indicators
 set scrolloff=8                 " Always show 8 lines below and above
-set shiftwidth=2                " Indention
-set laststatus=2                " Always leave status line
 set encoding=utf-8              " Encoding
-set backspace=indent,eol,start  " Working backspace
-set wildmode=longest:full,full
-set list listchars=tab:»·,trail:·,nbsp:·
 
 execute pathogen#infect()
 
@@ -50,72 +182,6 @@ hi ColorColumn               ctermbg=60
 " set stl+=%=                         " Right align
 " set stl+=Line:\ %l/%L\ [\ %p%%\ ]   " Lines info
 
-""" Keys
-let mapleader = "\<Space>"
-imap § <Esc>
-nmap § <Esc>
-vmap § <Esc>
-cmap § <Esc>
-nnoremap <Leader><Leader> :w<cr>
-nmap \ <C-p>
-nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
-nnoremap K i<cr><esc>k$                 " Split lines
-nnoremap Y y$                           " Y
-map Q <Nop>
-nmap Q @q                               " qq to record, Q to replay
-set pastetoggle=<F2>                    " Toggle paste with f2
-
-""" Movement
-nmap j gj
-nmap k gk
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
-
-" Auto center searching
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-
-
-""" Other
-" Smart tab - if at the bol <tab>, else autocompletion.
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
-
-" Auto resize splits after window resize
-autocmd! VimResized * exe "normal! \<c-w>="
-
-autocmd WinLeave * setlocal nocursorline
-autocmd WinEnter * setlocal cursorline
-
-" Show 80th column
-if exists('+colorcolumn')
-  set colorcolumn=81
-endif
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it for commit messages or when the position is invalid
-autocmd BufReadPost *
-      \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal g`\"" |
-      \ endif
-
-" :Chomp
-command! Chomp silent! normal! :%s/\s\+$//<cr>
-
-
-" Filetypes
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 autocmd FileType markdown setlocal spell
@@ -127,13 +193,9 @@ autocmd FileType gitcommit setlocal colorcolumn=50
 
 au! BufRead,BufNewFile *.hamlc set ft=haml
 au! BufRead,BufNewFile *.jbuilder set ft=ruby
-autocmd filetype crontab setlocal nobackup nowritebackup
 
 
 """ Plugins
-let g:gitgutter_sign_column_always = 1
-let g:gitgutter_map_keys = 0
-" let g:gitgutter_override_sign_column_highlight = 0
 
 " let g:AutoPairsFlyMode = 1
 
@@ -142,6 +204,10 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
+let g:airline_symbols = {}
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 let g:airline_detect_modified=1
 let g:airline_detect_paste=1
 let g:airline#extensions#syntastic#enabled = 1
@@ -149,20 +215,19 @@ let g:airline#extensions#syntastic#enabled = 1
 let g:tmuxline_theme = 'powerline'
 let g:tmuxline_preset = {
       \'c'    : '#h',
-      \'win'  : ['#I', '#W'],
-      \'cwin' : ['#I', '#W'],
+      \'win'  : '#I #W',
+      \'cwin' : '#I #W',
       \'x'    : ['%H:%M'],
       \'y'    : ['%Y-%m-%d'],
       \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
 let g:tmuxline_separators = {
-    \ 'left' : '',
+    \ 'left' : '',
     \ 'left_alt': '',
     \ 'right' : '',
     \ 'right_alt' : '',
     \ 'space' : ' '}
 
 let g:syntastic_enable_signs=1
-let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_echo_current_error = 0
@@ -172,20 +237,18 @@ let g:syntastic_haml_checkers = ['haml']
 let g:syntastic_javascript_checkers = ['standard']
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
-nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor *<cr>
+nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor *<cr>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <leader>l :CtrlPLine<cr>
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:55,results:25'
-nnoremap <Leader>g :Ack<Space>
-if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column'
-  let &grepprg = 'ag --nogroup --nocolor --column'
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore-dir=shared --ignore-dir=vendor --ignore-dir=public -g ""'
-  let g:ctrlp_use_caching = 0
-else
-  let &grepprg = 'grep -rn $* *'
-endif
-command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+
+
 
 " Reload .vimrc with every save
 " autocmd bufwritepost .vimrc source $MYVIMRC
+
+set autoindent                  " Auto indention
+set smartindent                 " Smart indent
+" set lazyredraw                  " Redraw only when we need to
+
+" :Chomp
+command! Chomp silent! normal! :%s/\s\+$//<cr>
