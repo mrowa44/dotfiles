@@ -219,9 +219,9 @@ let g:tmuxline_preset = {
       \'cwin' : '#I #W',
       \'x'    : ['%H:%M'],
       \'y'    : ['%Y-%m-%d'],
-      \'options': {'status-bg': 'colour233', 'statud-fg': 'colour60'} }
+      \'options': {'status-bg': 'colour233', 'status-fg': 'colour60'} }
 let g:tmuxline_separators = {
-    \ 'left' : '',
+    \ 'left' : '',
     \ 'left_alt': '',
     \ 'right' : '',
     \ 'right_alt' : '',
@@ -241,6 +241,9 @@ nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=ve
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <leader>l :CtrlPLine<cr>
 
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
 
 
 " Reload .vimrc with every save
