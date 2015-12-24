@@ -173,7 +173,7 @@ execute pathogen#infect()
 
 " Colors
 hi StatusLine                cterm=NONE  ctermfg=60
-hi StatusLineNC              cterm=NONE  ctermfg=60
+hi StatusLineNC              cterm=NONE  ctermfg=61
 hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
 
