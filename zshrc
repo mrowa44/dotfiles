@@ -2,6 +2,10 @@ export EDITOR=vim
 export VISUAL=vim
 export PATH="$PATH:$HOME/.rvm/bin"
 
+if [[ -a /usr/local/rvm/scripts/rvm ]]; then
+  source "/usr/local/rvm/scripts/rvm"
+fi
+
 setopt promptsubst
 PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
@@ -19,6 +23,7 @@ setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word
 setopt always_to_end
 
+fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
 zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
@@ -26,10 +31,6 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' menu select=long             # highlight current
 zstyle ':completion:*' original true
-
-if [[ -a /usr/local/rvm/scripts/rvm ]]; then
-  source "/usr/local/rvm/scripts/rvm"
-fi
 
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
@@ -41,23 +42,21 @@ parse_git_dirty() {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean"  ]] && echo "*"
 }
 
-# bindkey -v
 export KEYTIMEOUT=1
-#bindkey '^J' up-history
-#bindkey '^K' down-history
-bindkey '^A' beginning-of-line
-bindkey '^E' end-of-line
+bindkey -v
+bindkey '^K' up-history
+bindkey '^J' down-history
+bindkey "^N" up-history
+bindkey "^P" down-history
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
+bindkey "^U" kill-line
 
-alias -g ls='ls'
-alias -g be='bundle exec'
-alias -g H='| head'
-alias -g T='| tail'
-# alias -g ls='ls --color=auto'
-alias ff='find . -type f -iname'
-alias fd='find . -type d -iname'
 alias '..'='cd ..'
 alias '...'='cd ../..'
-
+alias -g H='| head'
+alias -g T='| tail'
+alias -g be='bundle exec'
 alias -g r='rails'
 alias ga='git add'
 alias gaa='git add --all'
