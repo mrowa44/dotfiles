@@ -71,7 +71,8 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 set textwidth=80
 set colorcolumn=+1
 
-set number
+" set number
+set relativenumber
 set numberwidth=5
 let g:gitgutter_sign_column_always = 1
 let g:gitgutter_map_keys = 0

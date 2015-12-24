@@ -5,8 +5,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 setopt promptsubst
 PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
-autoload -U colors
-colors
+autoload -U colors && colors
 export CLICOLOR=1
 
 setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
@@ -14,11 +13,19 @@ DIRSTACKSIZE=5
 setopt extendedglob
 unsetopt nomatch
 
-autoload -U compinit
-compinit
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' list-colors $CLICOLOR
+unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt flowcontrol
+setopt auto_menu         # show completion menu on succesive tab press
+setopt complete_in_word
+setopt always_to_end
+
+autoload -Uz compinit && compinit
 zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' menu select=long             # highlight current
+zstyle ':completion:*' original true
 
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
   source "/usr/local/rvm/scripts/rvm"
@@ -30,7 +37,7 @@ git_prompt_info() {
     echo "(%{$fg_bold[green]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
   fi
 }
-function parse_git_dirty {
+parse_git_dirty() {
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean"  ]] && echo "*"
 }
 
@@ -59,13 +66,11 @@ alias gc="git commit -v"
 alias gc!='git commit -v --amend'
 alias gco='git checkout'
 alias gd="git diff"
-alias gdca='git diff --cached'
 alias gdc='git diff --cached'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
 alias gpsh="git push"
 alias grb='git rebase'
-alias grbm='git rebase master'
 alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
@@ -73,4 +78,3 @@ alias gcp="git cherry-pick"
 alias glo='git log --oneline --decorate --color'
 alias glog='git log --oneline --decorate --color --graph'
 alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"
-
