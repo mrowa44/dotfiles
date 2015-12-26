@@ -54,6 +54,7 @@ bindkey "^U" kill-line
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
+alias mkdir="mkdir -p"
 alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
@@ -74,6 +75,5 @@ alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
-alias glo='git log --oneline --decorate --color'
-alias glog='git log --oneline --decorate --color --graph'
+alias glo='git log --oneline --decorate --color --graph'
 alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"

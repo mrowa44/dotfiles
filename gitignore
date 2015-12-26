@@ -1,7 +1,5 @@
-# vim undo history
 *.un~
-
-# OS X files
 .DS_Store
-
 tags
+log/*.log
+tmp/**/*

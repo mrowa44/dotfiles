@@ -71,11 +71,11 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 set textwidth=80
 set colorcolumn=+1
 
-" set number
+set number
 set relativenumber
 set numberwidth=5
 let g:gitgutter_sign_column_always = 1
-let g:gitgutter_map_keys = 0
+" let g:gitgutter_map_keys = 0
 " let g:gitgutter_override_sign_column_highlight = 0
 
 " Tab completion
@@ -172,8 +172,8 @@ set encoding=utf-8              " Encoding
 execute pathogen#infect()
 
 " Colors
-hi StatusLine                cterm=NONE  ctermfg=60
-hi StatusLineNC              cterm=NONE  ctermfg=61
+" hi StatusLine                cterm=NONE  ctermfg=60
+" hi StatusLineNC              cterm=NONE  ctermfg=61
 hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
 
@@ -198,35 +198,27 @@ au! BufRead,BufNewFile *.jbuilder set ft=ruby
 
 """ Plugins
 
-" let g:AutoPairsFlyMode = 1
-
-let g:airline_theme='powerlineish'
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols = {}
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-let g:airline_detect_modified=1
+let g:airline_detect_modified=0
 let g:airline_detect_paste=1
 let g:airline#extensions#syntastic#enabled = 1
+let g:airline_powerline_fonts =1
+" let g:airline_theme='powerlineish'
 
-let g:tmuxline_theme = 'powerline'
 let g:tmuxline_preset = {
-      \'c'    : '#h',
-      \'win'  : '#I #W',
-      \'cwin' : '#I #W',
-      \'x'    : ['%H:%M'],
-      \'y'    : ['%Y-%m-%d'],
-      \'options': {'status-bg': 'colour233', 'status-fg': 'colour60'} }
-let g:tmuxline_separators = {
-    \ 'left' : '',
-    \ 'left_alt': '',
-    \ 'right' : '',
-    \ 'right_alt' : '',
-    \ 'space' : ' '}
+    \'b'       : '#h',
+    \'c'       : '#S',
+    \'win'     : '#I #W',
+    \'cwin'    : '#I #W',
+    \'x'       : '%H:%M',
+    \'y'       : '%Y-%m-%d',
+    \'options' : {'status-justify' : 'centre'}}
+
+" let g:tmuxline_separators = {
+"     \ 'left' : '',
+"     \ 'left_alt': '',
+"     \ 'right' : '',
+"     \ 'right_alt' : '',
+"     \ 'space' : ' '}
 
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq = 0
@@ -238,7 +230,7 @@ let g:syntastic_haml_checkers = ['haml']
 let g:syntastic_javascript_checkers = ['standard']
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
-nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor *<cr>
+nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <leader>l :CtrlPLine<cr>
 
