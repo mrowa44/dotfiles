@@ -176,6 +176,7 @@ execute pathogen#infect()
 " hi StatusLineNC              cterm=NONE  ctermfg=61
 hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
+hi VertSplit                 ctermfg=60 ctermbg=60
 
 """ Status line
 " set stl=%F\ \ \                     " Full path to the file
