@@ -71,7 +71,7 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 set textwidth=80
 set colorcolumn=+1
 
-set number
+" set number
 set relativenumber
 set numberwidth=5
 let g:gitgutter_sign_column_always = 1
@@ -176,7 +176,7 @@ execute pathogen#infect()
 " hi StatusLineNC              cterm=NONE  ctermfg=61
 hi LineNr                    ctermfg=60
 hi ColorColumn               ctermbg=60
-hi VertSplit                 ctermfg=60 ctermbg=60
+hi VertSplit                 ctermfg=234 ctermbg=234
 
 """ Status line
 " set stl=%F\ \ \                     " Full path to the file
