@@ -44,7 +44,7 @@ set shiftround
 set expandtab
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 
 " Use one space, not two, after punctuation.
 set nojoinspaces
@@ -71,9 +71,10 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 set textwidth=80
 set colorcolumn=+1
 
-" set number
-set relativenumber
 set numberwidth=5
+set number
+set relativenumber
+
 let g:gitgutter_sign_column_always = 1
 " let g:gitgutter_map_keys = 0
 " let g:gitgutter_override_sign_column_highlight = 0
