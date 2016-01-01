@@ -12,6 +12,7 @@ ln -sf ${DIR}/tmux.conf ~/.tmux.conf
 ln -sf ${DIR}/psqlrc ~/.psqlrc
 ln -sf ${DIR}/ctags ~/.ctags
 ln -sf ${DIR}/agignore ~/.agignore
+ln -sf ${DIR}/gemrc ~/.gemrc
 
 
 git submodule foreach git pull

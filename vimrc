@@ -44,7 +44,7 @@ set shiftround
 set expandtab
 
 " Display extra whitespace
-set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
+set list listchars=tab:▸·,trail:•
 
 " Use one space, not two, after punctuation.
 set nojoinspaces
@@ -140,11 +140,13 @@ cmap § <Esc>
 nnoremap <Leader><Leader> :w<cr>
 nmap \ <C-p>
 nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
+nnoremap <C-h> :nohlsearch<cr>
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 map Q <Nop>
 nmap Q @q                               " qq to record, Q to replay
-set pastetoggle=<F2>                    " Toggle paste with f2
+set pastetoggle=<F12>                   " Toggle paste with f12
+nmap dad $F.D                           " Delete after dot
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
@@ -196,7 +198,7 @@ autocmd FileType gitcommit setlocal colorcolumn=50
 
 au! BufRead,BufNewFile *.hamlc set ft=haml
 au! BufRead,BufNewFile *.jbuilder set ft=ruby
-
+au! BufRead,BufNewFile *.md set ft=markdown
 
 """ Plugins
 
