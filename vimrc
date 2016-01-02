@@ -137,6 +137,7 @@ imap § <Esc>
 nmap § <Esc>
 vmap § <Esc>
 cmap § <Esc>
+imap jk <Esc>
 nnoremap <Leader><Leader> :w<cr>
 nmap \ <C-p>
 nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
@@ -145,8 +146,12 @@ nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 map Q <Nop>
 nmap Q @q                               " qq to record, Q to replay
+imap hh ,
+imap jj .
+imap kk ?
 set pastetoggle=<F12>                   " Toggle paste with f12
 nmap dad $F.D                           " Delete after dot
+nnoremap <leader>so :source $MYVIMRC<CR>
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
@@ -227,11 +232,11 @@ let g:tmuxline_preset = {
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_echo_current_error = 0
+let g:syntastic_echo_current_error = 1
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_coffescript_checkers = ['coffee']
 let g:syntastic_haml_checkers = ['haml']
-let g:syntastic_javascript_checkers = ['standard']
+let g:syntastic_javascript_checkers = ['jshint']
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
