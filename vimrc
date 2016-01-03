@@ -141,7 +141,7 @@ imap jk <Esc>
 nnoremap <Leader><Leader> :w<cr>
 nmap \ <C-p>
 nnoremap <Leader>H :nohlsearch<cr>      " Turn off annoying search highlighting
-nnoremap <C-h> :nohlsearch<cr>
+nnoremap <Leader>h :nohlsearch<cr>
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 map Q <Nop>
@@ -176,6 +176,7 @@ set gdefault                    " Use :%s/foo/bar/ instead of :%s/foo/bar/g
 set noshowmode                  " Don't show default modes indicators
 set scrolloff=8                 " Always show 8 lines below and above
 set encoding=utf-8              " Encoding
+set lazyredraw                  " Redraw only when we need to
 
 execute pathogen#infect()
 
@@ -232,7 +233,7 @@ let g:tmuxline_preset = {
 let g:syntastic_enable_signs=1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_echo_current_error = 1
+let g:syntastic_echo_current_error = 0
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_coffescript_checkers = ['coffee']
 let g:syntastic_haml_checkers = ['haml']
@@ -253,7 +254,6 @@ endif
 
 set autoindent                  " Auto indention
 set smartindent                 " Smart indent
-" set lazyredraw                  " Redraw only when we need to
 
 " :Chomp
 command! Chomp silent! normal! :%s/\s\+$//<cr>
