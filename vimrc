@@ -258,3 +258,4 @@ set smartindent                 " Smart indent
 command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 abbr bpr binding.pry
+abbr iser user
