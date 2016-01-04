@@ -149,7 +149,7 @@ nmap Q @q                               " qq to record, Q to replay
 imap hh ,
 imap jj .
 imap kk ?
-set pastetoggle=<F2>                    " Toggle paste with f2
+set pastetoggle=<F12>                    " Toggle paste with f12
 nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<CR>
 
