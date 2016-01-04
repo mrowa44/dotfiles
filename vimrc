@@ -149,7 +149,7 @@ nmap Q @q                               " qq to record, Q to replay
 imap hh ,
 imap jj .
 imap kk ?
-set pastetoggle=<F12>                   " Toggle paste with f12
+set pastetoggle=<F2>                    " Toggle paste with f2
 nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<CR>
 
@@ -207,7 +207,6 @@ au! BufRead,BufNewFile *.jbuilder set ft=ruby
 au! BufRead,BufNewFile *.md set ft=markdown
 
 """ Plugins
-
 let g:airline_detect_modified=0
 let g:airline_detect_paste=1
 let g:airline#extensions#syntastic#enabled = 1
