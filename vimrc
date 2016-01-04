@@ -256,3 +256,5 @@ set smartindent                 " Smart indent
 
 " :Chomp
 command! Chomp silent! normal! :%s/\s\+$//<cr>
+
+abbr bpr binding.pry
