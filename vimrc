@@ -152,6 +152,7 @@ imap kk ?
 set pastetoggle=<F12>                    " Toggle paste with f12
 nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<CR>
+nnoremap <Leader>e :e!<cr>
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
