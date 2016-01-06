@@ -154,12 +154,6 @@ nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<CR>
 nnoremap <Leader>e :e!<cr>
 
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_eruby_ruby_quiet_messages =
-    \ {"regex": "possibly useless use of a variable in void context"}
-
 
 set nocompatible                " Vim rather than Vi settings
 set autoread                    " If file changed outside of vim autoload
@@ -212,6 +206,7 @@ let g:airline_detect_modified=0
 let g:airline_detect_paste=1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts =1
+let g:airline_exclude_preview=1
 " let g:airline_theme='powerlineish'
 
 let g:tmuxline_preset = {
@@ -230,14 +225,17 @@ let g:tmuxline_preset = {
 "     \ 'right_alt' : '',
 "     \ 'space' : ' '}
 
-let g:syntastic_enable_signs=1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs= 1
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq = 1
 let g:syntastic_enable_highlighting = 0
-let g:syntastic_echo_current_error = 0
+let g:syntastic_echo_current_error = 1
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 let g:syntastic_coffescript_checkers = ['coffee']
 let g:syntastic_haml_checkers = ['haml']
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['eslint']
+
+let g:jsx_ext_required = 0
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
@@ -260,3 +258,4 @@ command! Chomp silent! normal! :%s/\s\+$//<cr>
 
 abbr bpr binding.pry
 abbr iser user
+set omnifunc=syntaxcomplete#Complete

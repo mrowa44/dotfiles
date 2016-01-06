@@ -44,12 +44,13 @@ parse_git_dirty() {
 
 export KEYTIMEOUT=1
 bindkey -v
-bindkey '^K' up-history
+bindkey '^K' up-line-or-search
 bindkey '^J' down-history
 bindkey "^N" up-history
 bindkey "^P" down-history
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
+bindkey '^G' insert-last-word
 bindkey "^U" kill-line
 
 alias '..'='cd ..'

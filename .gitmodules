@@ -37,3 +37,6 @@
 [submodule "vim/bundle/dracula"]
 	path = vim/bundle/dracula
 	url = git@github.com:zenorocha/dracula-theme.git
+[submodule "vim/bundle/vim-jsx"]
+	path = vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx

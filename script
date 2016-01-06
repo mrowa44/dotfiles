@@ -13,6 +13,7 @@ ln -sf ${DIR}/psqlrc ~/.psqlrc
 ln -sf ${DIR}/ctags ~/.ctags
 ln -sf ${DIR}/agignore ~/.agignore
 ln -sf ${DIR}/gemrc ~/.gemrc
+ln -sf ${DIR}/eslintrc ~/.eslintrc
 
 
 git submodule foreach git pull
