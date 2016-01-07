@@ -225,6 +225,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -269,6 +270,7 @@ let g:syntastic_haml_checkers = ['haml']
 let g:syntastic_javascript_checkers = ['eslint']
 
 let g:jsx_ext_required = 0
+let g:used_javascript_libs = 'underscore,backbone,jquery,react'
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
