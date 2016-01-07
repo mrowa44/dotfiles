@@ -94,6 +94,8 @@ endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
+set omnifunc=syntaxcomplete#Complete
+
 " " Switch between the last two files
 " nnoremap <leader><leader> <c-^>
 
@@ -126,11 +128,15 @@ nnoremap <C-l> <C-w>l
 nmap j gj
 nmap k gk
 
-" Auto center searching
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
+" " Don't lose selection when shifting sidewards
+" xnoremap <  <gv
+" xnoremap >  >gv
+
+" Auto center searching, n - always forward, N - always backward
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
+nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
+nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
 
 """ Keys
 imap § <Esc>
@@ -149,11 +155,10 @@ nmap Q @q                               " qq to record, Q to replay
 imap hh ,
 imap jj .
 imap kk ?
-set pastetoggle=<F12>                    " Toggle paste with f12
+set pastetoggle=<F12>                   " Toggle paste with f12
 nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<CR>
 nnoremap <Leader>e :e!<cr>
-
 
 set nocompatible                " Vim rather than Vi settings
 set autoread                    " If file changed outside of vim autoload
@@ -172,15 +177,17 @@ set noshowmode                  " Don't show default modes indicators
 set scrolloff=8                 " Always show 8 lines below and above
 set encoding=utf-8              " Encoding
 set lazyredraw                  " Redraw only when we need to
+set formatoptions+=j     " Delete comment character when joining commented lines
 
-execute pathogen#infect()
+set autoindent                  " Auto indention
+" set smartindent                 " Smart indent
 
-" Colors
+" " Colors
 " hi StatusLine                cterm=NONE  ctermfg=60
 " hi StatusLineNC              cterm=NONE  ctermfg=61
-hi LineNr                    ctermfg=60
-hi ColorColumn               ctermbg=60
-hi VertSplit                 ctermfg=234 ctermbg=234
+" hi LineNr ctermfg=246 ctermbg=None cterm=NONE
+" hi ColorColumn               ctermbg=60
+" hi VertSplit                 ctermfg=234 ctermbg=234
 
 """ Status line
 " set stl=%F\ \ \                     " Full path to the file
@@ -201,29 +208,55 @@ au! BufRead,BufNewFile *.hamlc set ft=haml
 au! BufRead,BufNewFile *.jbuilder set ft=ruby
 au! BufRead,BufNewFile *.md set ft=markdown
 
+" :Chomp
+command! Chomp silent! normal! :%s/\s\+$//<cr>
+
 """ Plugins
+
+" set shell=bash
+call plug#begin('~/.vim/bundle')
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'edkolev/tmuxline.vim'
+Plug 'bling/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/syntastic'
+Plug 'mileszs/ack.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'kchmck/vim-coffee-script'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'jnurmine/Zenburn'
+call plug#end()
+
+color zenburn
+
 let g:airline_detect_modified=0
 let g:airline_detect_paste=1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline_powerline_fonts =1
 let g:airline_exclude_preview=1
-" let g:airline_theme='powerlineish'
 
 let g:tmuxline_preset = {
-    \'b'       : '#h',
-    \'c'       : '#S',
-    \'win'     : '#I #W',
-    \'cwin'    : '#I #W',
-    \'x'       : '%H:%M',
-    \'y'       : '%Y-%m-%d',
-    \'options' : {'status-justify' : 'centre'}}
+   \'b'       : '#h',
+   \'c'       : '#S',
+   \'win'     : '#I #W',
+   \'cwin'    : '#I #W',
+   \'x'       : '%H:%M',
+   \'y'       : '%Y-%m-%d',
+   \'options' : {'status-justify' : 'centre'}}
 
-" let g:tmuxline_separators = {
-"     \ 'left' : '',
-"     \ 'left_alt': '',
-"     \ 'right' : '',
-"     \ 'right_alt' : '',
-"     \ 'space' : ' '}
+"     
+let g:tmuxline_separators = {
+    \ 'left' : '',
+    \ 'left_alt': '',
+    \ 'right' : '',
+    \ 'right_alt' : '',
+    \ 'space' : ' '}
 
 let g:syntastic_enable_signs= 1
 let g:syntastic_check_on_open=1
@@ -242,20 +275,5 @@ nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=ve
 nnoremap <leader>t :CtrlPTag<cr>
 nnoremap <leader>l :CtrlPLine<cr>
 
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j " Delete comment character when joining commented lines
-endif
-
-
-" Reload .vimrc with every save
-" autocmd bufwritepost .vimrc source $MYVIMRC
-
-set autoindent                  " Auto indention
-set smartindent                 " Smart indent
-
-" :Chomp
-command! Chomp silent! normal! :%s/\s\+$//<cr>
-
 abbr bpr binding.pry
 abbr iser user
-set omnifunc=syntaxcomplete#Complete
