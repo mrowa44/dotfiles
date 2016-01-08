@@ -48,14 +48,17 @@ set omnifunc=syntaxcomplete#Complete
 
 " Auto resize splits after window resize
 autocmd! VimResized * exe "normal! \<c-w>="
+
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
+
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nmap j gj
 nmap k gk
+
 " Auto center searching, n - always forward, N - always backward
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
@@ -209,6 +212,7 @@ let g:gitgutter_sign_column_always = 1
 
 abbr bpr binding.pry
 abbr iser user
+abbr bananas console.log('bananas')
 
 " " Colors
 " hi StatusLine                cterm=NONE  ctermfg=60
