@@ -109,7 +109,6 @@ vmap § <Esc>
 cmap § <Esc>
 imap jk <Esc>
 nnoremap <Leader><Leader> :w<cr>
-nmap \ <C-p>
 nnoremap <Leader>H :nohlsearch<cr>
 nnoremap <Leader>h :nohlsearch<cr>
 nnoremap K i<cr><esc>k$                 " Split lines
@@ -145,70 +144,65 @@ command! Chomp silent! normal! :%s/\s\+$//<cr>
 " set shell=bash
 call plug#begin('~/.vim/bundle')
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'edkolev/tmuxline.vim'
+	nmap \ <C-p>
+	nnoremap <leader>t :CtrlPTag<cr>
+	nnoremap <leader>l :CtrlPLine<cr>
 Plug 'bling/vim-airline'
+	let g:airline_detect_modified=1
+	let g:airline_detect_paste=1
+	let g:airline_powerline_fonts =1
+	let g:airline_exclude_preview=1
+	let g:airline#extensions#syntastic#enabled = 1
+Plug 'edkolev/tmuxline.vim'
+	let g:tmuxline_preset = {
+		\'b'       : '#h',
+		\'c'       : '#S',
+		\'win'     : '#I #W',
+		\'cwin'    : '#I #W',
+		\'x'       : '%H:%M',
+		\'y'       : '%Y-%m-%d',
+		\'options' : {'status-justify' : 'centre'}}
+	"     
+	let g:tmuxline_separators = {
+			\ 'left' : '',
+			\ 'left_alt': '',
+			\ 'right' : '',
+			\ 'right_alt' : '',
+			\ 'space' : ' '}
 Plug 'airblade/vim-gitgutter'
+	let g:gitgutter_sign_column_always = 1
+	" let g:gitgutter_map_keys = 0
+	" let g:gitgutter_override_sign_column_highlight = 0
 Plug 'scrooloose/syntastic'
+	let g:syntastic_enable_signs= 1
+	let g:syntastic_check_on_open=1
+	let g:syntastic_check_on_wq = 1
+	let g:syntastic_enable_highlighting = 0
+	let g:syntastic_echo_current_error = 1
+	let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+	let g:syntastic_coffescript_checkers = ['coffee']
+	let g:syntastic_haml_checkers = ['haml']
+	let g:syntastic_javascript_checkers = ['eslint']
 Plug 'mileszs/ack.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'kchmck/vim-coffee-script'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+	let g:jsx_ext_required = 0
 Plug 'othree/javascript-libraries-syntax.vim'
+	let g:used_javascript_libs = 'underscore,backbone,jquery,react'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-speeddating'
 Plug 'jnurmine/Zenburn'
+	color zenburn
 call plug#end()
-
-color zenburn
-
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-let g:airline_powerline_fonts =1
-let g:airline_exclude_preview=1
-let g:airline#extensions#syntastic#enabled = 1
-
-let g:tmuxline_preset = {
-   \'b'       : '#h',
-   \'c'       : '#S',
-   \'win'     : '#I #W',
-   \'cwin'    : '#I #W',
-   \'x'       : '%H:%M',
-   \'y'       : '%Y-%m-%d',
-   \'options' : {'status-justify' : 'centre'}}
-
-"     
-let g:tmuxline_separators = {
-    \ 'left' : '',
-    \ 'left_alt': '',
-    \ 'right' : '',
-    \ 'right_alt' : '',
-    \ 'space' : ' '}
-
-let g:syntastic_enable_signs= 1
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_echo_current_error = 1
-let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-let g:syntastic_coffescript_checkers = ['coffee']
-let g:syntastic_haml_checkers = ['haml']
-let g:syntastic_javascript_checkers = ['eslint']
-
-let g:jsx_ext_required = 0
-let g:used_javascript_libs = 'underscore,backbone,jquery,react'
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
-nnoremap <leader>t :CtrlPTag<cr>
-nnoremap <leader>l :CtrlPLine<cr>
-
-let g:gitgutter_sign_column_always = 1
-" let g:gitgutter_map_keys = 0
-" let g:gitgutter_override_sign_column_highlight = 0
 
 abbr bpr binding.pry
 abbr iser user
