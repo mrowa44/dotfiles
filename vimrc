@@ -32,6 +32,7 @@ set lazyredraw
 set formatoptions+=j
 set nojoinspaces
 set tabstop=2
+set expandtab
 set shiftwidth=2
 set shiftround
 set textwidth=80
