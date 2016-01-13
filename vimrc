@@ -36,6 +36,7 @@ set expandtab
 set shiftwidth=2
 set shiftround
 set textwidth=80
+set wrap
 set colorcolumn=+1
 set numberwidth=5
 set number
@@ -52,6 +53,9 @@ autocmd! VimResized * exe "normal! \<c-w>="
 
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
+
+" Save on lost focus
+au FocusLost * :wa
 
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -110,6 +114,7 @@ vmap § <Esc>
 cmap § <Esc>
 imap jk <Esc>
 nnoremap <Leader><Leader> :w<cr>
+nnoremap <c-w> :w<cr>
 nnoremap <Leader>H :nohlsearch<cr>
 nnoremap <Leader>h :nohlsearch<cr>
 nnoremap K i<cr><esc>k$                 " Split lines
@@ -121,8 +126,11 @@ imap jj .
 imap kk ?
 set pastetoggle=<F12>
 nmap dad $F.D                           " Delete after dot
-nnoremap <leader>so :source $MYVIMRC<CR>
-nnoremap <Leader>e :e!<cr>
+nnoremap <leader>so :source $MYVIMRC<cr>
+nnoremap <leader>e :e!<cr>
+" nnoremap <leader>w <C-w>v<C-w>l
+cnoremap <c-n>  <down>
+cnoremap <c-p>  <up>
 
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
@@ -139,68 +147,98 @@ au! BufRead,BufNewFile *.md set ft=markdown
 
 " :Chomp
 command! Chomp silent! normal! :%s/\s\+$//<cr>
+nnoremap <leader>W :Chomp<cr>
 
 """ Plugins
-
 " set shell=bash
 call plug#begin('~/.vim/bundle')
 Plug 'ctrlpvim/ctrlp.vim'
-	nmap \ <C-p>
-	nnoremap <leader>t :CtrlPTag<cr>
-	nnoremap <leader>l :CtrlPLine<cr>
+  nmap \ <C-p>
+  nnoremap <leader>t :CtrlPTag<cr>
+  nnoremap <leader>l :CtrlPLine<cr>
+Plug 'ervandew/supertab'
+Plug 'scrooloose/nerdtree'
+  " autocmd StdinReadPre * let s:std_in=1
+  " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  map <C-n> :NERDTreeToggle<CR>
+  map <C-m> :NERDTreeFind<cr>
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
-	let g:airline_detect_modified=1
-	let g:airline_detect_paste=1
-	let g:airline_powerline_fonts =1
-	let g:airline_exclude_preview=1
-	let g:airline#extensions#syntastic#enabled = 1
+  let g:airline_detect_modified=0
+  let g:airline_detect_paste=1
+  let g:airline_powerline_fonts =1
+  let g:airline_exclude_preview=1
+  let g:airline#extensions#syntastic#enabled = 1
 Plug 'edkolev/tmuxline.vim'
-	let g:tmuxline_preset = {
-		\'b'       : '#h',
-		\'c'       : '#S',
-		\'win'     : '#I #W',
-		\'cwin'    : '#I #W',
-		\'x'       : '%H:%M',
-		\'y'       : '%Y-%m-%d',
-		\'options' : {'status-justify' : 'centre'}}
-	"     
-	let g:tmuxline_separators = {
-			\ 'left' : '',
-			\ 'left_alt': '',
-			\ 'right' : '',
-			\ 'right_alt' : '',
-			\ 'space' : ' '}
+  let g:tmuxline_preset = {
+    \'b'       : '#h',
+    \'c'       : '#S',
+    \'win'     : '#I #W',
+    \'cwin'    : '#I #W',
+    \'x'       : '%H:%M',
+    \'y'       : '%Y-%m-%d',
+    \'options' : {'status-justify' : 'centre'}}
+  "     
+  let g:tmuxline_separators = {
+      \ 'left' : '',
+      \ 'left_alt': '',
+      \ 'right' : '',
+      \ 'right_alt' : '',
+      \ 'space' : ' '}
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'airblade/vim-gitgutter'
-	let g:gitgutter_sign_column_always = 1
-	" let g:gitgutter_map_keys = 0
-	" let g:gitgutter_override_sign_column_highlight = 0
+  let g:gitgutter_sign_column_always = 1
+  " let g:gitgutter_map_keys = 0
+  " let g:gitgutter_override_sign_column_highlight = 0
 Plug 'scrooloose/syntastic'
-	let g:syntastic_enable_signs= 1
-	let g:syntastic_check_on_open=1
-	let g:syntastic_check_on_wq = 1
-	let g:syntastic_enable_highlighting = 0
-	let g:syntastic_echo_current_error = 1
-	let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-	let g:syntastic_coffescript_checkers = ['coffee']
-	let g:syntastic_haml_checkers = ['haml']
-	let g:syntastic_javascript_checkers = ['eslint']
-Plug 'mileszs/ack.vim'
-Plug 'justinmk/vim-sneak'
-Plug 'kchmck/vim-coffee-script'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-	let g:jsx_ext_required = 0
-Plug 'othree/javascript-libraries-syntax.vim'
-	let g:used_javascript_libs = 'underscore,backbone,jquery,react'
+  let g:syntastic_enable_signs= 1
+  let g:syntastic_check_on_open=1
+  let g:syntastic_check_on_wq = 1
+  let g:syntastic_enable_highlighting = 0
+  let g:syntastic_echo_current_error = 1
+  let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+  let g:syntastic_coffescript_checkers = ['coffee']
+  let g:syntastic_haml_checkers = ['haml']
+  let g:syntastic_javascript_checkers = ['eslint']
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-speeddating'
-Plug 'jnurmine/Zenburn'
-	color zenburn
+Plug 'mileszs/ack.vim'
+Plug 'vim-scripts/SearchComplete'
+Plug 'jiangmiao/auto-pairs'
+Plug 'vim-scripts/matchit.zip'
+  autocmd FileType ruby let b:match_words = '\<do\>:\<end\>'
+Plug 'justinmk/vim-sneak'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'tpope/vim-rails'
+  map <leader>m :Rmodel<cr>
+  map <leader>v :Rview<cr>
+  map <leader>c :Rcontroller<cr>
+  map <leader>r :Rmigration<cr>
+Plug 'keith/rspec.vim'
+Plug 'kien/rainbow_parentheses.vim'
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+Plug 'kchmck/vim-coffee-script'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+  let g:jsx_ext_required = 0
+Plug 'othree/javascript-libraries-syntax.vim'
+  let g:used_javascript_libs = 'underscore,backbone,jquery,react'
+Plug 'ajh17/Spacegray.vim'
+Plug 'gosukiwi/vim-atom-dark'
 call plug#end()
+
+set t_Co=256
+set background=dark
+color Spacegray
+" color atom-dark-256
 
 map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a new vsplit
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
