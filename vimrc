@@ -45,6 +45,7 @@ set splitbelow
 set splitright
 set autoindent
 set smartindent
+set nofoldenable
 set list listchars=tab:▸·,trail:•
 set omnifunc=syntaxcomplete#Complete
 
@@ -131,6 +132,8 @@ nnoremap <leader>e :e!<cr>
 " nnoremap <leader>w <C-w>v<C-w>l
 cnoremap <c-n>  <down>
 cnoremap <c-p>  <up>
+set clipboard^=unnamed
+set ttimeoutlen=50
 
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
@@ -186,6 +189,7 @@ Plug 'edkolev/tmuxline.vim'
       \ 'right_alt' : '',
       \ 'space' : ' '}
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'sjl/vitality.vim'
 Plug 'airblade/vim-gitgutter'
   let g:gitgutter_sign_column_always = 1
   " let g:gitgutter_map_keys = 0
@@ -200,6 +204,14 @@ Plug 'scrooloose/syntastic'
   let g:syntastic_coffescript_checkers = ['coffee']
   let g:syntastic_haml_checkers = ['haml']
   let g:syntastic_javascript_checkers = ['eslint']
+Plug 'kien/rainbow_parentheses.vim'
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+Plug 'junegunn/vim-easy-align'
+  xmap ga <Plug>(EasyAlign)
+  nmap ga <Plug>(EasyAlign)
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -220,17 +232,13 @@ Plug 'tpope/vim-rails'
   map <leader>c :Rcontroller<cr>
   map <leader>r :Rmigration<cr>
 Plug 'keith/rspec.vim'
-Plug 'kien/rainbow_parentheses.vim'
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
-Plug 'kchmck/vim-coffee-script'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
   let g:jsx_ext_required = 0
 Plug 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'underscore,backbone,jquery,react'
+Plug 'skammer/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ajh17/Spacegray.vim'
 Plug 'gosukiwi/vim-atom-dark'
 call plug#end()
@@ -250,7 +258,7 @@ abbr bananas console.log('bananas')
 " " Colors
 " hi StatusLine                cterm=NONE  ctermfg=60
 " hi StatusLineNC              cterm=NONE  ctermfg=61
-" hi LineNr ctermfg=246 ctermbg=None cterm=NONE
+" hi LineNr                    ctermfg=246 ctermbg=None cterm=NONE
 " hi ColorColumn               ctermbg=60
 " hi VertSplit                 ctermfg=234 ctermbg=234
 
