@@ -254,8 +254,8 @@ map <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR> " Open the tag in a n
 nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
 
 abbr bpr binding.pry
-abbr iser user
 abbr bananas console.log('bananas')
+abbr iser user
 abbr Teh the
 abbr teh the
 
