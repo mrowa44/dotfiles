@@ -31,6 +31,7 @@ set encoding=utf-8
 set lazyredraw
 set formatoptions+=j
 set nojoinspaces
+set nofoldenable
 set tabstop=2
 set expandtab
 set shiftwidth=2
@@ -39,15 +40,16 @@ set textwidth=80
 set wrap
 set colorcolumn=+1
 set numberwidth=5
-set number
-set relativenumber
+set number relativenumber
 set splitbelow
 set splitright
 set autoindent
 set smartindent
 set nofoldenable
-set list listchars=tab:▸·,trail:•
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set omnifunc=syntaxcomplete#Complete
+set timeoutlen=500
+" set clipboard^=unnamed
 
 " Auto resize splits after window resize
 autocmd! VimResized * exe "normal! \<c-w>="
@@ -95,12 +97,12 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " will insert tab at beginning of line, will use completion if not at beginning
 set wildmode=list:longest,list:full
 function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
@@ -116,24 +118,23 @@ cmap § <Esc>
 imap jk <Esc>
 nnoremap <Leader><Leader> :w<cr>
 nnoremap <c-w> :w<cr>
+nnoremap <c-q> :q<cr>
+nnoremap <Leader>w :w<cr>
+nnoremap <leader>e :e!<cr>
 nnoremap <Leader>H :nohlsearch<cr>
 nnoremap <Leader>h :nohlsearch<cr>
 nnoremap K i<cr><esc>k$                 " Split lines
 nnoremap Y y$                           " Y
 map Q <Nop>
 nmap Q @q                               " qq to record, Q to replay
-imap hh ,
-imap jj .
-imap kk ?
 set pastetoggle=<F12>
-nmap dad $F.D                           " Delete after dot
 nnoremap <leader>so :source $MYVIMRC<cr>
-nnoremap <leader>e :e!<cr>
-" nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ev :vs ~/.vimrc<cr>
 cnoremap <c-n>  <down>
 cnoremap <c-p>  <up>
-set clipboard^=unnamed
-set ttimeoutlen=50
+nnoremap <leader>c :cd %:p:h<CR>:pwd<CR>    " cd to the current file's path
+" nmap dad $F.D                           " Delete after dot
 
 " Automatically wrap at 80 characters for Markdown, enable spellchecking
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
@@ -153,7 +154,6 @@ command! Chomp silent! normal! :%s/\s\+$//<cr>
 nnoremap <leader>W :Chomp<cr>
 
 """ Plugins
-" set shell=bash
 call plug#begin('~/.vim/bundle')
 Plug 'ctrlpvim/ctrlp.vim'
   nmap \ <C-p>
@@ -161,10 +161,9 @@ Plug 'ctrlpvim/ctrlp.vim'
   nnoremap <leader>l :CtrlPLine<cr>
 Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdtree'
-  " autocmd StdinReadPre * let s:std_in=1
-  " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   map <C-n> :NERDTreeToggle<CR>
-  map <C-m> :NERDTreeFind<cr>
+  " map <C-m> :NERDTreeFind<cr>
+  let NERDTreeShowHidden=1
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'bling/vim-airline'
   let g:airline_detect_modified=0
@@ -174,26 +173,28 @@ Plug 'bling/vim-airline'
   let g:airline#extensions#syntastic#enabled = 1
 Plug 'edkolev/tmuxline.vim'
   let g:tmuxline_preset = {
-    \'b'       : '#h',
-    \'c'       : '#S',
-    \'win'     : '#I #W',
-    \'cwin'    : '#I #W',
-    \'x'       : '%H:%M',
-    \'y'       : '%Y-%m-%d',
-    \'options' : {'status-justify' : 'centre'}}
+        \'b'       : '#h',
+        \'c'       : '#S',
+        \'win'     : '#I #W',
+        \'cwin'    : '#I #W',
+        \'x'       : '%H:%M',
+        \'y'       : '%Y-%m-%d',
+        \'options' : {'status-justify' : 'centre'}}
   "     
   let g:tmuxline_separators = {
-      \ 'left' : '',
-      \ 'left_alt': '',
-      \ 'right' : '',
-      \ 'right_alt' : '',
-      \ 'space' : ' '}
+        \ 'left' : '',
+        \ 'left_alt': '',
+        \ 'right' : '',
+        \ 'right_alt' : '',
+        \ 'space' : ' '}
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'sjl/vitality.vim'
 Plug 'airblade/vim-gitgutter'
   let g:gitgutter_sign_column_always = 1
   " let g:gitgutter_map_keys = 0
   " let g:gitgutter_override_sign_column_highlight = 0
+  nmap ]h <Plug>GitGutterNextHunk
+  nmap [h <Plug>GitGutterPrevHunk
 Plug 'scrooloose/syntastic'
   let g:syntastic_enable_signs= 1
   let g:syntastic_check_on_open=1
@@ -215,22 +216,23 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+  nnoremap <leader>gs :Gstatus<cr>
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-speeddating'
 Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/SearchComplete'
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/vim-after-object'
+  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
 Plug 'vim-scripts/matchit.zip'
   autocmd FileType ruby let b:match_words = '\<do\>:\<end\>'
 Plug 'justinmk/vim-sneak'
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-rails'
-  map <leader>m :Rmodel<cr>
-  map <leader>v :Rview<cr>
-  map <leader>c :Rcontroller<cr>
-  map <leader>r :Rmigration<cr>
+  " map <leader>m :Rmodel<cr>
+  " map <leader>v :Rview<cr>
+  " map <leader>c :Rcontroller<cr>
+  " map <leader>r :Rmigration<cr>
 Plug 'keith/rspec.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript'
@@ -254,6 +256,8 @@ nnoremap <silent> <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=ve
 abbr bpr binding.pry
 abbr iser user
 abbr bananas console.log('bananas')
+abbr Teh the
+abbr teh the
 
 " " Colors
 " hi StatusLine                cterm=NONE  ctermfg=60
