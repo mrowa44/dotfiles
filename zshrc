@@ -21,8 +21,8 @@ unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word
 setopt always_to_end
-autoload -Uz compinit && compinit
 fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:*:*:*' menu select

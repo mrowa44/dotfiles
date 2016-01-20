@@ -13,10 +13,7 @@ set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t,kspell
 set completeopt+=longest,menuone
 set dictionary+=/usr/share/dict/words
-" set complete=.,w,b,t
-" set encoding=utf-8
-" set clipboard^=unnamed
-" set omnifunc=syntaxcomplete#Complete
+set clipboard^=unnamed
 
 """ UI
 set formatoptions+=j
@@ -31,7 +28,6 @@ set splitbelow splitright
 set textwidth=80 colorcolumn=+1
 set laststatus=2
 set scrolloff=8
-" set visualbell
 
 """ Search
 set hlsearch incsearch
@@ -229,3 +225,5 @@ abbr bananas console.log('bananas')
 abbr iser user
 abbr Teh the
 abbr teh the
+
+" set omnifunc=syntaxcomplete#Complete
