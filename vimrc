@@ -22,7 +22,7 @@ set dictionary+=/usr/share/dict/words
 set formatoptions+=j
 set lazyredraw
 set linebreak
-set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set nofoldenable
 set nojoinspaces
 set number relativenumber
@@ -31,7 +31,6 @@ set splitbelow splitright
 set textwidth=80 colorcolumn=+1
 set laststatus=2
 set scrolloff=8
-" set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 " set visualbell
 
 """ Search
@@ -47,8 +46,8 @@ set shiftwidth=2 softtabstop=2
 """ Backups. undo, history
 set history=200
 set noswapfile
-set backup
-set undofile
+set backup backupdir=~/.vim/backup/
+set undofile undodir=~/.vim/backup/undo/
 
 """ Autocommands
 autocmd VimResized * exe "normal! \<c-w>="   " Resize splits after window resize
@@ -73,7 +72,7 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
   let g:ctrlp_use_caching = 0
   let g:ackprg = 'ag --nogroup --nocolor --column'
-  let &grepprg = 'ag --nogroup --nocolor --column'
+  set grepprg=ag\ --hidden\ --vimgrep grepformat^=%f:%l:%c:%m
 else
   let &grepprg = 'grep -rn $* *'
 endif
@@ -94,7 +93,7 @@ inoremap <S-Tab> <c-n>
 
 command! Chomp silent! normal! :%s/\s\+$//<cr>                          " :Chomp
 
-let g:html_indent_tags = 'li\|p'    " Treat <li> and <p> tags like the block tags
+let g:html_indent_tags = 'li\|p'   " Treat <li> and <p> tags like the block tags
 
 """ Mappings
 nnoremap <C-j> <C-w>j
@@ -126,7 +125,7 @@ nnoremap <leader>o :bprev<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>}:nohl<cr>
+nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>3}:nohl<cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W :Chomp<cr>
 

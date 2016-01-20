@@ -1,4 +1,5 @@
 *.un~
+*~
 .DS_Store
 tags
 log/*.log

@@ -15,22 +15,21 @@ export CLICOLOR=1
 setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
 DIRSTACKSIZE=5
 setopt extendedglob
-unsetopt nomatch
 
-# unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt menu_complete   # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word
 setopt always_to_end
-
-fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
-zstyle ':completion::complete:*' use-cache 1
-zstyle ':completion:*' completer _expand _complete _ignored _approximate
+fpath=(~/.zsh/completion $fpath)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-zstyle ':completion:*' menu select=long             # highlight current
+zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' original true
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+zstyle ':completion::complete:*' use-cache 1
 
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
@@ -62,8 +61,18 @@ bindkey "^W" forward-word
 bindkey "^N" down-history
 bindkey "^P" up-history
 bindkey '^G' insert-last-word
-setopt hist_find_no_dups
-setopt hist_ignore_all_dups
+
+#################
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups # ignore duplication command history list
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history
+####################
+
 # bindkey "^U" kill-whole-line
 # bindkey "^A" beginning-of-line
 # bindkey "^E" end-of-line
@@ -81,6 +90,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
 alias -g r='rails'
+
 alias ga='git add'
 alias gaa='git add --all'
 alias gb="git branch"
@@ -89,6 +99,7 @@ alias gc!='git commit -v --amend'
 alias gco='git checkout'
 alias gd="git diff"
 alias gdc='git diff --cached'
+alias gm='git merge'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
 alias gpsh="git push"
@@ -97,5 +108,5 @@ alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
-alias glo='git log --oneline --decorate --color --graph'
-alias glg="git log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'"
+alias glg="git log --graph --all --abbrev-commit --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(blue)~ %an %Cgreen(%cr) %Creset'
+"
