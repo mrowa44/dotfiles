@@ -56,20 +56,27 @@ man() {
 }
 
 export KEYTIMEOUT=1
-bindkey -v
 bindkey "^B" backward-word
 bindkey "^W" forward-word
 
-bindkey "^A" beginning-of-line
-bindkey "^E" end-of-line
 bindkey "^N" down-history
 bindkey "^P" up-history
-bindkey "^U" kill-whole-line
 bindkey '^G' insert-last-word
+setopt hist_find_no_dups
+setopt hist_ignore_all_dups
+# bindkey "^U" kill-whole-line
+# bindkey "^A" beginning-of-line
+# bindkey "^E" end-of-line
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias mkdir="mkdir -p"
+alias cp="cp -vi"
+alias mv="mv -vi"
+alias rm="rm -v"
+alias ls="ls -GF"
+alias la="ls -GFA"
+alias f='find . -iname'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'

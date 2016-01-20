@@ -2,74 +2,63 @@ let mapleader = " "
 syntax on
 filetype plugin indent on
 
-set backspace=indent,eol,start
-set nobackup
-set nowritebackup
-set noswapfile
-set history=50
-set ruler
-set showcmd
-set incsearch
-set laststatus=2
-set autowrite
+""" General
 set nocompatible
+set backspace=indent,eol,start
 set autoread
-set linebreak
-set ignorecase
-set smartcase
-set hlsearch
-set visualbell
-set showmatch
-set undofile
-set wildmenu
 set hidden
+set ttimeoutlen=500
 set gdefault
-set noshowmode
-set scrolloff=8
-set encoding=utf-8
-set lazyredraw
-set formatoptions+=j
-set nojoinspaces
-set nofoldenable
-set tabstop=2
-set expandtab
-set shiftwidth=2
-set shiftround
-set textwidth=80
-set colorcolumn=+1
-set wrap
-set numberwidth=5
-set number relativenumber
-set splitbelow
-set splitright
-set autoindent
-set smartindent
-set nofoldenable
-set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
-set omnifunc=syntaxcomplete#Complete
-set wildmode=list:longest,list:full
-set timeoutlen=500
-set completeopt+=longest
+set wildmenu wildmode=list:longest,list:full
+set complete=.,w,b,t,kspell
+set completeopt+=longest,menuone
+set dictionary+=/usr/share/dict/words
+" set complete=.,w,b,t
+" set encoding=utf-8
 " set clipboard^=unnamed
+" set omnifunc=syntaxcomplete#Complete
 
-" Auto resize splits after window resize
-autocmd! VimResized * exe "normal! \<c-w>="
+""" UI
+set formatoptions+=j
+set lazyredraw
+set linebreak
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set nofoldenable
+set nojoinspaces
+set number relativenumber
+set showcmd showbreak=↪
+set splitbelow splitright
+set textwidth=80 colorcolumn=+1
+set laststatus=2
+set scrolloff=8
+" set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
+" set visualbell
 
+""" Search
+set hlsearch incsearch
+set ignorecase smartcase
+set showmatch matchtime=2
+
+""" Indention
+set autoindent smartindent
+set expandtab smarttab
+set shiftwidth=2 softtabstop=2
+
+""" Backups. undo, history
+set history=200
+set noswapfile
+set backup
+set undofile
+
+""" Autocommands
+autocmd VimResized * exe "normal! \<c-w>="   " Resize splits after window resize
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
-
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-nmap j gj
-nmap k gk
-
-" Auto center searching, n - always forward, N - always backward
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
-nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
+autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
+autocmd FileType tmux setlocal nowrap commentstring=#\ %s
+autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
+autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
+autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
 
 " When editing a file, always jump to the last known cursor position
 augroup vimrcEx
@@ -88,61 +77,73 @@ if executable('ag')
 else
   let &grepprg = 'grep -rn $* *'
 endif
-nnoremap <Leader>g :Ack<Space>
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+autocmd! FileType qf nnoremap <buffer> <leader>o <c-w><cr><c-w>L
 
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
+" Tab completion
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <S-Tab> <c-n>
 
-" Automatically wrap at 80 characters for Markdown, enable spellchecking
-autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-autocmd FileType markdown setlocal spell
+command! Chomp silent! normal! :%s/\s\+$//<cr>                          " :Chomp
 
-" Automatically wrap at 72 characters and spell check git commit messages
-autocmd FileType gitcommit setlocal textwidth=72
-autocmd FileType gitcommit setlocal spell
-autocmd FileType gitcommit setlocal colorcolumn=50
-
-autocmd FileType tmux setlocal commentstring=#%s
-
-au! BufRead,BufNewFile *.hamlc set ft=haml
-au! BufRead,BufNewFile *.jbuilder set ft=ruby
-au! BufRead,BufNewFile *.md set ft=markdown
-
-" :Chomp
-command! Chomp silent! normal! :%s/\s\+$//<cr>
+let g:html_indent_tags = 'li\|p'    " Treat <li> and <p> tags like the block tags
 
 """ Mappings
-imap § <Esc>
-nmap § <Esc>
-vmap § <Esc>
-cmap § <Esc>
-imap jk <Esc>
-nnoremap <Leader><Leader> :w<cr>
-nnoremap <leader>c :cd %:p:h<CR>:pwd<CR>    " cd to the current file's path
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap j gj
+nnoremap k gk
+
+" Auto center searching, n - always forward, N - always backward
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
+nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
+
+imap § <esc>
+nmap § <esc>
+vmap § <esc>
+cmap § <esc>
+inoremap jk <esc>
+nnoremap <leader><leader> :w<cr>
+nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
 nnoremap <leader>e :e!<cr>
-nnoremap <silent> <Leader>h :nohlsearch<cr>
-nnoremap <Leader>w :w<cr>
+nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>  " tag in vsplit
+nnoremap <leader>g :Ack<Space>
+nnoremap <leader>h :nohlsearch<cr>
+nnoremap <leader>i :bnext<cr>
+nnoremap <leader>o :bprev<cr>
+nnoremap <leader>q :q<cr>
+nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>}:nohl<cr>
-nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log --exclude=vendor .<cr>
+nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W :Chomp<cr>
- " Open the tag in a new vsplit
-nnoremap <leader>f :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
-nnoremap K i<cr><esc>k$                     " Split lines
-nnoremap Y y$                               " Y
-nmap Q @q                                   " qq to record, Q to replay
+nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " Split lines
+nnoremap Y y$                                   " Y acts consistent with C and D
+nmap Q @q                                            " qq to record, Q to replay
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 set pastetoggle=<F12>
+nnoremap <tab> %
+" nnoremap K i<cr><esc>k$                                          " Split lines
 
 """ Plugins
 call plug#begin('~/.vim/bundle')
 Plug 'ajh17/Spacegray.vim'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
-Plug 'ajh17/VimCompletesMe'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
@@ -153,8 +154,16 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-gitgutter'
   let g:gitgutter_sign_column_always = 1
-Plug 'junegunn/rainbow_parentheses.vim'
-  au VimEnter * RainbowParentheses
+Plug 'luochen1990/rainbow'
+  let g:rainbow_active = 1
+  if exists(':RainbowToggleOn') | exe "RainbowToggleOn" | endif
+  let g:rainbow_conf = {
+  \   'guifgs': ['tomato', 'darkorange3', 'seagreen3', 'deepskyblue1'],
+  \   'ctermfgs': ['1', '3', '2', '4'],
+  \   'operators': '_,_',
+  \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
+  \   'separately': {}
+  \}
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -167,6 +176,10 @@ Plug 'bling/vim-airline'
   let g:airline_detect_paste=1
   let g:airline_powerline_fonts =1
   let g:airline_exclude_preview=1
+  let g:airline_left_sep=''
+  let g:airline_right_sep=''
+  let g:airline_left_alt_sep='|'
+  let g:airline_right_alt_sep='|'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/goyo.vim'
   nmap <F8> :Goyo<cr>
@@ -186,6 +199,8 @@ Plug 'junegunn/goyo.vim'
   autocmd! User GoyoLeave nested call <SID>goyo_leave()
 Plug 'tpope/vim-fugitive'
   nnoremap <leader>gs :Gstatus<cr>7j
+  nnoremap <leader>gc :Gcommit<cr>
+  nnoremap <leader>gd :Gvdiff<cr>
 Plug 'tpope/vim-rails'
 Plug 'keith/rspec.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
@@ -198,7 +213,7 @@ Plug 'skammer/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'scrooloose/syntastic'
   let g:syntastic_enable_signs= 1
   let g:syntastic_check_on_open= 0
-  let g:syntastic_check_on_wq = 1
+  let g:syntastic_check_on_wq = 0
   let g:syntastic_enable_highlighting = 0
   let g:syntastic_echo_current_error = 1
   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
