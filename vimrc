@@ -11,9 +11,9 @@ set ttimeoutlen=500
 set gdefault
 set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t,kspell
-set completeopt+=longest,menuone
+set completeopt=longest,menuone,preview
 set dictionary+=/usr/share/dict/words
-set clipboard^=unnamed
+" set clipboard^=unnamed
 
 """ UI
 set formatoptions+=j
@@ -22,7 +22,7 @@ set linebreak
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set nofoldenable
 set nojoinspaces
-set number relativenumber
+set number
 set showcmd showbreak=↪
 set splitbelow splitright
 set textwidth=80 colorcolumn=+1
@@ -37,20 +37,23 @@ set showmatch matchtime=2
 """ Indention
 set autoindent smartindent
 set expandtab smarttab
-set shiftwidth=2 softtabstop=2
+set shiftwidth=2 softtabstop=2 tabstop=2
 
-""" Backups. undo, history
+""" Backups, undo, history
 set history=200
 set noswapfile
-set backup backupdir=~/.vim/backup/
-set undofile undodir=~/.vim/backup/undo/
+set backup
+set undofile
 
 """ Autocommands
-autocmd VimResized * exe "normal! \<c-w>="   " Resize splits after window resize
+" Resize splits after window resize
+autocmd VimResized * exe "normal! \<c-w>="
+
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
 autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
 autocmd FileType tmux setlocal nowrap commentstring=#\ %s
+autocmd FileType ruby let b:match_words = '\<do\>:\<end\>'
 autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
 autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
 autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
@@ -72,20 +75,20 @@ if executable('ag')
 else
   let &grepprg = 'grep -rn $* *'
 endif
-command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
-autocmd! FileType qf nnoremap <buffer> <leader>o <c-w><cr><c-w>L
+" command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+" autocmd! FileType qf nnoremap <buffer> <leader>o <c-w><cr><c-w>L
 
-" Tab completion
-function! InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
+" " Tab completion
+" function! InsertTabWrapper()
+"     let col = col('.') - 1
+"     if !col || getline('.')[col - 1] !~ '\k'
+"         return "\<tab>"
+"     else
+"         return "\<c-p>"
+"     endif
+" endfunction
+" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <S-Tab> <c-n>
 
 command! Chomp silent! normal! :%s/\s\+$//<cr>                          " :Chomp
 
@@ -118,6 +121,7 @@ nnoremap <leader>g :Ack<Space>
 nnoremap <leader>h :nohlsearch<cr>
 nnoremap <leader>i :bnext<cr>
 nnoremap <leader>o :bprev<cr>
+nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -131,90 +135,62 @@ nmap Q @q                                            " qq to record, Q to replay
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 set pastetoggle=<F12>
-nnoremap <tab> %
-" nnoremap K i<cr><esc>k$                                          " Split lines
 
 """ Plugins
+runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'ajh17/Spacegray.vim'
+Plug 'ajh17/VimCompletesMe'
+  " let g:vcm_direction = 'p'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'rstacruz/vim-closer'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'mileszs/ack.vim'
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'justinmk/vim-sneak'
-Plug 'airblade/vim-gitgutter'
-  let g:gitgutter_sign_column_always = 1
-Plug 'luochen1990/rainbow'
-  let g:rainbow_active = 1
-  if exists(':RainbowToggleOn') | exe "RainbowToggleOn" | endif
-  let g:rainbow_conf = {
-  \   'guifgs': ['tomato', 'darkorange3', 'seagreen3', 'deepskyblue1'],
-  \   'ctermfgs': ['1', '3', '2', '4'],
-  \   'operators': '_,_',
-  \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
-  \   'separately': {}
-  \}
-Plug 'junegunn/vim-easy-align'
-  xmap ga <Plug>(EasyAlign)
-  nmap ga <Plug>(EasyAlign)
+Plug 'tpope/vim-endwise'
+Plug 'rstacruz/vim-closer'
 Plug 'junegunn/vim-after-object'
   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-Plug 'vim-scripts/matchit.zip'
-  autocmd FileType ruby let b:match_words = '\<do\>:\<end\>'
-Plug 'bling/vim-airline'
-  let g:airline_detect_modified=0
-  let g:airline_detect_paste=1
-  let g:airline_powerline_fonts =1
-  let g:airline_exclude_preview=1
-  let g:airline_left_sep=''
-  let g:airline_right_sep=''
-  let g:airline_left_alt_sep='|'
-  let g:airline_right_alt_sep='|'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/goyo.vim'
-  nmap <F8> :Goyo<cr>
-  let g:goyo_width = 100
-  function! s:goyo_enter()
-    set noshowcmd
-    set laststatus=0
-    set nocursorline
-  endfunction
-  function! s:goyo_leave()
-    silent !tmux set status on
-    set showcmd
-    set laststatus=2
-    set cursorline
-  endfunction
-  autocmd! User GoyoEnter nested call <SID>goyo_enter()
-  autocmd! User GoyoLeave nested call <SID>goyo_leave()
-Plug 'tpope/vim-fugitive'
-  nnoremap <leader>gs :Gstatus<cr>7j
-  nnoremap <leader>gc :Gcommit<cr>
-  nnoremap <leader>gd :Gvdiff<cr>
-Plug 'tpope/vim-rails'
-Plug 'keith/rspec.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-  let g:jsx_ext_required = 0
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'othree/javascript-libraries-syntax.vim'
   let g:used_javascript_libs = 'underscore,backbone,jquery,react'
-Plug 'skammer/vim-css-color', { 'for': ['css', 'scss'] }
+Plug 'mxw/vim-jsx'
+  let g:jsx_ext_required = 0
+Plug 'mileszs/ack.vim'
+Plug 'justinmk/vim-sneak'
+Plug 'luochen1990/rainbow'
+"   let g:rainbow_active = 1
+  if exists(':RainbowToggleOn') | exe "RainbowToggleOn" | endif
+"   let g:rainbow_conf = {
+"   \   'ctermfgs': ['1', '3', '2', '4'],
+"   \   'operators': '_,_',
+"   \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
+"   \   'separately': {
+"   \      'html': {}
+"   \    }
+"   \ }
+Plug 'airblade/vim-gitgutter'
+  " let g:gitgutter_sign_column_always = 1
+Plug 'bling/vim-airline'
+  let g:airline_detect_modified=0
+  let g:airline_left_sep =''
+  let g:airline_right_sep=''
+Plug 'tpope/vim-rails'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/syntastic'
-  let g:syntastic_enable_signs= 1
-  let g:syntastic_check_on_open= 0
-  let g:syntastic_check_on_wq = 0
-  let g:syntastic_enable_highlighting = 0
-  let g:syntastic_echo_current_error = 1
   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-  let g:syntastic_coffescript_checkers = ['coffee']
-  let g:syntastic_haml_checkers = ['haml']
   let g:syntastic_javascript_checkers = ['eslint']
+  " let g:syntastic_enable_highlighting = 0
+  " let g:syntastic_coffescript_checkers = ['coffee']
+  " let g:syntastic_haml_checkers = ['haml']
+" Plug 'junegunn/vim-easy-align'
+"   xmap ga <Plug>(EasyAlign)
+"   nmap ga <Plug>(EasyAlign)
+" Plug 'tpope/vim-fugitive'
+" Plug 'ConradIrwin/vim-bracketed-paste'
+" Plug 'keith/rspec.vim'
+" Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 set t_Co=256
@@ -225,5 +201,3 @@ abbr bananas console.log('bananas')
 abbr iser user
 abbr Teh the
 abbr teh the
-
-" set omnifunc=syntaxcomplete#Complete
