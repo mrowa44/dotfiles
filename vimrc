@@ -46,9 +46,7 @@ set backup
 set undofile
 
 """ Autocommands
-" Resize splits after window resize
 autocmd VimResized * exe "normal! \<c-w>="
-
 autocmd WinLeave * setlocal nocursorline
 autocmd WinEnter * setlocal cursorline
 autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
@@ -77,20 +75,6 @@ else
 endif
 " command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 " autocmd! FileType qf nnoremap <buffer> <leader>o <c-w><cr><c-w>L
-
-" " Tab completion
-" function! InsertTabWrapper()
-"     let col = col('.') - 1
-"     if !col || getline('.')[col - 1] !~ '\k'
-"         return "\<tab>"
-"     else
-"         return "\<c-p>"
-"     endif
-" endfunction
-" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-" inoremap <S-Tab> <c-n>
-
-command! Chomp silent! normal! :%s/\s\+$//<cr>                          " :Chomp
 
 let g:html_indent_tags = 'li\|p'   " Treat <li> and <p> tags like the block tags
 
@@ -121,20 +105,20 @@ nnoremap <leader>g :Ack<Space>
 nnoremap <leader>h :nohlsearch<cr>
 nnoremap <leader>i :bnext<cr>
 nnoremap <leader>o :bprev<cr>
+set   pt=<leader>p                                                " paste toggle
 nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>3}:nohl<cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
-nnoremap <leader>W :Chomp<cr>
+nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
 
 nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " Split lines
-nnoremap Y y$                                   " Y acts consistent with C and D
+nmap Y y$                                       " Y acts consistent with C and D
 nmap Q @q                                            " qq to record, Q to replay
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
-set pastetoggle=<F12>
 
 """ Plugins
 runtime macros/matchit.vim
@@ -160,7 +144,7 @@ Plug 'mileszs/ack.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
   let g:rainbow_active = 0
-  if exists(':RainbowToggleOn') | exe "RainbowToggleOn" | endif
+  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
   let g:airline_detect_modified=0
