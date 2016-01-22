@@ -159,18 +159,9 @@ Plug 'mxw/vim-jsx'
 Plug 'mileszs/ack.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
-"   let g:rainbow_active = 1
+  let g:rainbow_active = 0
   if exists(':RainbowToggleOn') | exe "RainbowToggleOn" | endif
-"   let g:rainbow_conf = {
-"   \   'ctermfgs': ['1', '3', '2', '4'],
-"   \   'operators': '_,_',
-"   \   'parentheses': ['start=/(/ end=/)/', 'start=/\[/ end=/\]/', 'start=/{/ end=/}/'],
-"   \   'separately': {
-"   \      'html': {}
-"   \    }
-"   \ }
 Plug 'airblade/vim-gitgutter'
-  " let g:gitgutter_sign_column_always = 1
 Plug 'bling/vim-airline'
   let g:airline_detect_modified=0
   let g:airline_left_sep =''
@@ -181,7 +172,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/syntastic'
   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
   let g:syntastic_javascript_checkers = ['eslint']
-  " let g:syntastic_enable_highlighting = 0
   " let g:syntastic_coffescript_checkers = ['coffee']
   " let g:syntastic_haml_checkers = ['haml']
 " Plug 'junegunn/vim-easy-align'
