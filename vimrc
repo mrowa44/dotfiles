@@ -13,7 +13,6 @@ set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t,kspell
 set completeopt=longest,menuone,preview
 set dictionary+=/usr/share/dict/words
-" set clipboard^=unnamed
 
 """ UI
 set formatoptions+=j
@@ -45,12 +44,50 @@ set noswapfile
 set backup
 set undofile
 
+""" Mappings
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+nnoremap j gj
+nnoremap k gk
+
+" Auto center searching, n - always forward, N - always backward
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
+nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
+
+imap § <esc>
+nmap § <esc>
+vmap § <esc>
+cmap § <esc>
+nmap Y y$                                       " Y acts consistent with C and D
+nmap Q @q                                            " qq to record, Q to replay
+nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
+inoremap jk <esc>
+nnoremap <leader><leader> :w<cr>
+nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
+nnoremap <leader>e :e!<cr>
+nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>  " tag in vsplit
+nnoremap <leader>g :Ack<Space>
+nnoremap <leader>h :nohlsearch<cr>
+nnoremap <leader>i :bnext<cr>
+nnoremap <leader>o :bprev<cr>
+set   pt=<leader>p                                                " paste toggle
+nnoremap <leader>r :RainbowToggle<cr>
+nnoremap <leader>q :q<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>3}:nohl<cr>
+nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
+nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
+
 """ Autocommands
 autocmd VimResized * exe "normal! \<c-w>="
-autocmd WinLeave * setlocal nocursorline
-autocmd WinEnter * setlocal cursorline
 autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
-autocmd FileType tmux setlocal nowrap commentstring=#\ %s
 autocmd FileType ruby let b:match_words = '\<do\>:\<end\>'
 autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
 autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
@@ -78,54 +115,11 @@ endif
 
 let g:html_indent_tags = 'li\|p'   " Treat <li> and <p> tags like the block tags
 
-""" Mappings
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-nnoremap j gj
-nnoremap k gk
-
-" Auto center searching, n - always forward, N - always backward
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
-nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
-
-imap § <esc>
-nmap § <esc>
-vmap § <esc>
-cmap § <esc>
-inoremap jk <esc>
-nnoremap <leader><leader> :w<cr>
-nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
-nnoremap <leader>e :e!<cr>
-nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>  " tag in vsplit
-nnoremap <leader>g :Ack<Space>
-nnoremap <leader>h :nohlsearch<cr>
-nnoremap <leader>i :bnext<cr>
-nnoremap <leader>o :bprev<cr>
-set   pt=<leader>p                                                " paste toggle
-nnoremap <leader>r :RainbowToggle<cr>
-nnoremap <leader>q :q<cr>
-nnoremap <leader>w :w<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>3}:nohl<cr>
-nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
-nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
-
-nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " Split lines
-nmap Y y$                                       " Y acts consistent with C and D
-nmap Q @q                                            " qq to record, Q to replay
-cnoremap <c-p> <up>
-cnoremap <c-n> <down>
-
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'ajh17/Spacegray.vim'
 Plug 'ajh17/VimCompletesMe'
-  " let g:vcm_direction = 'p'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
 Plug 'tpope/vim-commentary'

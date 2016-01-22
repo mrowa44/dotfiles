@@ -7,3 +7,11 @@ bower_components/
 node_modules/
 *un~
 .keep
+.DS_Store
+*~
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.zip
