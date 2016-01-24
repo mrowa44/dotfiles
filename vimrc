@@ -4,29 +4,29 @@ filetype plugin indent on
 
 """ General
 set nocompatible
-set backspace=indent,eol,start
-set autoread
 set hidden
-set ttimeoutlen=500
+set autoread
 set gdefault
+set ttimeoutlen=500
+set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t,kspell
 set completeopt=longest,menuone,preview
 set dictionary+=/usr/share/dict/words
 
 """ UI
-set formatoptions+=j
 set lazyredraw
 set linebreak
-set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set nofoldenable
 set nojoinspaces
 set number
-set showcmd showbreak=↪
-set splitbelow splitright
-set textwidth=80 colorcolumn=+1
-set laststatus=2
 set scrolloff=8
+set splitbelow splitright
+set formatoptions+=j
+set laststatus=2
+set showcmd showbreak=↪
+set textwidth=80 colorcolumn=+1
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 
 """ Search
 set hlsearch incsearch
@@ -65,9 +65,9 @@ cmap § <esc>
 nmap Y y$                                       " Y acts consistent with C and D
 nmap Q @q                                            " qq to record, Q to replay
 nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
+inoremap jk <esc>
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
-inoremap jk <esc>
 nnoremap <leader><leader> :w<cr>
 nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
 nnoremap <leader>e :e!<cr>
@@ -115,6 +115,19 @@ endif
 
 let g:html_indent_tags = 'li\|p'   " Treat <li> and <p> tags like the block tags
 
+" " Tab completion
+" " will insert tab at beginning of line, will use completion if not at beginning
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-p>"
+"   endif
+" endfunction
+" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
+" inoremap <S-Tab> <c-n>
+
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
@@ -144,6 +157,7 @@ Plug 'bling/vim-airline'
   let g:airline_detect_modified=0
   let g:airline_left_sep =''
   let g:airline_right_sep=''
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-rails'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript'
@@ -152,13 +166,13 @@ Plug 'scrooloose/syntastic'
   let g:syntastic_javascript_checkers = ['eslint']
   " let g:syntastic_coffescript_checkers = ['coffee']
   " let g:syntastic_haml_checkers = ['haml']
+" Plug 'nelstrom/vim-textobj-rubyblock'
 " Plug 'junegunn/vim-easy-align'
 "   xmap ga <Plug>(EasyAlign)
 "   nmap ga <Plug>(EasyAlign)
 " Plug 'tpope/vim-fugitive'
 " Plug 'ConradIrwin/vim-bracketed-paste'
 " Plug 'keith/rspec.vim'
-" Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 
 set t_Co=256
