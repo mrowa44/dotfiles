@@ -111,5 +111,4 @@ alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
-alias glg="git log --graph --all --abbrev-commit --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(blue)~ %an %Cgreen(%cr) %Creset'
-"
+alias glg="git log --graph --all --abbrev-commit --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(blue)~ %an %Cgreen(%cr) %Creset'"

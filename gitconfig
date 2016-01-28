@@ -22,8 +22,8 @@
  branch = auto
  diff = auto
 [log]
-	decorate = true
+ decorate = true
 [help]
-	autocorrect = 1
+ autocorrect = 1
 [core]
-	excludesfile = ~/.gitignore
+ excludesfile = ~/.gitignore

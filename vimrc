@@ -19,7 +19,7 @@ set lazyredraw
 set linebreak
 set nofoldenable
 set nojoinspaces
-set number
+set number relativenumber
 set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j
@@ -81,7 +81,7 @@ nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs ~/.vimrc<cr>/Mappings<cr>3}:nohl<cr>
+nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>3}:nohl<cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
 
@@ -115,24 +115,12 @@ endif
 
 let g:html_indent_tags = 'li\|p'   " Treat <li> and <p> tags like the block tags
 
-" " Tab completion
-" " will insert tab at beginning of line, will use completion if not at beginning
-" function! InsertTabWrapper()
-"   let col = col('.') - 1
-"   if !col || getline('.')[col - 1] !~ '\k'
-"     return "\<tab>"
-"   else
-"     return "\<c-p>"
-"   endif
-" endfunction
-" inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-" inoremap <S-Tab> <c-n>
-
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'ajh17/Spacegray.vim'
-Plug 'ajh17/VimCompletesMe'
+" Plug 'ajh17/VimCompletesMe'
+Plug 'ervandew/supertab'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
 Plug 'tpope/vim-commentary'
@@ -158,6 +146,7 @@ Plug 'bling/vim-airline'
   let g:airline_left_sep =''
   let g:airline_right_sep=''
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'pangloss/vim-javascript'
@@ -170,7 +159,6 @@ Plug 'scrooloose/syntastic'
 " Plug 'junegunn/vim-easy-align'
 "   xmap ga <Plug>(EasyAlign)
 "   nmap ga <Plug>(EasyAlign)
-" Plug 'tpope/vim-fugitive'
 " Plug 'ConradIrwin/vim-bracketed-paste'
 " Plug 'keith/rspec.vim'
 call plug#end()
