@@ -1,4 +1,6 @@
 vim/spell
 vim/bundle
 vim/backup
+vim/undo
 vim/doc
+vim/.netrwhist

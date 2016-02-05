@@ -68,6 +68,10 @@ man() {
     man "$@"
 }
 
+mcd() {
+  mkdir -p "$1" && cd "$1";
+}
+
 export KEYTIMEOUT=1
 bindkey "^B" backward-word
 bindkey "^W" forward-word
@@ -75,10 +79,9 @@ bindkey "^W" forward-word
 bindkey "^N" down-history
 bindkey "^P" up-history
 bindkey '^G' insert-last-word
-
-# bindkey "^U" kill-whole-line
-# bindkey "^A" beginning-of-line
-# bindkey "^E" end-of-line
+bindkey "^U" kill-whole-line
+bindkey "^A" beginning-of-line
+bindkey "^E" end-of-line
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
