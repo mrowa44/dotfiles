@@ -81,9 +81,9 @@ nnoremap <leader>e :e!<cr>
 nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>  " tag in vsplit
 nnoremap <leader>g :Ack<Space>
 nnoremap <leader>h :nohlsearch<cr>
-nnoremap <leader>i :bnext<cr>
+nnoremap <leader>i :bprev<cr>
 nnoremap <leader>n :setlocal number!<cr>
-nnoremap <leader>o :bprev<cr>
+nnoremap <leader>o :bnext<cr>
 nnoremap <leader>p :set paste!<cr>
 nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
