@@ -13,6 +13,7 @@ set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t,kspell
 set completeopt=longest,menuone,preview
 set dictionary+=/usr/share/dict/words
+" set clipboard^=unnamedplus,unnamed
 
 """ UI
 set lazyredraw
@@ -68,7 +69,7 @@ nmap Y y$                                       " Y acts consistent with C and D
 nmap Q @q                                            " qq to record, Q to replay
 nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
 inoremap jk <esc>
-inoremap <c-h> <space>=><space>                             " h like hash rocket
+inoremap <c-h> <space>=><space>
 inoremap <c-f> <c-x><c-f>
 inoremap <c-]> <c-x><c-]>
 inoremap <c-l> <c-x><c-l>
@@ -162,7 +163,7 @@ Plug 'tpope/vim-rails'
 Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
   let g:easytags_async = 1
 Plug 'majutsushi/tagbar'
-  nnoremap tt :TagbarToggle<cr>
+nnoremap tt :TagbarToggle<cr><c-w>=
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'scrooloose/syntastic'
   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
