@@ -4,3 +4,5 @@
 tags
 log/*.log
 tmp/**/*
+Session.vim
+dump.rdb
