@@ -90,6 +90,7 @@ nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>3}:nohl<cr>
+nnoremap <leader>R :!find . -type f -iregex '.*\.js$' -exec jsctags {} -f \; \| sed '/^$/d' \| sort > tags <cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
 
@@ -172,6 +173,7 @@ Plug 'scrooloose/syntastic'
 "   xmap ga <Plug>(EasyAlign)
 "   nmap ga <Plug>(EasyAlign)
 " Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'ternjs/tern_for_vim'
 call plug#end()
 
 set t_Co=256
