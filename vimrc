@@ -69,7 +69,6 @@ nmap Y y$                                       " Y acts consistent with C and D
 nmap Q @q                                            " qq to record, Q to replay
 nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
 inoremap jk <esc>
-inoremap <c-h> <space>=><space>
 inoremap <c-f> <c-x><c-f>
 inoremap <c-]> <c-x><c-]>
 inoremap <c-l> <c-x><c-l>
