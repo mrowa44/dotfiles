@@ -174,6 +174,8 @@ Plug 'scrooloose/syntastic'
 "   nmap ga <Plug>(EasyAlign)
 " Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'ternjs/tern_for_vim'
+Plug 'scrooloose/nerdtree'
+  nnoremap mm :NERDTreeToggle<cr>
 call plug#end()
 
 set t_Co=256
