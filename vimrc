@@ -10,10 +10,9 @@ set gdefault
 set ttimeoutlen=500
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
-set complete=.,w,b,t,kspell
+set complete=.,w,b,t
 set completeopt=longest,menuone,preview
 set dictionary+=/usr/share/dict/words
-" set clipboard^=unnamedplus,unnamed
 
 """ UI
 set lazyredraw
@@ -55,19 +54,10 @@ nnoremap <C-l> <C-w>l
 nnoremap j gj
 nnoremap k gk
 
-" Auto center searching, n - always forward, N - always backward
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <expr> n  'Nn'[v:searchforward].'zvzz'
-nnoremap <expr> N  'nN'[v:searchforward].'zvzz'
-
-imap § <esc>
-nmap § <esc>
-vmap § <esc>
-cmap § <esc>
-nmap Y y$                                       " Y acts consistent with C and D
-nmap Q @q                                            " qq to record, Q to replay
-nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
+nnoremap § <esc>
+vnoremap § <esc>
+cnoremap § <esc>
+inoremap § <esc>
 inoremap jk <esc>
 inoremap <c-f> <c-x><c-f>
 inoremap <c-]> <c-x><c-]>
@@ -75,6 +65,9 @@ inoremap <c-l> <c-x><c-l>
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap w!! w !sudo tee % >/dev/null                           " save with sudo
+nnoremap Y y$                                   " Y acts consistent with C and D
+nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
+nnoremap <CR> :wa<CR>:!!<CR>
 nnoremap <leader><leader> :w<cr>
 nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
 nnoremap <leader>e :e!<cr>
@@ -89,20 +82,30 @@ nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>3}:nohl<cr>
+nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>2}:nohl<cr>
 nnoremap <leader>R :!find . -type f -iregex '.*\.js$' -exec jsctags {} -f \; \| sed '/^$/d' \| sort > tags <cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
 
 """ Autocommands
-autocmd VimResized * exe "normal! \<c-w>="
-autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
-autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
-autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
-autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+augroup vimrcEx
+  autocmd!
 
-" When editing a file, always jump to the last known cursor position
-au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  autocmd VimResized * exe "normal! \<c-w>="
+
+  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
+
+  autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
+  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
+  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+
+  autocmd BufWritePre *.html :normal gg=G
+
+  autocmd FileType javascript :inoremap lg console.log();<left><left>
+
+  " When editing a file, always jump to the last known cursor position
+  au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
@@ -144,7 +147,7 @@ Plug 'bling/vim-airline'
   let g:airline_right_sep=''
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'sheerun/vim-polyglot'
-  " let g:jsx_ext_required = 0
+  let g:jsx_ext_required = 0
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rails'
   nnoremap rt  :AS<cr>
@@ -168,23 +171,25 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'scrooloose/syntastic'
   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
   let g:syntastic_javascript_checkers = ['eslint']
-" Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug 'junegunn/vim-easy-align'
-"   xmap ga <Plug>(EasyAlign)
-"   nmap ga <Plug>(EasyAlign)
-" Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'junegunn/vim-easy-align'
+  xmap ga <Plug>(EasyAlign)
+  nmap ga <Plug>(EasyAlign)
 Plug 'ternjs/tern_for_vim'
 Plug 'scrooloose/nerdtree'
   nnoremap mm :NERDTreeToggle<cr>
+Plug 'ap/vim-css-color'
+Plug 'djoshea/vim-autoread'
+Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
+" Plug 'ConradIrwin/vim-bracketed-paste'
 call plug#end()
 
 set t_Co=256
 color Spacegray
 
+" viming very hard here
 set mouse=a
 
 abbr bpr binding.pry
-abbr bananas console.log('bananas')
 abbr iser user
 abbr Teh the
 abbr teh the

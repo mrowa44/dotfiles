@@ -5,6 +5,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
   source "/usr/local/rvm/scripts/rvm"
 fi
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 autoload -U colors && colors
 export CLICOLOR=1
@@ -12,7 +13,8 @@ export CLICOLOR=1
 DIRSTACKSIZE=5
 setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
 setopt extendedglob
-unsetopt menu_complete   # do not autoselect the first completion entry
+# unsetopt menu_complete   # do not autoselect the first completion entry
+bindkey '^[[Z' reverse-menu-complete
 unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word always_to_end
@@ -138,3 +140,5 @@ alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
 alias glg="git log --graph --all --abbrev-commit --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(blue)~ %an %Cgreen(%cr) %Creset'"
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
