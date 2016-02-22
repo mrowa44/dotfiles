@@ -8,6 +8,6 @@
         "ecmascript": 6
     },
     "rules": {
-        "strict": 0
+        "strict": "never"
     }
 }

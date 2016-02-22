@@ -107,6 +107,7 @@ bindkey '^G' insert-last-word
 bindkey "^U" backward-kill-line
 bindkey "^A" beginning-of-line
 bindkey "^E" end-of-line
+bindkey "^Y" yank
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
@@ -139,6 +140,4 @@ alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
-alias glg="git log --graph --all --abbrev-commit --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %C(blue)~ %an %Cgreen(%cr) %Creset'"
-
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(black)%C(bold)~%an %Creset%C(black)%cr'"
