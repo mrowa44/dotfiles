@@ -13,11 +13,10 @@ export CLICOLOR=1
 DIRSTACKSIZE=5
 setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
 setopt extendedglob
-# unsetopt menu_complete   # do not autoselect the first completion entry
-bindkey '^[[Z' reverse-menu-complete
 unsetopt flowcontrol
 setopt auto_menu         # show completion menu on succesive tab press
 setopt complete_in_word always_to_end
+bindkey '^[[Z' reverse-menu-complete
 
 setopt append_history
 setopt extended_history
