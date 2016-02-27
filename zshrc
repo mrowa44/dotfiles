@@ -49,7 +49,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   if [[ -n $current_branch ]]; then
-    echo "(%{$fg_bold[green]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
+    echo "(%{$fg_bold[yellow]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
   fi
 }
 parse_git_dirty() {

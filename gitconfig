@@ -1,32 +1,39 @@
 [user]
- name = Justyna Rachowicz
- email = mrowa44@gmail.com
+  name  = Justyna Rachowicz
+  email = mrowa44@gmail.com
 [alias]
-  aa = add --all
-  ap = add --patch
-  br = branch
-  co = checkout
-  cm = commit -v
-  df = diff
-  st = status
-  lg = log --abbrev-commit --date=relative --graph --pretty=format:'%C(yellow)%h%Creset %s %Cblue~ %cn %Creset(%Cgreen%ar)%Cred%d%Creset'
-  lo = log --graph --decorate --oneline --color
-  last = log -1 HEAD
+  a   = add
+  aa  = add --all
+  br  = branch
+  cm  = commit -v
+  co  = checkout
+  df  = diff
+  dfc = diff --cached
+  m   = merge
+  pl  = pull
+  plr = pull --rebase
+  psh = push
+  rb  = rebase
+  rh  = reset HEAD
+  sh  = stash
+  st  = status
+  cp  = cherry-pick
+  lg  = log --graph --color=always --format='%C(auto)%h%d %s %C(black)%C(bold)~%an %Creset%C(black)%cr'
 [grep]
- lineNumber = true
+  lineNumber = true
 [push]
- default = current
+  default = current
 [color]
- ui = auto
- status = auto
- branch = auto
- diff = auto
+  ui     = auto
+  status = auto
+  branch = auto
+  diff   = auto
 [log]
- decorate = true
+  decorate = true
 [help]
- autocorrect = 1
+  autocorrect = 1
 [core]
- excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
 [pager]
-	diff = diff-so-fancy | less --tabs=1,5 -RFX
-	show = diff-so-fancy | less --tabs=1,5 -RFX
+  diff = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX

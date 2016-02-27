@@ -13,6 +13,7 @@ set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t
 set completeopt=menuone,preview
 set dictionary+=/usr/share/dict/words
+set noendofline
 
 """ UI
 set lazyredraw
@@ -55,39 +56,37 @@ inoremap jk <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
-cnoremap w!! w !sudo tee % >/dev/null                           " save with sudo
+cnoremap w!! w !sudo tee %
 
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 nnoremap j gj
 nnoremap k gk
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
 
-nnoremap Y y$                                   " Y acts consistent with C and D
-nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w         " split lines
+nnoremap Y y$
+nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
 nnoremap <CR> :wa<CR>:!!<CR>
 nnoremap <leader><leader> :w<cr>
+nnoremap Q <nop>
 
-nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>         " cd to the current file's path
+nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e :e!<cr>
-nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>  " tag in vsplit
+nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
 nnoremap <leader>g :Ack<Space>
 nnoremap <leader>h :nohlsearch<cr>
-nnoremap <leader>i :bprev<cr>
 nnoremap <leader>n :setlocal number!<cr>
-nnoremap <leader>o :bnext<cr>
 nnoremap <leader>p :set paste!<cr>
-nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>q :q<cr>
+nnoremap <leader>r :RainbowToggle<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>5}:nohl<cr>
 nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
-nnoremap <leader>W :%s/\s\+$//<cr>                           " Remove whitespace
-
-nnoremap ]b :bnext<cr>
-nnoremap [b :bprev<cr>
+nnoremap <leader>W :%s/\s\+$//<cr>
 
 inoremap <c-]> <c-x><c-]>
 inoremap <c-f> <c-x><c-f>
@@ -97,13 +96,13 @@ inoremap <c-j> <c-x><c-n>
 
 function! CleverTab()
    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<Tab>"
+      return "\<tab>"
    else
-      return "\<C-P>"
+      return "\<c-p>"
    endif
 endfunction
-inoremap <Tab> <C-R>=CleverTab()<CR>
-inoremap <S-Tab> <c-n>
+inoremap <tab> <c-r>=CleverTab()<cr>
+inoremap <s-tab> <c-n>
 
 """ Autocommands
 augroup vimrcEx
@@ -119,6 +118,9 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
 
   autocmd BufWritePre *.html :normal gg=G
+
+  " autocmd WinLeave * setlocal nocursorline
+  " autocmd WinEnter * setlocal cursorline
 
   " When editing a file, always jump to the last known cursor position
   au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -143,8 +145,8 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
 Plug 'rstacruz/vim-closer'
-Plug 'mileszs/ack.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
@@ -153,51 +155,48 @@ Plug 'junegunn/vim-after-object'
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
-
-Plug 'justinmk/vim-sneak'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-fugitive'
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'junegunn/vim-peekaboo'
-Plug 'sheerun/vim-polyglot'
-  let g:jsx_ext_required = 0
-Plug 'othree/javascript-libraries-syntax.vim'
-  let g:used_javascript_libs = 'underscore,react'
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-  let g:easytags_async = 1
-Plug 'majutsushi/tagbar'
-  nnoremap tt :TagbarToggle<cr><c-w>=
-Plug 'luochen1990/rainbow'
-  let g:rainbow_active = 0
-  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
 Plug 'bling/vim-airline'
   let g:airline_detect_modified=0
   let g:airline_left_sep =''
   let g:airline_right_sep=''
-Plug 'tpope/vim-rails'
-  nnoremap rt  :AS<cr>
-  nnoremap rtt :AV<cr>
-  nnoremap rrr :AV<cr>
-  nnoremap rs  :Sschema<cr>
-  nnoremap rss :Vschema<cr>
-  nnoremap rc  :Scontroller<space>
-  nnoremap rcc :Vcontroller<space>
-  nnoremap rm  :Smodel<space>
-  nnoremap rmm :Vmodel<space>
-  nnoremap rg  :Smigration<space>
-  nnoremap rgg :Vmigration<space>
-  nnoremap rl  :Slib<space>
-  nnoremap rll :Vlib<space>
-Plug 'scrooloose/syntastic'
-  let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-  let g:syntastic_javascript_checkers = ['eslint']
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
-  nnoremap mm :NERDTreeToggle<cr><c-w>=
-Plug 'djoshea/vim-autoread'
-Plug 'ternjs/tern_for_vim'
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
+  let g:rainbow_active = 0
+  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
+Plug 'mileszs/ack.vim'
+
+" Plug 'christoomey/vim-tmux-navigator'
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+"   let g:easytags_async = 1
+" Plug 'majutsushi/tagbar'
+"   nnoremap tt :TagbarToggle<cr><c-w>=
+" Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
+" Plug 'tpope/vim-rails'
+"   nnoremap rt  :AS<cr>
+"   nnoremap rtt :AV<cr>
+"   nnoremap rrr :AV<cr>
+"   nnoremap rs  :Sschema<cr>
+"   nnoremap rss :Vschema<cr>
+"   nnoremap rc  :Scontroller<space>
+"   nnoremap rcc :Vcontroller<space>
+"   nnoremap rm  :Smodel<space>
+"   nnoremap rmm :Vmodel<space>
+"   nnoremap rg  :Smigration<space>
+"   nnoremap rgg :Vmigration<space>
+"   nnoremap rl  :Slib<space>
+"   nnoremap rll :Vlib<space>
+" Plug 'scrooloose/syntastic'
+"   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+"   let g:syntastic_javascript_checkers = ['eslint']
+" Plug 'ternjs/tern_for_vim'
+Plug 'sheerun/vim-polyglot'
+" Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'justinmk/vim-sneak'
+  " let g:jsx_ext_required = 0
+" Plug 'othree/javascript-libraries-syntax.vim'
+"   let g:used_javascript_libs = 'underscore,react'
 call plug#end()
 
 set t_Co=256
