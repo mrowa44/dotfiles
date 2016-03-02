@@ -70,6 +70,8 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
+"        ]c next git chunk
+"        [c prev git chunk
 
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
@@ -108,6 +110,12 @@ endfunction
 inoremap <tab> <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
 
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
 """ Autocommands
 augroup vimrcEx
   autocmd!
@@ -126,6 +134,8 @@ augroup vimrcEx
   autocmd WinLeave * setlocal nocursorline
   autocmd WinEnter * setlocal cursorline
   autocmd VimEnter * setlocal cursorline
+
+  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
 
   " When editing a file, always jump to the last known cursor position
   au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -163,7 +173,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'junegunn/vim-peekaboo'
-Plug 'bling/vim-airline'
+Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
   let g:airline_detect_modified=0
   let g:airline_left_sep =''
   let g:airline_right_sep=''
@@ -207,10 +217,14 @@ Plug 'majutsushi/tagbar'
   " let g:jsx_ext_required = 0
 " Plug 'othree/javascript-libraries-syntax.vim'
 "   let g:used_javascript_libs = 'underscore,react'
+Plug 'edkolev/tmuxline.vim'
+Plug 'jnurmine/Zenburn'
 call plug#end()
 
 set t_Co=256
-color Spacegray
+set background=dark
+color zenburn
+nnoremap <leader>b :let &background = ( &background == "dark"? "light" : "dark" )<cr>
 
 " viming very hard here
 set mouse=a

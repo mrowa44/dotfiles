@@ -28,7 +28,7 @@ setopt inc_append_history
 setopt share_history
 
 setopt promptsubst
-PS1='${SSH_CONNECTION+"%{$fg_bold[green]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
+PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
