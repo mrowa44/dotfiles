@@ -58,20 +58,24 @@ cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap w!! w !sudo tee %
 
+nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+nnoremap <left>  <c-w>H
+nnoremap <down>  <c-w>J
+nnoremap <up>    <c-w>K
+nnoremap <right> <c-w>L
 nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
 
 nnoremap Y y$
-nnoremap K i<cr><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
-nnoremap <CR> :wa<CR>:!!<CR>
+nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :w<cr>
-nnoremap Q <nop>
+nnoremap Q @q
+nnoremap <cr> :wa<cr>:!!<cr>
 
 nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e :e!<cr>
@@ -119,8 +123,9 @@ augroup vimrcEx
 
   autocmd BufWritePre *.html :normal gg=G
 
-  " autocmd WinLeave * setlocal nocursorline
-  " autocmd WinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
+  autocmd WinEnter * setlocal cursorline
+  autocmd VimEnter * setlocal cursorline
 
   " When editing a file, always jump to the last known cursor position
   au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -166,32 +171,37 @@ Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
   let g:rainbow_active = 0
   if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
 Plug 'mileszs/ack.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+  augroup filetypeRuby
+    autocmd!
+    autocmd FileType ruby nnoremap rt  :AS<cr>
+    autocmd FileType ruby nnoremap rtt :AV<cr>
+    autocmd FileType ruby nnoremap rrr :AV<cr>
+    autocmd FileType ruby nnoremap rs  :Sschema<cr>
+    autocmd FileType ruby nnoremap rss :Vschema<cr>
+    autocmd FileType ruby nnoremap rc  :Scontroller<space>
+    autocmd FileType ruby nnoremap rcc :Vcontroller<space>
+    autocmd FileType ruby nnoremap rm  :Smodel<space>
+    autocmd FileType ruby nnoremap rmm :Vmodel<space>
+    autocmd FileType ruby nnoremap rg  :Smigration<space>
+    autocmd FileType ruby nnoremap rgg :Vmigration<space>
+    autocmd FileType ruby nnoremap rl  :Slib<space>
+    autocmd FileType ruby nnoremap rll :Vlib<space>
+  augroup END
 
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+  let g:easytags_async = 1
+Plug 'majutsushi/tagbar'
+  nnoremap tt :TagbarToggle<cr><c-w>=
+
+" Plug 'wincent/ferret'
 " Plug 'christoomey/vim-tmux-navigator'
-" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-"   let g:easytags_async = 1
-" Plug 'majutsushi/tagbar'
-"   nnoremap tt :TagbarToggle<cr><c-w>=
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug 'tpope/vim-rails'
-"   nnoremap rt  :AS<cr>
-"   nnoremap rtt :AV<cr>
-"   nnoremap rrr :AV<cr>
-"   nnoremap rs  :Sschema<cr>
-"   nnoremap rss :Vschema<cr>
-"   nnoremap rc  :Scontroller<space>
-"   nnoremap rcc :Vcontroller<space>
-"   nnoremap rm  :Smodel<space>
-"   nnoremap rmm :Vmodel<space>
-"   nnoremap rg  :Smigration<space>
-"   nnoremap rgg :Vmigration<space>
-"   nnoremap rl  :Slib<space>
-"   nnoremap rll :Vlib<space>
 " Plug 'scrooloose/syntastic'
 "   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 "   let g:syntastic_javascript_checkers = ['eslint']
 " Plug 'ternjs/tern_for_vim'
-Plug 'sheerun/vim-polyglot'
 " Plug 'AndrewRadev/splitjoin.vim'
 " Plug 'justinmk/vim-sneak'
   " let g:jsx_ext_required = 0
