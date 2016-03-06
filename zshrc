@@ -2,6 +2,12 @@ export EDITOR=vim
 export VISUAL=vim
 export PATH="$PATH:$HOME/.rvm/bin"
 
+if [[ -n "$TMUX" ]]; then
+  export TERM="screen-256color"
+else
+  export TERM="xterm-256color"
+fi
+
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
   source "/usr/local/rvm/scripts/rvm"
 fi

@@ -24,10 +24,12 @@ set number
 set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j1
-set laststatus=2
 set showcmd showbreak=↪
 set textwidth=80 colorcolumn=+1
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
+set laststatus=2
+set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c
 
 """ Search
 set hlsearch incsearch
@@ -79,20 +81,20 @@ nnoremap <leader><leader> :w<cr>
 nnoremap Q @q
 nnoremap <cr> :wa<cr>:!!<cr>
 
-nnoremap <leader>c :cd %:p:h<cr>:pwd<cr>
-nnoremap <leader>e :e!<cr>
-nnoremap <leader>f :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
-nnoremap <leader>g :Ack<Space>
-nnoremap <leader>h :nohlsearch<cr>
-nnoremap <leader>n :setlocal number!<cr>
-nnoremap <leader>p :set paste!<cr>
-nnoremap <leader>q :q<cr>
-nnoremap <leader>r :RainbowToggle<cr>
-nnoremap <leader>w :w<cr>
+nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
+nnoremap <leader>e  :e!<cr>
+nnoremap <leader>f  :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
+nnoremap <leader>g  :Ack<Space>
+nnoremap <leader>h  :nohlsearch<cr>
+nnoremap <leader>n  :setlocal number!<cr>
+nnoremap <leader>p  :set paste!<cr>
+nnoremap <leader>q  :q<cr>
+nnoremap <leader>r  :RainbowToggle<cr>
+nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>5}:nohl<cr>
-nnoremap <leader>T :!ctags -R --exclude=.git --exclude=log .<cr>
-nnoremap <leader>W :%s/\s\+$//<cr>
+nnoremap <leader>T  :!ctags -R --exclude=.git --exclude=log .<cr>
+nnoremap <leader>W  :%s/\s\+$//<cr>
 
 inoremap <c-]> <c-x><c-]>
 inoremap <c-f> <c-x><c-f>
@@ -110,32 +112,29 @@ endfunction
 inoremap <tab> <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
 
-function! ExecuteMacroOverVisualRange()
-  echo "@".getcmdline()
-  execute ":'<,'>normal @".nr2char(getchar())
-endfunction
-xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
-
 """ Autocommands
 augroup vimrcEx
   autocmd!
 
   autocmd VimResized * exe "normal! \<c-w>="
 
-  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
-  autocmd FileType javascript inoremap lg console.log();<left><left>
-
-  autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
-  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
-  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
-
-  autocmd BufWritePre *.html :normal gg=G
+  " autocmd VimLeave * mksession!
+  " autocmd VimEnter * silent! source Session.vim
 
   autocmd WinLeave * setlocal nocursorline
   autocmd WinEnter * setlocal cursorline
   autocmd VimEnter * setlocal cursorline
 
-  autocmd bufwritepost $MYVIMRC nested source $MYVIMRC
+  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
+  autocmd FileType javascript inoremap lg console.log();<left><left>
+
+  autocmd BufWritePre *.html :normal gg=G
+
+  autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
+  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
+  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+
+  autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
   " When editing a file, always jump to the last known cursor position
   au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -149,8 +148,6 @@ if executable('ag')
 else
   let &grepprg = 'grep -rn $* *'
 endif
-" command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
-" autocmd! FileType qf nnoremap <buffer> <leader>o <c-w><cr><c-w>L
 
 """ Plugins
 runtime macros/matchit.vim
@@ -173,10 +170,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'junegunn/vim-peekaboo'
-Plug 'bling/vim-airline' | Plug 'vim-airline/vim-airline-themes'
-  let g:airline_detect_modified=0
-  let g:airline_left_sep =''
-  let g:airline_right_sep=''
 Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
   let g:rainbow_active = 0
   if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
@@ -217,14 +210,10 @@ Plug 'majutsushi/tagbar'
   " let g:jsx_ext_required = 0
 " Plug 'othree/javascript-libraries-syntax.vim'
 "   let g:used_javascript_libs = 'underscore,react'
-Plug 'edkolev/tmuxline.vim'
-Plug 'jnurmine/Zenburn'
 call plug#end()
 
 set t_Co=256
-set background=dark
-color zenburn
-nnoremap <leader>b :let &background = ( &background == "dark"? "light" : "dark" )<cr>
+color Spacegray
 
 " viming very hard here
 set mouse=a
