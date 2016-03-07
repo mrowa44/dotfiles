@@ -34,7 +34,7 @@ setopt inc_append_history
 setopt share_history
 
 setopt promptsubst
-PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg_bold[blue]%}%~%{$reset_color%}$(git_prompt_info) '
+PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
@@ -55,7 +55,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
   if [[ -n $current_branch ]]; then
-    echo "(%{$fg_bold[yellow]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
+    echo "(%{$fg[yellow]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
   fi
 }
 parse_git_dirty() {
@@ -145,4 +145,4 @@ alias grh='git reset HEAD'
 alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
-alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(black)%C(bold)~%an %Creset%C(black)%cr'"
+alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"

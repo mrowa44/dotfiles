@@ -29,7 +29,7 @@ set textwidth=80 colorcolumn=+1
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c\ 
 
 """ Search
 set hlsearch incsearch
@@ -79,8 +79,9 @@ nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :w<cr>
 nnoremap Q @q
-nnoremap <cr> :wa<cr>:!!<cr>
+" nnoremap <cr> :wa<cr>:!!<cr>
 
+nnoremap <leader>b  :let &background = (&background == "dark" ? "light" : "dark")<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :e!<cr>
 nnoremap <leader>f  :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
@@ -121,9 +122,9 @@ augroup vimrcEx
   " autocmd VimLeave * mksession!
   " autocmd VimEnter * silent! source Session.vim
 
-  autocmd WinLeave * setlocal nocursorline
-  autocmd WinEnter * setlocal cursorline
-  autocmd VimEnter * setlocal cursorline
+  " autocmd WinLeave * setlocal nocursorline
+  " autocmd WinEnter * setlocal cursorline
+  " autocmd VimEnter * setlocal cursorline
 
   autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
   autocmd FileType javascript inoremap lg console.log();<left><left>
@@ -152,7 +153,7 @@ endif
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'ajh17/Spacegray.vim'
+Plug 'chriskempson/base16-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -162,13 +163,12 @@ Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
-Plug 'junegunn/vim-after-object'
-  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/vim-peekaboo'
 Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
   let g:rainbow_active = 0
@@ -197,23 +197,21 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
   let g:easytags_async = 1
 Plug 'majutsushi/tagbar'
   nnoremap tt :TagbarToggle<cr><c-w>=
+Plug 'junegunn/vim-after-object'
+  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
+Plug 'AndrewRadev/switch.vim'
+  nnoremap <cr> :Switch<cr>
 
 " Plug 'wincent/ferret'
-" Plug 'christoomey/vim-tmux-navigator'
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
 " Plug 'scrooloose/syntastic'
 "   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
 "   let g:syntastic_javascript_checkers = ['eslint']
 " Plug 'ternjs/tern_for_vim'
 " Plug 'AndrewRadev/splitjoin.vim'
-" Plug 'justinmk/vim-sneak'
-  " let g:jsx_ext_required = 0
-" Plug 'othree/javascript-libraries-syntax.vim'
-"   let g:used_javascript_libs = 'underscore,react'
 call plug#end()
 
-set t_Co=256
-color Spacegray
+color base16-ocean
 
 " viming very hard here
 set mouse=a
