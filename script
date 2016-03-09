@@ -18,6 +18,6 @@ ln -sf ${DIR}/gemrc ~/.gemrc
 ln -sf ${DIR}/eslintrc ~/.eslintrc
 ln -sf ${DIR}/my.cnf ~/.my.cnf
 
-# brew install git diff-so-fancy ag ctags httpie pandoc
+# brew install git diff-so-fancy ag ctags httpie pandoc tig node
 # brew install vim --override-system-vi
-# gem install rvm
+# gem install rvm tmuxinator

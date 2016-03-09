@@ -70,6 +70,8 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap j gj
 nnoremap k gk
+nnoremap n nzz
+nnoremap N Nzz
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
 "        ]c next git chunk
