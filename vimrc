@@ -59,6 +59,7 @@ inoremap jk <esc>
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap w!! w !sudo tee %
+cnoremap <expr> %% expand('%:h').'/'
 
 nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
