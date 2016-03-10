@@ -96,7 +96,7 @@ nnoremap <leader>q  :q<cr>
 nnoremap <leader>r  :RainbowToggle<cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs $MYVIMRC<cr>/Mappings<cr>5}:nohl<cr>
+nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>T  :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 

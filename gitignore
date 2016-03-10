@@ -4,6 +4,11 @@
 tags
 log/*.log
 tmp/**/*
+node_modules
+node_modules_prod
+npm-debug.log
+data/schema.graphql
+data/schema.json
 Session.vim
 dump.rdb
 notes.*
