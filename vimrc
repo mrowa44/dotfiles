@@ -202,8 +202,6 @@ Plug 'majutsushi/tagbar'
   nnoremap tt :TagbarToggle<cr><c-w>=
 Plug 'junegunn/vim-after-object'
   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-Plug 'AndrewRadev/switch.vim'
-  nnoremap <cr> :Switch<cr>
 
 " Plug 'wincent/ferret'
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
