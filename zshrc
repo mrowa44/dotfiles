@@ -2,12 +2,6 @@ export EDITOR=vim
 export VISUAL=vim
 export PATH="$PATH:$HOME/.rvm/bin"
 
-if [[ -n "$TMUX" ]]; then
-  export TERM="screen-256color"
-else
-  export TERM="xterm-256color"
-fi
-
 if [[ -a /usr/local/rvm/scripts/rvm ]]; then
   source "/usr/local/rvm/scripts/rvm"
 fi
@@ -79,8 +73,7 @@ mcd() {
   mkdir -p "$1" && cd "$1";
 }
 
-# extract - archive extractor
-# usage: extract <file>
+# Extract archives
 extract ()
 {
   if [ -f $1 ] ; then
@@ -127,6 +120,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
 alias -g r='rails'
+alias reloadlocaldb='DB_HOST=127.0.0.1 DB_USER=root ./reload_staging_db.sh'
 
 alias ga='git add'
 alias gaa='git add --all'

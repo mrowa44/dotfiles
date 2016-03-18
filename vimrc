@@ -25,7 +25,8 @@ set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j1
 set showcmd showbreak=↪
-set textwidth=80 colorcolumn=+1
+set textwidth=80
+execute "set colorcolumn=" . join(range(81,335), ',')
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
@@ -69,10 +70,10 @@ nnoremap <left>  <c-w>H
 nnoremap <down>  <c-w>J
 nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
+noremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
+noremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
 nnoremap j gj
 nnoremap k gk
-nnoremap n nzz
-nnoremap N Nzz
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
 "        ]c next git chunk
@@ -80,11 +81,14 @@ nnoremap [b :bprev<cr>
 
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
-nnoremap <leader><leader> :w<cr>
 nnoremap Q @q
 " nnoremap <cr> :wa<cr>:!!<cr>
+" select whatever's just been pasted, or read into the buffer
+nnoremap <bs> `[V`]
 
-nnoremap <leader>b  :let &background = (&background == "dark" ? "light" : "dark")<cr>
+nnoremap <leader><leader> :w<cr>
+nnoremap <leader>a  :!atom %<cr>
+nnoremap <leader>b  :let &background = (&background=="dark"?"light":"dark")<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :e!<cr>
 nnoremap <leader>f  :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
@@ -94,9 +98,12 @@ nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  :set paste!<cr>
 nnoremap <leader>q  :q<cr>
 nnoremap <leader>r  :RainbowToggle<cr>
+nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
+nnoremap <leader>ms :mksession!<cr>
+nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>T  :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 
@@ -120,19 +127,21 @@ inoremap <s-tab> <c-n>
 augroup vimrcEx
   autocmd!
 
-  autocmd VimResized * exe "normal! \<c-w>="
-
-  " autocmd VimLeave * mksession!
-  " autocmd VimEnter * silent! source Session.vim
-
   " autocmd WinLeave * setlocal nocursorline
   " autocmd WinEnter * setlocal cursorline
   " autocmd VimEnter * setlocal cursorline
 
-  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
-  autocmd FileType javascript inoremap lg console.log();<left><left>
+  autocmd BufEnter * setlocal number relativenumber
+  autocmd WinEnter * setlocal number relativenumber
+  autocmd BufLeave * setlocal nonumber norelativenumber
+  autocmd WinLeave * setlocal nonumber norelativenumber
+  autocmd BufEnter * execute "set colorcolumn=" . join(range(81,335), ',')
+  autocmd WinEnter * execute "set colorcolumn=" . join(range(81,335), ',')
+  autocmd BufLeave * setlocal colorcolumn=
+  autocmd WinLeave * setlocal colorcolumn=
 
-  autocmd BufWritePre *.html :normal gg=G
+  autocmd BufWritePre *.html normal gg=G
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
   autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
   autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
@@ -141,7 +150,18 @@ augroup vimrcEx
   autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
 
   " When editing a file, always jump to the last known cursor position
-  au BufReadPost * if &ft != 'gitcommit' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  autocmd BufReadPost *
+    \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
+  autocmd FileType javascript inoremap lg console.log();<left><left>
+  autocmd FileType ruby inoremap bp binding.pry
+
+  autocmd FileChangedShell * echo "Warning: File changed outside of vim"
+  autocmd InsertLeave * write
+  autocmd VimResized * execute "normal! \<c-w>="
 augroup END
 
 if executable('ag')
@@ -156,28 +176,24 @@ endif
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'chriskempson/base16-vim'
+Plug 'ajh17/Spacegray.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
+Plug 'sheerun/vim-polyglot'
+Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
 Plug 'junegunn/vim-easy-align'
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/vim-peekaboo'
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
-  let g:rainbow_active = 0
-  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
-Plug 'mileszs/ack.vim'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
   augroup filetypeRuby
     autocmd!
@@ -196,28 +212,27 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
     autocmd FileType ruby nnoremap rll :Vlib<space>
   augroup END
 
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-  let g:easytags_async = 1
-Plug 'majutsushi/tagbar'
-  nnoremap tt :TagbarToggle<cr><c-w>=
+Plug 'junegunn/vim-peekaboo'
+Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
+  let g:rainbow_active = 0
+  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
 Plug 'junegunn/vim-after-object'
   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-
-" Plug 'wincent/ferret'
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+"   let g:easytags_async = 1
+" Plug 'majutsushi/tagbar'
+"   nnoremap tt :TagbarToggle<cr><c-w>=
+" Plug 'mileszs/ack.vim'
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug 'scrooloose/syntastic'
-"   let g:syntastic_ruby_checkers = ['rubocop', 'mri']
-"   let g:syntastic_javascript_checkers = ['eslint']
 " Plug 'ternjs/tern_for_vim'
-" Plug 'AndrewRadev/splitjoin.vim'
 call plug#end()
 
-color base16-ocean
+set background=dark
+color spacegray
 
 " viming very hard here
 set mouse=a
 
-abbr bpr binding.pry
 abbr iser user
 abbr Teh the
 abbr teh the
