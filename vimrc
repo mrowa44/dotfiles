@@ -26,11 +26,12 @@ set splitbelow splitright
 set formatoptions+=j1
 set showcmd showbreak=↪
 set textwidth=80
-execute "set colorcolumn=" . join(range(81,335), ',')
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c\ 
+execute "set colorcolumn=" . join(range(&textwidth,335), ',')
+execute "set scroll=" .&lines / 3
 
 """ Search
 set hlsearch incsearch
@@ -48,17 +49,19 @@ set noswapfile
 set backup backupdir=~/.vim/backup
 set undofile undodir=~/.vim/undo
 if !isdirectory(expand(&backupdir)) | call mkdir(expand(&backupdir), "p") | endif
-if !isdirectory(expand(&undodir)) | call mkdir(expand(&undodir), "p") | endif
+if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), "p")   | endif
 
 """ Mappings
-nmap § <esc>
-vnoremap § <esc>
-cnoremap § <esc>
-inoremap § <esc>
+nmap     §  <esc>
+vnoremap §  <esc>
+cnoremap §  <esc>
+inoremap §  <esc>
 inoremap jk <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
+cnoremap <c-b> <s-left>
+cnoremap <c-w> <s-right>
 cnoremap w!! w !sudo tee %
 cnoremap <expr> %% expand('%:h').'/'
 
@@ -70,25 +73,34 @@ nnoremap <left>  <c-w>H
 nnoremap <down>  <c-w>J
 nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
-noremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
-noremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
+nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
+nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
+nnoremap <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
+nnoremap <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
+nnoremap <silent> <c-b> :move+<cr>
+nnoremap <silent> <c-n> :move-2<cr>
+xnoremap <silent> <c-b> :move'>+<cr>gv
+xnoremap <silent> <c-n> :move-2<cr>gv
 nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
-"        ]c next git chunk
-"        [c prev git chunk
+"        ]c next git change
+"        [c prev git change
+"        ]s next wrong spelled word
+"        [s prev wrong spelled word
 
+nnoremap Q @q
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
-nnoremap Q @q
-" nnoremap <cr> :wa<cr>:!!<cr>
-" select whatever's just been pasted, or read into the buffer
 nnoremap <bs> `[V`]
-
+nnoremap <cr> :wa<cr>
 nnoremap <leader><leader> :w<cr>
-nnoremap <leader>a  :!atom %<cr>
-nnoremap <leader>b  :let &background = (&background=="dark"?"light":"dark")<cr>
+" :TOhtml wowowowo
+" :%!markdown  md to html
+
+nnoremap <leader>a  :silent !atom %<cr>
+nnoremap <leader>b  :call ToggleColors()<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :e!<cr>
 nnoremap <leader>f  :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
@@ -97,7 +109,6 @@ nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  :set paste!<cr>
 nnoremap <leader>q  :q<cr>
-nnoremap <leader>r  :RainbowToggle<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -106,12 +117,16 @@ nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>T  :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
+nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
+nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 
-inoremap <c-]> <c-x><c-]>
-inoremap <c-f> <c-x><c-f>
-inoremap <c-l> <c-x><c-l>
-inoremap <c-k> <c-x><c-p>
-inoremap <c-j> <c-x><c-n>
+inoremap <c-]>   <c-x><c-]>
+inoremap <c-f>   <c-x><c-f>
+inoremap <c-l>   <c-x><c-l>
+inoremap <c-k>   <c-x><c-p>
+inoremap <c-j>   <c-x><c-n>
+inoremap <tab>   <c-r>=CleverTab()<cr>
+inoremap <s-tab> <c-n>
 
 function! CleverTab()
    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -120,28 +135,27 @@ function! CleverTab()
       return "\<c-p>"
    endif
 endfunction
-inoremap <tab> <c-r>=CleverTab()<cr>
-inoremap <s-tab> <c-n>
+
+function! ToggleColors()
+  if (g:colors_name == "spacegray")
+    set background=light
+    color solarized
+  else
+    set background=dark
+    color spacegray
+  endif
+endfunction
 
 """ Autocommands
 augroup vimrcEx
   autocmd!
 
-  " autocmd WinLeave * setlocal nocursorline
-  " autocmd WinEnter * setlocal cursorline
-  " autocmd VimEnter * setlocal cursorline
-
   autocmd BufEnter * setlocal number relativenumber
-  autocmd WinEnter * setlocal number relativenumber
   autocmd BufLeave * setlocal nonumber norelativenumber
-  autocmd WinLeave * setlocal nonumber norelativenumber
-  autocmd BufEnter * execute "set colorcolumn=" . join(range(81,335), ',')
-  autocmd WinEnter * execute "set colorcolumn=" . join(range(81,335), ',')
+  autocmd BufEnter * execute "set colorcolumn=" . join(range(&textwidth,335), ',')
   autocmd BufLeave * setlocal colorcolumn=
-  autocmd WinLeave * setlocal colorcolumn=
 
   autocmd BufWritePre *.html normal gg=G
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
   autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
   autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
@@ -155,20 +169,21 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
 
-  autocmd FileType gitcommit setlocal textwidth=72 spell colorcolumn=50
+  autocmd FileType gitcommit  setlocal textwidth=72 spell colorcolumn=50
   autocmd FileType javascript inoremap lg console.log();<left><left>
-  autocmd FileType ruby inoremap bp binding.pry
+  autocmd FileType ruby       inoremap bp binding.pry
 
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
-  autocmd InsertLeave * write
-  autocmd VimResized * execute "normal! \<c-w>="
+  autocmd InsertLeave      * write
+  autocmd InsertLeave      * silent! set nopaste
+  autocmd VimResized       * execute "normal! \<c-w>="
+  autocmd VimResized       * execute "set scroll=" . &lines / 3
 augroup END
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
   let g:ctrlp_use_caching = 0
-  let g:ackprg = 'ag --smart-case --nogroup --nocolor --column'
-  set grepprg=ag\ --hidden\ --vimgrep grepformat^=%f:%l:%c:%m
+  let &grepprg = 'ag --nogroup --nocolor --column'
 else
   let &grepprg = 'grep -rn $* *'
 endif
@@ -177,6 +192,7 @@ endif
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'ajh17/Spacegray.vim'
+Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -188,47 +204,47 @@ Plug 'sheerun/vim-polyglot'
 Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
   nnoremap \ :CtrlP<cr>
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/rainbow_parentheses.vim'
+augroup RainbowParentheses
+  autocmd!
+  autocmd BufEnter * RainbowParentheses
+augroup END
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
+  nmap gaa <Plug>(EasyAlign)ip
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
-  augroup filetypeRuby
-    autocmd!
-    autocmd FileType ruby nnoremap rt  :AS<cr>
-    autocmd FileType ruby nnoremap rtt :AV<cr>
-    autocmd FileType ruby nnoremap rrr :AV<cr>
-    autocmd FileType ruby nnoremap rs  :Sschema<cr>
-    autocmd FileType ruby nnoremap rss :Vschema<cr>
-    autocmd FileType ruby nnoremap rc  :Scontroller<space>
-    autocmd FileType ruby nnoremap rcc :Vcontroller<space>
-    autocmd FileType ruby nnoremap rm  :Smodel<space>
-    autocmd FileType ruby nnoremap rmm :Vmodel<space>
-    autocmd FileType ruby nnoremap rg  :Smigration<space>
-    autocmd FileType ruby nnoremap rgg :Vmigration<space>
-    autocmd FileType ruby nnoremap rl  :Slib<space>
-    autocmd FileType ruby nnoremap rll :Vlib<space>
-  augroup END
-
-Plug 'junegunn/vim-peekaboo'
-Plug 'luochen1990/rainbow', { 'on': 'RainbowToggleOn' }
-  let g:rainbow_active = 0
-  if exists(':RainbowToggleOn') | exe "silent! RainbowToggleOn" | endif
-Plug 'junegunn/vim-after-object'
-  autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-"   let g:easytags_async = 1
-" Plug 'majutsushi/tagbar'
-"   nnoremap tt :TagbarToggle<cr><c-w>=
-" Plug 'mileszs/ack.vim'
+Plug 'majutsushi/tagbar'
+Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+  let g:easytags_async = 1
+  nnoremap tt :TagbarToggle<cr><c-w>=
+" Plug 'junegunn/vim-after-object'
+"   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
-" Plug 'ternjs/tern_for_vim'
+" augroup filetypeRuby
+"   autocmd!
+"   autocmd FileType ruby nnoremap rt  :AS<cr>
+"   autocmd FileType ruby nnoremap rtt :AV<cr>
+"   autocmd FileType ruby nnoremap rrr :AV<cr>
+"   autocmd FileType ruby nnoremap rs  :Sschema<cr>
+"   autocmd FileType ruby nnoremap rss :Vschema<cr>
+"   autocmd FileType ruby nnoremap rc  :Scontroller<space>
+"   autocmd FileType ruby nnoremap rcc :Vcontroller<space>
+"   autocmd FileType ruby nnoremap rm  :Smodel<space>
+"   autocmd FileType ruby nnoremap rmm :Vmodel<space>
+"   autocmd FileType ruby nnoremap rg  :Smigration<space>
+"   autocmd FileType ruby nnoremap rgg :Vmigration<space>
+"   autocmd FileType ruby nnoremap rl  :Slib<space>
+"   autocmd FileType ruby nnoremap rll :Vlib<space>
+" augroup END
 call plug#end()
 
-set background=dark
-color spacegray
+set background=light
+color solarized
 
 " viming very hard here
 set mouse=a

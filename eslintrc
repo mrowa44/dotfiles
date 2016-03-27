@@ -7,7 +7,4 @@
     "settings": {
         "ecmascript": 6
     },
-    "rules": {
-        "strict": "never"
-    }
 }
