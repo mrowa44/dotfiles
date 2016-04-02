@@ -29,6 +29,7 @@ set textwidth=80
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
+set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c\ 
 execute "set colorcolumn=" . join(range(&textwidth,335), ',')
 execute "set scroll=" .&lines / 3
@@ -96,6 +97,7 @@ nnoremap K i<cr><esc>k$
 nnoremap <bs> `[V`]
 nnoremap <cr> :wa<cr>
 nnoremap <leader><leader> :w<cr>
+nnoremap <leader> <Nop>
 " :TOhtml wowowowo
 " :%!markdown  md to html
 
@@ -241,6 +243,9 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 "   autocmd FileType ruby nnoremap rl  :Slib<space>
 "   autocmd FileType ruby nnoremap rll :Vlib<space>
 " augroup END
+Plug 'scrooloose/syntastic'
+Plug 'mtscout6/syntastic-local-eslint.vim'
+Plug 'sjl/badwolf'
 call plug#end()
 
 set background=light
