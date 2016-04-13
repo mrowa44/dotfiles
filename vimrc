@@ -14,13 +14,13 @@ set complete=.,w,b,t
 set completeopt=menuone,preview
 set dictionary+=/usr/share/dict/words
 set noendofline
+set suffixesadd+=.js path+=$PWD/node_modules
 
 """ UI
 set lazyredraw
 set linebreak
 set nofoldenable
 set nojoinspaces
-set number
 set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j1
@@ -28,11 +28,9 @@ set showcmd showbreak=↪
 set textwidth=80
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
 set laststatus=2
-set statusline=\ %f\ %y%m%r%h%q\ %{fugitive#head()}%=
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}]\ [%P]\ %l\ :\ %c\ 
-execute "set colorcolumn=" . join(range(&textwidth,335), ',')
-execute "set scroll=" .&lines / 3
+set statusline=\ %f\ %y%m%r%h%q[%{fugitive#head()}]%=
+set statusline+=[%{strlen(&fenc)?&fenc:'none'}][%P]\ %l\ :\ %c\ 
+let &colorcolumn=&textwidth
 
 """ Search
 set hlsearch incsearch
@@ -92,6 +90,10 @@ nnoremap [b :bprev<cr>
 "        [s prev wrong spelled word
 
 nnoremap Q @q
+" xnoremap Q :norm @q<cr>
+" xnoremap @ :normal @
+xnoremap . :norm.<cr>
+nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <bs> `[V`]
@@ -100,6 +102,8 @@ nnoremap <leader><leader> :w<cr>
 nnoremap <leader> <Nop>
 " :TOhtml wowowowo
 " :%!markdown  md to html
+" gx opens link that cursor is on in default browser
+" o in visual mode changes which 'end' of selection you're editing
 
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>b  :call ToggleColors()<cr>
@@ -111,13 +115,13 @@ nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  :set paste!<cr>
 nnoremap <leader>q  :q<cr>
+nnoremap <leader>s  :SyntasticCheck<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>ss :source Session.vim<cr>
-nnoremap <leader>T  :!ctags -R --exclude=.git --exclude=log .<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
@@ -152,26 +156,23 @@ endfunction
 augroup vimrcEx
   autocmd!
 
-  autocmd BufEnter * setlocal number relativenumber
-  autocmd BufLeave * setlocal nonumber norelativenumber
-  autocmd BufEnter * execute "set colorcolumn=" . join(range(&textwidth,335), ',')
-  autocmd BufLeave * setlocal colorcolumn=
-
-  autocmd BufWritePre *.html normal gg=G
-
-  autocmd BufRead,BufNewFile *.md setlocal ft=markdown textwidth=80 spell
-  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
-  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
-
-  autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
-
   " When editing a file, always jump to the last known cursor position
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
     \   exe "normal! g`\"" |
     \ endif
 
-  autocmd FileType gitcommit  setlocal textwidth=72 spell colorcolumn=50
+  autocmd BufEnter * let &colorcolumn=&textwidth
+  autocmd BufLeave * setlocal colorcolumn=
+
+  autocmd BufRead,BufNewFile *.md setlocal ft=markdown spell
+  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
+  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+
+  autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
+  autocmd BufWritePre *.html normal gg=G
+
+  autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType ruby       inoremap bp binding.pry
 
@@ -179,16 +180,7 @@ augroup vimrcEx
   autocmd InsertLeave      * write
   autocmd InsertLeave      * silent! set nopaste
   autocmd VimResized       * execute "normal! \<c-w>="
-  autocmd VimResized       * execute "set scroll=" . &lines / 3
 augroup END
-
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-  let g:ctrlp_use_caching = 0
-  let &grepprg = 'ag --nogroup --nocolor --column'
-else
-  let &grepprg = 'grep -rn $* *'
-endif
 
 """ Plugins
 runtime macros/matchit.vim
@@ -202,28 +194,45 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
-Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
-  nnoremap \ :CtrlP<cr>
-Plug 'junegunn/rainbow_parentheses.vim'
-augroup RainbowParentheses
-  autocmd!
-  autocmd BufEnter * RainbowParentheses
-augroup END
+ nnoremap \ :CtrlP<cr>
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'vim-scripts/SearchComplete'
+Plug 'sheerun/vim-polyglot'
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
+Plug 'wincent/ferret', { 'branch': 'autojump' }
+  let g:FerretAutojump = 1
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'majutsushi/tagbar'
-Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-  let g:easytags_async = 1
-  nnoremap tt :TagbarToggle<cr><c-w>=
+call plug#end()
+
+set background=light
+color solarized
+
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+" viming very hard here
+set mouse=a
+
+iabbr iser user
+iabbr Teh the
+iabbr teh the
+
+let g:netrw_liststyle=3
+
+" Plug 'majutsushi/tagbar'
+" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
+"   let g:easytags_async = 1
+"   nnoremap tt :TagbarToggle<cr><c-w>=
 " Plug 'junegunn/vim-after-object'
 "   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
 " Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
@@ -243,19 +252,3 @@ Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
 "   autocmd FileType ruby nnoremap rl  :Slib<space>
 "   autocmd FileType ruby nnoremap rll :Vlib<space>
 " augroup END
-Plug 'scrooloose/syntastic'
-Plug 'mtscout6/syntastic-local-eslint.vim'
-Plug 'sjl/badwolf'
-call plug#end()
-
-set background=light
-color solarized
-
-" viming very hard here
-set mouse=a
-
-abbr iser user
-abbr Teh the
-abbr teh the
-
-let g:netrw_liststyle=3

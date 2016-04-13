@@ -120,7 +120,6 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
 alias -g r='rails'
-alias reloadlocaldb='DB_HOST=127.0.0.1 DB_USER=root ./reload_staging_db.sh'
 
 alias ga='git add'
 alias gaa='git add --all'
@@ -140,14 +139,3 @@ alias gsh='git stash'
 alias gst="git status"
 alias gcp="git cherry-pick"
 alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
-
-update_me() {
-  cd ~/dotfiles && git pull
-  brew update --verbose && brew outdated && brew upgrade --all && brew cleanup
-}
-
-run_away() {
-  rm -rf ~/dotfiles
-  cd ~
-  brew remove --force $(brew list) && brew cleanup
-}
