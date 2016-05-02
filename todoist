@@ -13,4 +13,8 @@ http.use_ssl = true
 response = http.request(Net::HTTP::Get.new(uri.request_uri)).body
 tasks_count = 0
 JSON.parse(response).each { |item| tasks_count += item['data'].count }
-p tasks_count
+if tasks_count > 0
+  puts "#[fg=red]#{tasks_count}#[fg=default]"
+else
+  puts "#[fg=yellow]#{tasks_count}#[fg=default]"
+end

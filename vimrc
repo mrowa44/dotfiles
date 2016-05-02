@@ -5,7 +5,6 @@ filetype plugin indent on
 """ General
 set nocompatible
 set hidden
-set autoread
 set gdefault
 set ttimeoutlen=500
 set backspace=indent,eol,start
@@ -90,9 +89,8 @@ nnoremap [b :bprev<cr>
 "        [s prev wrong spelled word
 
 nnoremap Q @q
-" xnoremap Q :norm @q<cr>
-" xnoremap @ :normal @
 xnoremap . :norm.<cr>
+xnoremap @ :norm@
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
@@ -102,8 +100,6 @@ nnoremap <leader><leader> :w<cr>
 nnoremap <leader> <Nop>
 " :TOhtml wowowowo
 " :%!markdown  md to html
-" gx opens link that cursor is on in default browser
-" o in visual mode changes which 'end' of selection you're editing
 
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>b  :call ToggleColors()<cr>
@@ -115,7 +111,6 @@ nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  :set paste!<cr>
 nnoremap <leader>q  :q<cr>
-nnoremap <leader>s  :SyntasticCheck<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :w<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
@@ -144,10 +139,10 @@ endfunction
 
 function! ToggleColors()
   if (g:colors_name == "spacegray")
-    set background=light
+    set background=light noguicolors
     color solarized
   else
-    set background=dark
+    set background=dark guicolors t_ut=
     color spacegray
   endif
 endfunction
@@ -212,7 +207,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap gaa <Plug>(EasyAlign)ip
 call plug#end()
 
-set background=light
+set background=light t_ut=
 color solarized
 
 if executable('ag')
@@ -229,13 +224,6 @@ iabbr teh the
 
 let g:netrw_liststyle=3
 
-" Plug 'majutsushi/tagbar'
-" Plug 'xolox/vim-misc' | Plug 'xolox/vim-easytags'
-"   let g:easytags_async = 1
-"   nnoremap tt :TagbarToggle<cr><c-w>=
-" Plug 'junegunn/vim-after-object'
-"   autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ', '.')
-" Plug 'kana/vim-textobj-user' | Plug 'nelstrom/vim-textobj-rubyblock'
 " augroup filetypeRuby
 "   autocmd!
 "   autocmd FileType ruby nnoremap rt  :AS<cr>

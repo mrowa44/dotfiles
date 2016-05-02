@@ -27,9 +27,6 @@ setopt hist_verify
 setopt inc_append_history
 setopt share_history
 
-setopt promptsubst
-PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg[blue]%}%~%{$reset_color%}$(git_prompt_info) '
-
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
 zstyle ':completion::complete:*' use-cache 1
@@ -45,6 +42,9 @@ zstyle ':completion:*:manuals' separate-sections true
 zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+setopt promptsubst
+PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg[blue]%}%~%{$reset_color%}$(git_prompt_info) '
 
 git_prompt_info() {
   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
@@ -120,6 +120,13 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
 alias -g r='rails'
+alias ds='docker-machine env && eval $(docker-machine env)'
+yolo ()
+{
+  echo "DROP DATABASE oddshot;" | mysql -h dm -u root
+  ./migrate.sh
+  ./mock_data_sql_scripts/load_mock_data.sh
+}
 
 alias ga='git add'
 alias gaa='git add --all'
@@ -129,7 +136,9 @@ alias gc!='git commit -v --amend'
 alias gco='git checkout'
 alias gd="git diff"
 alias gdc='git diff --cached'
+alias gdn='git diff --name-only'
 alias gm='git merge'
+alias gum='git reset --hard ORIG_HEAD'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
 alias gpsh="git push"
