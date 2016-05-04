@@ -118,6 +118,7 @@ alias la="ls -GFA"
 alias f='find . -iname'
 alias -g H='| head'
 alias -g T='| tail'
+alias todo='$HOME/dotfiles/todoist'
 alias -g be='bundle exec'
 alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
