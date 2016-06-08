@@ -23,7 +23,9 @@ when '--count', '-c'
     puts "#[fg=yellow]#{tasks_count}#[fg=default]"
   end
 else
-  parsed_resp.first['data'].map do |task|
-    puts task['content']
+  parsed_resp.each do |item|
+    item['data'].each_with_index do |task, i|
+      puts "#{i + 1}. #{task['content']}"
+    end
   end
 end

@@ -55,6 +55,9 @@ vnoremap §  <esc>
 cnoremap §  <esc>
 inoremap §  <esc>
 inoremap jk <esc>
+inoremap Â <esc>
+vnoremap Â <esc>
+nmap Â <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>

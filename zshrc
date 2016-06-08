@@ -2,9 +2,6 @@ export EDITOR=vim
 export VISUAL=vim
 export PATH="$PATH:$HOME/.rvm/bin"
 
-if [[ -a /usr/local/rvm/scripts/rvm ]]; then
-  source "/usr/local/rvm/scripts/rvm"
-fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 autoload -U colors && colors
@@ -120,7 +117,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias todo='$HOME/dotfiles/todoist'
 alias -g be='bundle exec'
-alias -g r='rails'
+# alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
 yolo ()
 {
@@ -146,6 +143,11 @@ alias gpsh="git push"
 alias grb='git rebase'
 alias grh='git reset HEAD'
 alias gsh='git stash'
+alias gshl='git stash list'
+alias 'gsh popf'='git checkout -- .'
 alias gst="git status"
 alias gcp="git cherry-pick"
 alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
+
+export NVM_DIR="/Users/Justyna/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
