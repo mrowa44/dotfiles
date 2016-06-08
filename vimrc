@@ -139,10 +139,10 @@ endfunction
 
 function! ToggleColors()
   if (g:colors_name == "spacegray")
-    set background=light noguicolors
+    set background=light notermguicolors
     color solarized
   else
-    set background=dark guicolors t_ut=
+    set background=dark termguicolors t_ut=
     color spacegray
   endif
 endfunction
