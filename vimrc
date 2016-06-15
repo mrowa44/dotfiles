@@ -221,6 +221,7 @@ endif
 " viming very hard here
 set mouse=a
 
+nnoremap sfs /\vconsole.log\|debugger<cr>
 iabbr iser user
 iabbr Teh the
 iabbr teh the

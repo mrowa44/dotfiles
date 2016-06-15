@@ -129,25 +129,26 @@ yolo ()
 alias ga='git add'
 alias gaa='git add --all'
 alias gb="git branch"
-alias gc="git commit -v"
 alias gc!='git commit -v --amend'
+alias gc="git commit -v"
 alias gco='git checkout'
+alias gcp="git cherry-pick"
 alias gd="git diff"
 alias gdc='git diff --cached'
 alias gdn='git diff --name-only'
+alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
 alias gm='git merge'
-alias gum='git reset --hard ORIG_HEAD'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
 alias gpsh="git push"
 alias grb='git rebase'
 alias grh='git reset HEAD'
+alias gs="git show"
 alias gsh='git stash'
-alias gshl='git stash list'
 alias 'gsh popf'='git checkout -- .'
+alias gshl='git stash list'
 alias gst="git status"
-alias gcp="git cherry-pick"
-alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
+alias gum='git reset --hard ORIG_HEAD'
 
 export NVM_DIR="/Users/Justyna/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
