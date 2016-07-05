@@ -22,6 +22,7 @@ set nofoldenable
 set nojoinspaces
 set scrolloff=8
 set splitbelow splitright
+set title
 set formatoptions+=j1
 set showcmd showbreak=↪
 set textwidth=80
@@ -76,8 +77,6 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
 nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
-nnoremap <C-U> <C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y><C-Y>
-nnoremap <C-D> <C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E><C-E>
 nnoremap <silent> <c-b> :move+<cr>
 nnoremap <silent> <c-n> :move-2<cr>
 xnoremap <silent> <c-b> :move'>+<cr>gv
@@ -102,14 +101,10 @@ nnoremap <cr> :wa<cr>
 nnoremap <leader><leader> :w<cr>
 nnoremap <leader> <Nop>
 
-" :TOhtml wowowowo
-" :%!markdown  md to html
-
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>b  :call ToggleColors()<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :e!<cr>
-nnoremap <leader>f  :vsp <cr>:exec("tag ".expand("<cword>"))<cr>
 nnoremap <leader>g  :Ack<Space>
 nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>n  :setlocal number!<cr>
@@ -210,10 +205,6 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 call plug#end()
-
-" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-" let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
