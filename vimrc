@@ -168,6 +168,7 @@ augroup vimrcEx
 
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript inoremap lg console.log();<left><left>
+  autocmd FileType javascript setlocal textwidth=120
   autocmd FileType ruby       inoremap bp binding.pry
 
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"

@@ -4,3 +4,5 @@ vim/backup
 vim/undo
 vim/doc
 vim/.netrwhist
+zsh/zsh
+vim/vim
