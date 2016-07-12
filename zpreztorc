@@ -5,6 +5,7 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'prompt' \
   'utility' \
+  'node' \
   'history'
 
 zstyle ':prezto:module:git:status:ignore' submodules 'all'

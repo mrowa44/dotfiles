@@ -223,6 +223,7 @@ endif
 set mouse=a
 
 nnoremap sfs /\vconsole.log\|debugger<cr>
+nnoremap sr G?render<cr>
 iabbr iser user
 iabbr Teh the
 iabbr teh the
