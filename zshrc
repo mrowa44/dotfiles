@@ -11,54 +11,8 @@ fi
 export NVM_DIR="/Users/Justyna/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-# autoload -U colors && colors
-# export CLICOLOR=1
-
-# DIRSTACKSIZE=5
-# setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
-# setopt extendedglob
-# unsetopt flowcontrol
-# setopt auto_menu         # show completion menu on succesive tab press
-# setopt complete_in_word always_to_end
-# bindkey '^[[Z' reverse-menu-complete
-
-# setopt append_history
-# setopt extended_history
-# setopt hist_expire_dups_first
-# setopt hist_ignore_dups # ignore duplication command history list
-# setopt hist_ignore_space
-# setopt hist_verify
-# setopt inc_append_history
-# setopt share_history
-
-# fpath=(~/.zsh/completion $fpath)
-# autoload -Uz compinit && compinit
-# zstyle ':completion::complete:*' use-cache 1
-# zstyle ':completion:*' list-colors ''
-# zstyle ':completion:*' menu select
-# zstyle ':completion:*' original true
-# zstyle ':completion:*' verbose true
-# zstyle ':completion:*' auto-description 'specify: %d'
-# zstyle ':completion:*' format '%F{yellow}Completing %d%f'
-# zstyle ':completion:*' warnings '%F{red}No matches for: %d%f'
-# zstyle ':completion:*:matches' group 'yes'
-# zstyle ':completion:*:manuals' separate-sections true
-# zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
-# zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-
-# setopt promptsubst
-# PS1='${SSH_CONNECTION+"%{$fg_bold[black]%}%n@%m:"}%{$fg[blue]%}%~%{$reset_color%}$(git_prompt_info) '
-
-# git_prompt_info() {
-#   current_branch=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-#   if [[ -n $current_branch ]]; then
-#     echo "(%{$fg[yellow]%}$current_branch%{$reset_color%}$(parse_git_dirty))"
-#   fi
-# }
-# parse_git_dirty() {
-#   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit, working directory clean"  ]] && echo "+"
-# }
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit
 
 # Colorize man pages
 man() {
@@ -126,6 +80,7 @@ alias todo='$HOME/dotfiles/todoist'
 alias -g be='bundle exec'
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
+alias servethis='python -m SimpleHTTPServer'
 yolo ()
 {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root

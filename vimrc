@@ -3,17 +3,13 @@ syntax on
 filetype plugin indent on
 
 """ General
-set nocompatible
 set hidden
 set gdefault
-set ttimeoutlen=500
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t
-set completeopt=menuone,preview
-set dictionary+=/usr/share/dict/words
-set noendofline
-set suffixesadd+=.js path+=$PWD/node_modules
+" set ttimeoutlen=500
+" set dictionary+=/usr/share/dict/words
 
 """ UI
 set lazyredraw
@@ -22,15 +18,15 @@ set nofoldenable
 set nojoinspaces
 set scrolloff=8
 set splitbelow splitright
-set title
 set formatoptions+=j1
-set showcmd showbreak=↪
+set showcmd
 set textwidth=80
-set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:•
+set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbreak=↪
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q[%{fugitive#head()}]%=
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}][%P]\ %l\ :\ %c\ 
 let &colorcolumn=&textwidth
+color default
 
 """ Search
 set hlsearch incsearch
@@ -56,16 +52,12 @@ vnoremap §  <esc>
 cnoremap §  <esc>
 inoremap §  <esc>
 inoremap jk <esc>
-inoremap Â <esc>
-vnoremap Â <esc>
-nmap Â <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap <c-b> <s-left>
 cnoremap <c-w> <s-right>
 cnoremap w!! w !sudo tee %
-cnoremap <expr> %% expand('%:h').'/'
 
 nnoremap <c-h> <c-w>h
 nnoremap <c-j> <c-w>j
@@ -77,18 +69,14 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
 nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
-nnoremap <silent> <c-b> :move+<cr>
-nnoremap <silent> <c-n> :move-2<cr>
-xnoremap <silent> <c-b> :move'>+<cr>gv
-xnoremap <silent> <c-n> :move-2<cr>gv
+" nnoremap <silent> <c-b> :move+<cr>
+" nnoremap <silent> <c-n> :move-2<cr>
+" xnoremap <silent> <c-b> :move'>+<cr>gv
+" xnoremap <silent> <c-n> :move-2<cr>gv
 nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
-"        ]c next git change
-"        [c prev git change
-"        ]s next wrong spelled word
-"        [s prev wrong spelled word
 
 nnoremap Q @q
 xnoremap . :norm.<cr>
@@ -102,7 +90,6 @@ nnoremap <leader><leader> :w<cr>
 nnoremap <leader> <Nop>
 
 nnoremap <leader>a  :silent !atom %<cr>
-nnoremap <leader>b  :call ToggleColors()<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :e!<cr>
 nnoremap <leader>g  :Ack<Space>
@@ -136,16 +123,6 @@ function! CleverTab()
    endif
 endfunction
 
-function! ToggleColors()
-  if (g:colors_name == "spacegray")
-    set background=light notermguicolors
-    color solarized
-  else
-    set background=dark termguicolors t_ut=
-    color spacegray
-  endif
-endfunction
-
 """ Autocommands
 augroup vimrcEx
   autocmd!
@@ -172,7 +149,7 @@ augroup vimrcEx
   autocmd FileType ruby       inoremap bp binding.pry
 
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
-  autocmd InsertLeave      * write
+  autocmd InsertLeave      * silent! write
   autocmd InsertLeave      * silent! set nopaste
   autocmd VimResized       * execute "normal! \<c-w>="
 augroup END
@@ -180,19 +157,15 @@ augroup END
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'ajh17/Spacegray.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-commentary'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
  nnoremap \ :CtrlP<cr>
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'vim-scripts/SearchComplete'
 Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
@@ -200,19 +173,18 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
 Plug 'wincent/ferret', { 'branch': 'autojump' }
   let g:FerretAutojump = 1
-Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
+" Plug 'christoomey/vim-tmux-navigator'
+" Plug 'ConradIrwin/vim-bracketed-paste'
+" Plug 'junegunn/vim-peekaboo'
 call plug#end()
 
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-
-set background=light t_ut=
-color solarized
+" let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+" let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
