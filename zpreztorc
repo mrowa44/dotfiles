@@ -2,6 +2,7 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'completion' \
   'history-substring-search' \
+  'syntax-highlighting' \
   'prompt' \
   'utility' \
   'node' \
@@ -9,9 +10,10 @@ zstyle ':prezto:load' pmodule \
 
 zstyle ':prezto:module:git:status:ignore' submodules 'all'
 zstyle ':prezto:module:git:info:context:subcontext' format 'string'
-zstyle ':prezto:module:prompt' theme 'sorin'
+zstyle ':prezto:module:prompt' theme 'pure'
 zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 zstyle ':prezto:module:tmux:iterm' integrate 'yes'
+zstyle ':prezto:module:syntax-highlighting' color 'yes'
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'

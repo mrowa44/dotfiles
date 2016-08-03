@@ -26,7 +26,6 @@ set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q[%{fugitive#head()}]%=
 set statusline+=[%{strlen(&fenc)?&fenc:'none'}][%P]\ %l\ :\ %c\ 
 let &colorcolumn=&textwidth
-color default
 
 """ Search
 set hlsearch incsearch
@@ -157,6 +156,8 @@ augroup END
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
+Plug 'ajh17/Spacegray.vim'
+Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -178,13 +179,14 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 " Plug 'christoomey/vim-tmux-navigator'
-" Plug 'ConradIrwin/vim-bracketed-paste'
 " Plug 'junegunn/vim-peekaboo'
 call plug#end()
 
-" let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-" let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+color solarized
+
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
