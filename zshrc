@@ -54,6 +54,11 @@ extract ()
   fi
 }
 
+rejson()
+{
+  redis-cli "$@" | json_pp
+}
+
 # export KEYTIMEOUT=1
 bindkey "^B" backward-word
 bindkey '^G' insert-last-word
