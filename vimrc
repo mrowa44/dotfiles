@@ -68,6 +68,8 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
 nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
+nnoremap <c-o> <c-o>zz
+nnoremap <c-i> <c-i>zz
 " nnoremap <silent> <c-b> :move+<cr>
 " nnoremap <silent> <c-n> :move-2<cr>
 " xnoremap <silent> <c-b> :move'>+<cr>gv
