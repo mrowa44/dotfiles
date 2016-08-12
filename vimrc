@@ -50,7 +50,7 @@ nmap     §  <esc>
 vnoremap §  <esc>
 cnoremap §  <esc>
 inoremap §  <esc>
-inoremap jk <esc>
+" inoremap jk <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
@@ -115,6 +115,7 @@ inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>
 inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
+inoremap <c-b> <c-w>
 
 function! CleverTab()
    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -205,6 +206,12 @@ iabbr Teh the
 iabbr teh the
 
 let g:netrw_liststyle=3
+
+set guioptions-=m
+set guioptions-=T
+set guioptions-=r
+set guioptions-=L
+set guicursor+=a:blinkon0
 
 " augroup filetypeRuby
 "   autocmd!
