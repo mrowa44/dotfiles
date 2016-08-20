@@ -11,6 +11,8 @@ fi
 export NVM_DIR="/Users/Justyna/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+source `brew --prefix`/etc/profile.d/z.sh
+
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
 
@@ -82,6 +84,7 @@ alias f='find . -iname'
 alias -g H='| head'
 alias -g T='| tail'
 alias todo='$HOME/dotfiles/todoist'
+alias j='z'
 alias -g be='bundle exec'
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
@@ -116,3 +119,4 @@ alias 'gsh popf'='git checkout -- .'
 alias gshl='git stash list'
 alias gst="git status"
 alias gum='git reset --hard ORIG_HEAD'
+alias gsup='git submodule update'

@@ -146,9 +146,10 @@ augroup vimrcEx
   autocmd BufWritePre *.html normal gg=G
 
   autocmd FileType gitcommit  setlocal textwidth=72 spell
-  autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType javascript setlocal textwidth=120
+  autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType ruby       inoremap bp binding.pry
+  autocmd FileType scss       inoremap ttt @include theme();<left><left>
 
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
   autocmd InsertLeave      * silent! write
@@ -171,7 +172,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
  nnoremap \ :CtrlP<cr>
 Plug 'vim-scripts/SearchComplete'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
@@ -181,8 +182,8 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-" Plug 'christoomey/vim-tmux-navigator'
-" Plug 'junegunn/vim-peekaboo'
+" Plug 'pangloss/vim-javascript'
+" Plug 'mxw/vim-jsx'
 call plug#end()
 
 color solarized
@@ -200,7 +201,7 @@ endif
 set mouse=a
 
 nnoremap sfs /\vconsole.log\|debugger<cr>
-nnoremap sr G?render<cr>
+nnoremap sr G?render<cr>:nohl<cr>
 iabbr iser user
 iabbr Teh the
 iabbr teh the
