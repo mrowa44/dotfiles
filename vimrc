@@ -8,7 +8,6 @@ set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set complete=.,w,b,t
-" set ttimeoutlen=500
 " set dictionary+=/usr/share/dict/words
 
 """ UI
@@ -70,6 +69,8 @@ nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
 nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
+nnoremap * *zz
+nnoremap # #zz
 " nnoremap <silent> <c-b> :move+<cr>
 " nnoremap <silent> <c-n> :move-2<cr>
 " xnoremap <silent> <c-b> :move'>+<cr>gv
@@ -115,7 +116,7 @@ inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>
 inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
-inoremap <c-b> <c-w>
+inoremap <c-b>   <c-w>
 
 function! CleverTab()
    if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -165,8 +166,8 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -182,11 +183,9 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-" Plug 'pangloss/vim-javascript'
-" Plug 'mxw/vim-jsx'
 call plug#end()
 
-color solarized
+colorscheme solarized
 
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
@@ -208,10 +207,7 @@ iabbr teh the
 
 let g:netrw_liststyle=3
 
-set guioptions-=m
-set guioptions-=T
-set guioptions-=r
-set guioptions-=L
+set guioptions=
 set guicursor+=a:blinkon0
 
 " augroup filetypeRuby
