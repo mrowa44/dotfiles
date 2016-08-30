@@ -170,15 +170,15 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
+Plug 'kshenoy/vim-signature'
+Plug 'wincent/ferret', { 'branch': 'autojump' }
+  let g:FerretAutojump = 1
 Plug 'ctrlpvim/ctrlp.vim'
  nnoremap \ :CtrlP<cr>
 Plug 'vim-scripts/SearchComplete'
-" Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
-Plug 'wincent/ferret', { 'branch': 'autojump' }
-  let g:FerretAutojump = 1
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
