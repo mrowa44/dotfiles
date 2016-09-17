@@ -7,8 +7,7 @@ set hidden
 set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
-set complete=.,w,b,t
-" set dictionary+=/usr/share/dict/words
+" set complete=.,w,b,t
 
 """ UI
 set lazyredraw
@@ -22,8 +21,8 @@ set showcmd
 set textwidth=80
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbreak=↪
 set laststatus=2
-set statusline=\ %f\ %y%m%r%h%q[%{fugitive#head()}]%=
-set statusline+=[%{strlen(&fenc)?&fenc:'none'}][%P]\ %l\ :\ %c\ 
+set statusline=\ %f\ %y%m%r%h%q%=
+set statusline+=[%P]\ %l\ :\ %c\ 
 let &colorcolumn=&textwidth
 
 """ Search
@@ -144,11 +143,12 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
 
   autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
-  autocmd BufWritePre *.html normal gg=G
+  " autocmd BufWritePre *.html normal gg=G
 
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript setlocal textwidth=120
   autocmd FileType javascript inoremap lg console.log();<left><left>
+  " autocmd FileType javascript nnoremap <c-p> ^dt($xds(
   autocmd FileType ruby       inoremap bp binding.pry
   autocmd FileType scss       inoremap ttt @include theme();<left><left>
 
@@ -199,7 +199,7 @@ endif
 " viming very hard here
 set mouse=a
 
-nnoremap sfs /\vconsole.log\|debugger<cr>
+nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir<cr>
 nnoremap sr G?render<cr>:nohl<cr>
 iabbr iser user
 iabbr Teh the

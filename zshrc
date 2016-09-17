@@ -89,6 +89,7 @@ alias -g be='bundle exec'
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
 alias servethis='python -m SimpleHTTPServer'
+alias watchthemstyles='sass --watch style.scss:style.css'
 yolo ()
 {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
