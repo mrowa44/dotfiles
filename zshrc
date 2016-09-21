@@ -97,6 +97,13 @@ yolo ()
   ./mock_data_sql_scripts/load_mock_data.sh
 }
 
+kurwa () {
+  docker-machine start
+  ds
+  j dev
+  docker-compose up -d
+  j web
+}
 alias ga='git add'
 alias gaa='git add --all'
 alias gb="git branch"
@@ -121,3 +128,5 @@ alias gshl='git stash list'
 alias gst="git status"
 alias gum='git reset --hard ORIG_HEAD'
 alias gsup='git submodule update'
+
+unalias ggl
