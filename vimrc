@@ -7,7 +7,6 @@ set hidden
 set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
-" set complete=.,w,b,t
 
 """ UI
 set lazyredraw
@@ -70,10 +69,6 @@ nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 nnoremap * *zz
 nnoremap # #zz
-" nnoremap <silent> <c-b> :move+<cr>
-" nnoremap <silent> <c-n> :move-2<cr>
-" xnoremap <silent> <c-b> :move'>+<cr>gv
-" xnoremap <silent> <c-n> :move-2<cr>gv
 nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
@@ -148,6 +143,7 @@ augroup vimrcEx
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript setlocal textwidth=120
   autocmd FileType javascript inoremap lg console.log();<left><left>
+  autocmd FileType javascript nnoremap so vi{:sort<cr><c-o>
   " autocmd FileType javascript nnoremap <c-p> ^dt($xds(
   autocmd FileType ruby       inoremap bp binding.pry
   autocmd FileType scss       inoremap ttt @include theme();<left><left>
@@ -161,7 +157,6 @@ augroup END
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'ajh17/Spacegray.vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -185,11 +180,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap gaa <Plug>(EasyAlign)ip
 call plug#end()
 
-colorscheme solarized
-
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+color solarized
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
@@ -207,6 +198,7 @@ iabbr teh the
 
 let g:netrw_liststyle=3
 
+" highlight Comment cterm=italic
 set guioptions=
 set guicursor+=a:blinkon0
 

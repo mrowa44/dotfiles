@@ -90,18 +90,18 @@ alias -g be='bundle exec'
 alias ds='docker-machine env && eval $(docker-machine env)'
 alias servethis='python -m SimpleHTTPServer'
 alias watchthemstyles='sass --watch style.scss:style.css'
+alias lint="npm run lint"
+alias cask="brew cask"
 yolo ()
 {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
   ./migrate.sh
   ./mock_data_sql_scripts/load_mock_data.sh
 }
-
 kurwa () {
   docker-machine start
-  ds
   j dev
-  docker-compose up -d
+  ds && docker-compose up -d
   j web
 }
 alias ga='git add'
