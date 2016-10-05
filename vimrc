@@ -195,6 +195,7 @@ nnoremap sr G?render<cr>:nohl<cr>
 iabbr iser user
 iabbr Teh the
 iabbr teh the
+iabbr cosnt const
 
 let g:netrw_liststyle=3
 
