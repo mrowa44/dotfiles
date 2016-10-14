@@ -11,6 +11,8 @@ fi
 export NVM_DIR="/Users/Justyna/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
 source `brew --prefix`/etc/profile.d/z.sh
 
 fpath=(~/.zsh/completion $fpath)
@@ -62,7 +64,7 @@ rejson()
 }
 
 # export KEYTIMEOUT=1
-bindkey "^B" backward-word
+bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 # bindkey "^W" forward-word
 # bindkey "^N" down-history
