@@ -60,7 +60,7 @@ extract ()
 
 rejson()
 {
-  redis-cli "$@" | json_pp
+  redis-cli -h dm "$@" | json_pp
 }
 
 # export KEYTIMEOUT=1
@@ -94,6 +94,7 @@ alias servethis='python -m SimpleHTTPServer'
 alias watchthemstyles='sass --watch style.scss:style.css'
 alias lint="npm run lint"
 alias cask="brew cask"
+alias svim="vim -u NONE"
 yolo ()
 {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root

@@ -87,6 +87,7 @@ nnoremap <leader> <Nop>
 
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
+nnoremap <leader>d  :Ack <c-r>/<cr>
 nnoremap <leader>e  :e!<cr>
 nnoremap <leader>g  :Ack<Space>
 nnoremap <leader>h  :nohlsearch<cr>
@@ -170,7 +171,7 @@ Plug 'wincent/ferret', { 'branch': 'autojump' }
   let g:FerretAutojump = 1
 Plug 'ctrlpvim/ctrlp.vim'
  nnoremap \ :CtrlP<cr>
-Plug 'vim-scripts/SearchComplete'
+" Plug 'vim-scripts/SearchComplete'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
@@ -178,6 +179,8 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
+Plug 'mxw/vim-jsx'
+Plug 'vim-scripts/nginx.vim'
 call plug#end()
 
 color solarized
@@ -196,12 +199,17 @@ iabbr iser user
 iabbr Teh the
 iabbr teh the
 iabbr cosnt const
+iabbr rpors props
 
 let g:netrw_liststyle=3
 
 " highlight Comment cterm=italic
 set guioptions=
 set guicursor+=a:blinkon0
+
+nnoremap <leader>el :vs config/local.js<cr>
+" lol
+nnoremap <leader>f :Ack src_redesigned<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><space>
 
 " augroup filetypeRuby
 "   autocmd!
