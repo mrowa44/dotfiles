@@ -7,6 +7,7 @@ set hidden
 set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
+set clipboard=unnamedplus
 
 """ UI
 set lazyredraw
@@ -22,7 +23,8 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbrea
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q%=
 set statusline+=[%P]\ %l\ :\ %c\ 
-let &colorcolumn=&textwidth
+" let &colorcolumn=&textwidth
+let &colorcolumn=join(range(&textwidth,999),",")
 
 """ Search
 set hlsearch incsearch
@@ -63,28 +65,27 @@ nnoremap <left>  <c-w>H
 nnoremap <down>  <c-w>J
 nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
-nnoremap <expr> n (v:searchforward ? 'nzz' : 'Nzz')
-nnoremap <expr> N (v:searchforward ? 'Nzz' : 'nzz')
-nnoremap <c-o> <c-o>zz
-nnoremap <c-i> <c-i>zz
-nnoremap * *zz
-nnoremap # #zz
+nnoremap <expr> n (v:searchforward ? 'nzz:call Flash()<cr>' : 'Nzz:call Flash()<cr>')
+nnoremap <expr> N (v:searchforward ? 'Nzz:call Flash()<cr>' : 'nzz:call Flash()<cr>')
+nnoremap <c-o> <c-o>zz:call Flash()<cr>
+nnoremap <c-i> <c-i>zz:call Flash()<cr>
+nnoremap * *zz:call Flash()<cr>
+nnoremap # #zz:call Flash()<cr>
 nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
 
 nnoremap Q @q
-xnoremap . :norm.<cr>
-xnoremap @ :norm@
+" xnoremap . :norm.<cr>
+" xnoremap @ :norm@
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <bs> `[V`]
-nnoremap <cr> :wa<cr>
-nnoremap <leader><leader> :w<cr>
 nnoremap <leader> <Nop>
 
+nnoremap <leader><leader> :wa<cr>
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
@@ -121,6 +122,13 @@ function! CleverTab()
    endif
 endfunction
 
+function! Flash()
+  set cursorline
+  redraw
+  sleep 110m
+  set nocursorline
+endfunction
+
 """ Autocommands
 augroup vimrcEx
   autocmd!
@@ -131,21 +139,20 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
 
-  autocmd BufEnter * let &colorcolumn=&textwidth
+  " autocmd BufEnter * let &colorcolumn=&textwidth
   autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
 
   autocmd BufRead,BufNewFile *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
   autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
 
   autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
-  " autocmd BufWritePre *.html normal gg=G
 
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript setlocal textwidth=120
   autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType javascript nnoremap so vi{:sort<cr><c-o>
-  " autocmd FileType javascript nnoremap <c-p> ^dt($xds(
   autocmd FileType ruby       inoremap bp binding.pry
   autocmd FileType scss       inoremap ttt @include theme();<left><left>
 
@@ -159,6 +166,7 @@ augroup END
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'altercation/vim-colors-solarized'
+Plug 'croaky/vim-colors-github'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -167,23 +175,22 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
-Plug 'wincent/ferret', { 'branch': 'autojump' }
-  let g:FerretAutojump = 1
+Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
  nnoremap \ :CtrlP<cr>
-" Plug 'vim-scripts/SearchComplete'
-Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'mxw/vim-jsx'
-Plug 'vim-scripts/nginx.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
 call plug#end()
 
-color solarized
+color github
+set termguicolors
+highlight ColorColumn ctermbg=gray guibg=gray93
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'

@@ -66,7 +66,8 @@ rejson()
 # export KEYTIMEOUT=1
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
-# bindkey "^W" forward-word
+bindkey "^W" foreward-word
+bindkey "^V" backward-word
 # bindkey "^N" down-history
 # bindkey "^P" up-history
 # bindkey "^U" backward-kill-line
@@ -95,6 +96,9 @@ alias watchthemstyles='sass --watch style.scss:style.css'
 alias lint="npm run lint"
 alias cask="brew cask"
 alias svim="vim -u NONE"
+# netstat -nlp tcp | ag 8000
+alias clock="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &"
+
 yolo ()
 {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
@@ -117,7 +121,8 @@ alias gcp="git cherry-pick"
 alias gd="git diff"
 alias gdc='git diff --cached'
 alias gdn='git diff --name-only'
-alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
+# alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
+alias glg="git log --oneline --graph"
 alias gm='git merge'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
@@ -131,5 +136,3 @@ alias gshl='git stash list'
 alias gst="git status"
 alias gum='git reset --hard ORIG_HEAD'
 alias gsup='git submodule update'
-
-unalias ggl
