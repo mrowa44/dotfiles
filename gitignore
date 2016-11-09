@@ -4,6 +4,7 @@
 tags
 log/*.log
 tmp/**/*
+.idea
 node_modules
 node_modules_prod
 npm-debug.log

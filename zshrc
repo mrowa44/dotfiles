@@ -97,7 +97,6 @@ alias lint="npm run lint"
 alias cask="brew cask"
 alias svim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
-alias clock="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &"
 
 yolo ()
 {

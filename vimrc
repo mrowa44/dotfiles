@@ -7,7 +7,7 @@ set hidden
 set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 """ UI
 set lazyredraw
@@ -23,8 +23,6 @@ set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbrea
 set laststatus=2
 set statusline=\ %f\ %y%m%r%h%q%=
 set statusline+=[%P]\ %l\ :\ %c\ 
-" let &colorcolumn=&textwidth
-let &colorcolumn=join(range(&textwidth,999),",")
 
 """ Search
 set hlsearch incsearch
@@ -84,8 +82,8 @@ nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <bs> `[V`]
 nnoremap <leader> <Nop>
-
 nnoremap <leader><leader> :wa<cr>
+
 nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
@@ -115,11 +113,11 @@ inoremap <s-tab> <c-n>
 inoremap <c-b>   <c-w>
 
 function! CleverTab()
-   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-      return "\<tab>"
-   else
-      return "\<c-p>"
-   endif
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
 endfunction
 
 function! Flash()
