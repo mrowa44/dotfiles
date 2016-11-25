@@ -149,6 +149,7 @@ augroup vimrcEx
 
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript setlocal textwidth=120
+  autocmd FileType sql setlocal textwidth=120
   autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType javascript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby       inoremap bp binding.pry
@@ -180,7 +181,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xmap ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot' " turn off for js
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
@@ -205,6 +206,8 @@ iabbr Teh the
 iabbr teh the
 iabbr cosnt const
 iabbr rpors props
+iabbr reutrn return
+iabbr treu true
 
 let g:netrw_liststyle=3
 
@@ -214,7 +217,7 @@ set guicursor+=a:blinkon0
 
 nnoremap <leader>el :vs config/local.js<cr>
 " lol
-nnoremap <leader>f :Ack src_redesigned<left><left><left><left><left><left><left><left><left><left><left><left><left><left><left><space>
+nnoremap <leader>f :Ack src<left><left><left><left><space><space><left>
 
 " augroup filetypeRuby
 "   autocmd!

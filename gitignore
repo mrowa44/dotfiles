@@ -13,3 +13,5 @@ data/schema.json
 Session.vim
 dump.rdb
 notes.*
+tags.lock
+tags.temp

@@ -31,10 +31,6 @@ man() {
     man "$@"
 }
 
-mcd() {
-  mkdir -p "$1" && cd "$1";
-}
-
 # Extract archives
 extract ()
 {
@@ -58,12 +54,9 @@ extract ()
   fi
 }
 
-rejson()
-{
-  redis-cli -h dm "$@" | json_pp
-}
+rejson() { redis-cli -h dm "$@" | json_pp }
+alias redis-match='redis-cli -h dm --scan --pattern' # pattern: 'escache/dupa*'
 
-# export KEYTIMEOUT=1
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" foreward-word
@@ -78,16 +71,19 @@ bindkey "^V" backward-word
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias mkdir="mkdir -p"
+mkdirc() { mkdir -p "$1" && cd "$1"; }
+
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -v"
 alias ls="ls -GF"
 alias la="ls -GFA"
 alias f='find . -iname'
-alias -g H='| head'
-alias -g T='| tail'
+alias ps='ps aux'
 alias todo='$HOME/dotfiles/todoist'
 alias j='z'
+alias -g H='| head'
+alias -g T='| tail'
 alias -g be='bundle exec'
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
@@ -98,8 +94,10 @@ alias cask="brew cask"
 alias svim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
 
-yolo ()
-{
+dockerbash () {
+  docker exec -it $1 bash
+}
+yolo () {
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
   ./migrate.sh
   ./mock_data_sql_scripts/load_mock_data.sh
@@ -111,7 +109,7 @@ kurwa () {
   j web
 }
 alias ga='git add'
-alias gaa='git add --all'
+alias gaa="git add --all && echo '------> change branch'"
 alias gb="git branch"
 alias gc!='git commit -v --amend'
 alias gc="git commit -v"
