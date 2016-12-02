@@ -150,6 +150,7 @@ augroup vimrcEx
   autocmd FileType gitcommit  setlocal textwidth=72 spell
   autocmd FileType javascript setlocal textwidth=120
   autocmd FileType sql setlocal textwidth=120
+  autocmd FileType javascript inoremap lh console.log('~~~~~~~~~~~~~~~~~~~~~ ', );<left><left>
   autocmd FileType javascript inoremap lg console.log();<left><left>
   autocmd FileType javascript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby       inoremap bp binding.pry
@@ -197,7 +198,7 @@ if executable('ag')
 endif
 
 " viming very hard here
-set mouse=a
+" set mouse=a
 
 nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir<cr>
 nnoremap sr G?render<cr>:nohl<cr>

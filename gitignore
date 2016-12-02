@@ -15,3 +15,4 @@ dump.rdb
 notes.*
 tags.lock
 tags.temp
+npm-debug*

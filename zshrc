@@ -119,7 +119,7 @@ alias gd="git diff"
 alias gdc='git diff --cached'
 alias gdn='git diff --name-only'
 # alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
-alias glg="git log --oneline --graph"
+alias glg="git log --oneline --graph --color"
 alias gm='git merge'
 alias gpl="git pull"
 alias gplr="git pull --rebase"
