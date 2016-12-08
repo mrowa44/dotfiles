@@ -19,7 +19,7 @@ ln -sf ${DIR}/gemrc ~/.gemrc
 ln -sf ${DIR}/eslintrc ~/.eslintrc
 ln -sf ${DIR}/my.cnf ~/.my.cnf
 
-# brew install git diff-so-fancy ag ctags httpie pandoc tig node tree redis nvm
+# brew install git diff-so-fancy ag ctags httpie tig node tree redis nvm
 # brew install vim --override-system-vi
-# brew cask install sequel-pro google-chrome virtualbox
+# brew cask install sequel-pro postico google-chrome virtualbox slack spotify
 # gem install rvm tmuxinator

@@ -75,11 +75,10 @@ nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
 
 nnoremap Q @q
-" xnoremap . :norm.<cr>
-" xnoremap @ :norm@
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
+nnoremap 99 :q<cr>
 nnoremap <bs> `[V`]
 nnoremap <leader> <Nop>
 nnoremap <leader><leader> :wa<cr>
@@ -103,14 +102,14 @@ nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 
-inoremap <c-]>   <c-x><c-]>
-inoremap <c-f>   <c-x><c-f>
-inoremap <c-l>   <c-x><c-l>
-inoremap <c-k>   <c-x><c-p>
-inoremap <c-j>   <c-x><c-n>
 inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
-inoremap <c-b>   <c-w>
+inoremap <c-k>   <c-x><c-p>
+inoremap <c-j>   <c-x><c-n>
+inoremap <c-l>   <c-x><c-l>
+inoremap <c-f>   <c-x><c-f>
+
+inoremap <c-b> <c-w>
 
 function! CleverTab()
   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -137,7 +136,6 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
 
-  " autocmd BufEnter * let &colorcolumn=&textwidth
   autocmd BufLeave * setlocal colorcolumn=
   autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
 
@@ -186,6 +184,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
+Plug 'junegunn/rainbow_parentheses.vim'
 call plug#end()
 
 color github
@@ -215,10 +214,9 @@ let g:netrw_liststyle=3
 " highlight Comment cterm=italic
 set guioptions=
 set guicursor+=a:blinkon0
+set guifont=Menlo:h12
 
 nnoremap <leader>el :vs config/local.js<cr>
-" lol
-nnoremap <leader>f :Ack src<left><left><left><left><space><space><left>
 
 " augroup filetypeRuby
 "   autocmd!
