@@ -61,46 +61,47 @@ bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" foreward-word
 bindkey "^V" backward-word
-# bindkey "^N" down-history
-# bindkey "^P" up-history
-# bindkey "^U" backward-kill-line
-# bindkey "^A" beginning-of-line
-# bindkey "^E" end-of-line
-# bindkey "^Y" yank
 
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias mkdir="mkdir -p"
 mkdirc() { mkdir -p "$1" && cd "$1"; }
+f() { find . -iname "$1*"; }
+gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
+gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
 
 alias cp="cp -vi"
 alias mv="mv -vi"
 alias rm="rm -v"
 alias ls="ls -GF"
 alias la="ls -GFA"
-alias f='find . -iname'
 alias ps='ps aux'
 alias todo='$HOME/dotfiles/todoist'
 alias j='z'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g be='bundle exec'
+alias -g cat="ccat"
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
 alias servethis='python -m SimpleHTTPServer'
 alias watchthemstyles='sass --watch style.scss:style.css'
+alias open_ports='lsof -i -P | grep -i "listen"'
+# alias open_ports='netstat -lnptu'
 alias lint="npm run lint"
 alias cask="brew cask"
-alias svim="vim -u NONE"
+alias vvim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
 
 dockerbash () {
   docker exec -it $1 bash
 }
 yolo () {
+  j db
   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
   ./migrate.sh
   ./mock_data_sql_scripts/load_mock_data.sh
+  cd -
 }
 kurwa () {
   docker-machine start

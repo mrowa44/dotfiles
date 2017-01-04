@@ -8,6 +8,7 @@ set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set clipboard=unnamed
+set complete-=t
 
 """ UI
 set lazyredraw
@@ -17,12 +18,9 @@ set nojoinspaces
 set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j1
-set showcmd
 set textwidth=80
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbreak=↪
-set laststatus=2
-set statusline=\ %f\ %y%m%r%h%q%=
-set statusline+=[%P]\ %l\ :\ %c\ 
+set showcmd laststatus=2 ruler
 
 """ Search
 set hlsearch incsearch
@@ -46,13 +44,13 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), "p")   | endi
 nmap     §  <esc>
 vnoremap §  <esc>
 cnoremap §  <esc>
-inoremap §  <esc>
-" inoremap jk <esc>
+inoremap §  <esc>:echo "~~~~~ Use jj ~~~~~~"<cr>
+inoremap jj <esc>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap <c-b> <s-left>
-cnoremap <c-w> <s-right>
+" cnoremap <c-w> <s-right>
 cnoremap w!! w !sudo tee %
 
 nnoremap <c-h> <c-w>h
@@ -63,8 +61,8 @@ nnoremap <left>  <c-w>H
 nnoremap <down>  <c-w>J
 nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
-nnoremap <expr> n (v:searchforward ? 'nzz:call Flash()<cr>' : 'Nzz:call Flash()<cr>')
-nnoremap <expr> N (v:searchforward ? 'Nzz:call Flash()<cr>' : 'nzz:call Flash()<cr>')
+nnoremap <expr> n (v:searchforward ? 'n:call Flash()<cr>' : 'N:call Flash()<cr>')
+nnoremap <expr> N (v:searchforward ? 'N:call Flash()<cr>' : 'n:call Flash()<cr>')
 nnoremap <c-o> <c-o>zz:call Flash()<cr>
 nnoremap <c-i> <c-i>zz:call Flash()<cr>
 nnoremap * *zz:call Flash()<cr>
@@ -83,17 +81,16 @@ nnoremap <bs> `[V`]
 nnoremap <leader> <Nop>
 nnoremap <leader><leader> :wa<cr>
 
-nnoremap <leader>a  :silent !atom %<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
-nnoremap <leader>e  :e!<cr>
+nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>g  :Ack<Space>
 nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  :set paste!<cr>
-nnoremap <leader>q  :q<cr>
+nnoremap <leader>q  :quit<cr>
 nnoremap <leader>u  :vs#<cr>
-nnoremap <leader>w  :w<cr>
+nnoremap <leader>w  :write<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>ms :mksession!<cr>
@@ -129,35 +126,31 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
-
   " When editing a file, always jump to the last known cursor position
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
     \   exe "normal! g`\"" |
     \ endif
-
   autocmd BufLeave * setlocal colorcolumn=
   autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
-
-  autocmd BufRead,BufNewFile *.md setlocal ft=markdown spell
-  autocmd BufRead,BufNewFile *.hamlc setlocal ft=haml
+  autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
+  autocmd BufRead,BufNewFile *.hamlc    setlocal ft=haml
   autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
-
-  autocmd BufReadPost *.doc,*.docx,*.rtf,*.odp,*.odt silent %!pandoc "%" -tplain -o /dev/stdout
-
-  autocmd FileType gitcommit  setlocal textwidth=72 spell
-  autocmd FileType javascript setlocal textwidth=120
-  autocmd FileType sql setlocal textwidth=120
-  autocmd FileType javascript inoremap lh console.log('~~~~~~~~~~~~~~~~~~~~~ ', );<left><left>
-  autocmd FileType javascript inoremap lg console.log();<left><left>
-  autocmd FileType javascript nnoremap so vi{:sort<cr><c-o>
-  autocmd FileType ruby       inoremap bp binding.pry
-  autocmd FileType scss       inoremap ttt @include theme();<left><left>
-
+  autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
+  autocmd FileType gitcommit      setlocal textwidth=72 spell
+  autocmd FileType html           setlocal textwidth=130
+  autocmd FileType sql,javascript setlocal textwidth=120
+  autocmd FileType javascript     inoremap lh console.log('~~~~~~~~~~~~~~ ',);<left><left>
+  autocmd FileType javascript     inoremap lg console.log();<left><left>
+  autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
+  autocmd FileType javascript     nnoremap sr G?render<cr>:nohl<cr>
+  autocmd FileType javascript     nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir<cr>
+  autocmd FileType ruby           inoremap bp binding.pry
+  autocmd FileType qf             nnoremap <buffer> <c-l> <C-w><Enter><C-w>L
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
-  autocmd InsertLeave      * silent! write
-  autocmd InsertLeave      * silent! set nopaste
-  autocmd VimResized       * execute "normal! \<c-w>="
+  autocmd InsertLeave * silent! write
+  autocmd InsertLeave * silent! set nopaste
+  autocmd VimResized * execute "normal! \<c-w>="
 augroup END
 
 """ Plugins
@@ -165,6 +158,7 @@ runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'altercation/vim-colors-solarized'
 Plug 'croaky/vim-colors-github'
+Plug 'reedes/vim-colors-pencil'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -175,32 +169,27 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
- nnoremap \ :CtrlP<cr>
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  xmap ga <Plug>(EasyAlign)
-  nmap ga <Plug>(EasyAlign)
-  nmap gaa <Plug>(EasyAlign)ip
-" Plug 'sheerun/vim-polyglot' " turn off for js
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+  xma ga <Plug>(EasyAlign)
+  nmap ga <Plug>(EasyAlign)
+  nmap gaa <Plug>(EasyAlign)ip
+Plug 'chemzqm/vim-jsx-improve'
+" Plug 'sheerun/vim-polyglot' " turn off for js
+Plug 'yuttie/comfortable-motion.vim'
 call plug#end()
 
-color github
+""" Colors
 set termguicolors
-highlight ColorColumn ctermbg=gray guibg=gray93
+color pencil
+" highlight ColorColumn ctermbg=gray guibg=gray93
+highlight jsThis ctermfg=blue guifg=darkgray
+" highlight jsString ctermfg=darkcyan guifg=darkcyan
 
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-" viming very hard here
-" set mouse=a
-
-nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir<cr>
-nnoremap sr G?render<cr>:nohl<cr>
+""" Typos
 iabbr iser user
 iabbr Teh the
 iabbr teh the
@@ -208,29 +197,16 @@ iabbr cosnt const
 iabbr rpors props
 iabbr reutrn return
 iabbr treu true
+iabbr thus this
+iabbr porps props
 
-let g:netrw_liststyle=3
-
-" highlight Comment cterm=italic
 set guioptions=
 set guicursor+=a:blinkon0
-set guifont=Menlo:h12
+set guifont=Consolas:h13
 
-nnoremap <leader>el :vs config/local.js<cr>
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_use_caching = 0
+endif
 
-" augroup filetypeRuby
-"   autocmd!
-"   autocmd FileType ruby nnoremap rt  :AS<cr>
-"   autocmd FileType ruby nnoremap rtt :AV<cr>
-"   autocmd FileType ruby nnoremap rrr :AV<cr>
-"   autocmd FileType ruby nnoremap rs  :Sschema<cr>
-"   autocmd FileType ruby nnoremap rss :Vschema<cr>
-"   autocmd FileType ruby nnoremap rc  :Scontroller<space>
-"   autocmd FileType ruby nnoremap rcc :Vcontroller<space>
-"   autocmd FileType ruby nnoremap rm  :Smodel<space>
-"   autocmd FileType ruby nnoremap rmm :Vmodel<space>
-"   autocmd FileType ruby nnoremap rg  :Smigration<space>
-"   autocmd FileType ruby nnoremap rgg :Vmigration<space>
-"   autocmd FileType ruby nnoremap rl  :Slib<space>
-"   autocmd FileType ruby nnoremap rll :Vlib<space>
-" augroup END
+let g:netrw_liststyle=3

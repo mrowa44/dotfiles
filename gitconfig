@@ -8,9 +8,8 @@
   cm  = commit -v
   co  = checkout
   df  = diff
-  dfc = diff --cached
+  dc = diff --cached
   m   = merge
-  um  = reset --hard ORIG_HEAD
   pl  = pull
   plr = pull --rebase
   psh = push
@@ -19,7 +18,7 @@
   sh  = stash
   st  = status
   cp  = cherry-pick
-  lg  = log --graph --color=always --format='%C(auto)%h%d %s %C(black)%C(bold)~%an %Creset%C(black)%cr'
+  lg  = log --graph --oneline --color
 [grep]
   lineNumber = true
 [push]
@@ -38,3 +37,5 @@
 [pager]
   diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
+[commit]
+  template = ~/dotfiles/gitcommit
