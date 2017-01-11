@@ -202,7 +202,7 @@ iabbr porps props
 
 set guioptions=
 set guicursor+=a:blinkon0
-set guifont=Consolas:h13
+set guifont=Menlo:h12
 
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'

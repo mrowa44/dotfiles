@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # chsh -s `which zsh`
+# git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -19,8 +20,30 @@ ln -sf ${DIR}/gemrc ~/.gemrc
 ln -sf ${DIR}/eslintrc ~/.eslintrc
 ln -sf ${DIR}/my.cnf ~/.my.cnf
 
-# brew install git diff-so-fancy ag ctags httpie tig node tree redis nvm ccat
-# brew install vim --override-system-vi
-# brew cask install sequel-pro postico google-chrome virtualbox slack spotify
-#   flycut caffeine thyme
-# gem install rvm tmuxinator
+brew install vim --override-system-vi
+
+brew install\
+  git\
+  diff-so-fancy\
+  ag\
+  ctags\
+  httpie\
+  tig\
+  node\
+  tree\
+  redis\
+  nvm\
+  ccat\
+  postgresql
+
+brew cask install\
+  sequel-pro\
+  postico\
+  google-chrome\
+  virtualbox\
+  slack\
+  spotify\
+  flycut\
+  caffeine\
+  thyme
+gem install rvm tmuxinator bundler

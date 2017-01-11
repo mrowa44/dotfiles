@@ -12,6 +12,8 @@ export NVM_DIR="/Users/Justyna/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
 export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 source `brew --prefix`/etc/profile.d/z.sh
 
@@ -92,6 +94,8 @@ alias lint="npm run lint"
 alias cask="brew cask"
 alias vvim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
+alias rios='react-native run-ios --simulator="iPhone 7"'
+alias ran='react-native run-android'
 
 dockerbash () {
   docker exec -it $1 bash
