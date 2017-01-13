@@ -139,8 +139,8 @@ augroup vimrcEx
   autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType sql,javascript setlocal textwidth=120
-  autocmd FileType javascript     inoremap lh console.log('~~~~~~~~~~~~~~ ',);<left><left>
+  autocmd FileType sql            setlocal textwidth=120
+  autocmd FileType javascript     setlocal textwidth=100
   autocmd FileType javascript     inoremap lg console.log();<left><left>
   autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript     nnoremap sr G?render<cr>:nohl<cr>
@@ -179,7 +179,6 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap gaa <Plug>(EasyAlign)ip
 Plug 'chemzqm/vim-jsx-improve'
 " Plug 'sheerun/vim-polyglot' " turn off for js
-Plug 'yuttie/comfortable-motion.vim'
 call plug#end()
 
 """ Colors

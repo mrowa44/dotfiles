@@ -23,27 +23,28 @@ ln -sf ${DIR}/my.cnf ~/.my.cnf
 brew install vim --override-system-vi
 
 brew install\
-  git\
-  diff-so-fancy\
   ag\
-  ctags\
-  httpie\
-  tig\
-  node\
-  tree\
-  redis\
-  nvm\
   ccat\
+  ctags\
+  diff-so-fancy\
+  git\
+  httpie\
+  node\
+  nvm\
   postgresql
+  redis\
+  tig\
+  tmux\
+  tree\
 
 brew cask install\
-  sequel-pro\
-  postico\
+  caffeine\
+  flycut\
   google-chrome\
-  virtualbox\
+  postico\
+  sequel-pro\
   slack\
   spotify\
-  flycut\
-  caffeine\
   thyme
+  virtualbox\
 gem install rvm tmuxinator bundler
