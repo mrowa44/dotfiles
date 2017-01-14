@@ -31,20 +31,21 @@ brew install\
   httpie\
   node\
   nvm\
-  postgresql
+  postgresql\
   redis\
   tig\
   tmux\
   tree\
+  reattach-to-user-namespace
 
 brew cask install\
   caffeine\
   flycut\
   google-chrome\
-  postico\
   sequel-pro\
   slack\
   spotify\
-  thyme
+  thyme\
   virtualbox\
+  vlc
 gem install rvm tmuxinator bundler
