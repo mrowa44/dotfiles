@@ -42,10 +42,11 @@ brew cask install\
   caffeine\
   flycut\
   google-chrome\
+  psequel\
   sequel-pro\
   slack\
   spotify\
   thyme\
   virtualbox\
   vlc
-gem install rvm tmuxinator bundler
+# gem install rvm tmuxinator bundler

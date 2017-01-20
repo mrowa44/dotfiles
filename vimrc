@@ -9,6 +9,7 @@ set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set clipboard=unnamed
 set complete-=t
+set visualbell
 
 """ UI
 set lazyredraw

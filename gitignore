@@ -1,7 +1,7 @@
 *.un~
 *~
 .DS_Store
-tags
+tags*
 log/*.log
 tmp/**/*
 .idea
@@ -13,6 +13,4 @@ data/schema.json
 Session.vim
 dump.rdb
 notes.*
-tags.lock
-tags.temp
 npm-debug*

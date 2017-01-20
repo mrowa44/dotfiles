@@ -74,7 +74,7 @@ gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
 
 alias cp="cp -vi"
 alias mv="mv -vi"
-alias rm="rm -v"
+# alias rm="rm -v"
 alias ls="ls -GF"
 alias la="ls -GFA"
 alias ps='ps aux'
