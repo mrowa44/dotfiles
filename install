@@ -32,11 +32,13 @@ brew install\
   node\
   nvm\
   postgresql\
+  progress\
+  reattach-to-user-namespace\
   redis\
   tig\
   tmux\
   tree\
-  reattach-to-user-namespace
+  watch
 
 brew cask install\
   caffeine\
