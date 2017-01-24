@@ -174,7 +174,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
-Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -184,8 +183,10 @@ Plug 'chemzqm/vim-jsx-improve'
 call plug#end()
 
 """ Colors
-set termguicolors
-color pencil
+" set termguicolors
+" color pencil
+" color default
+highlight ColorColumn ctermbg=lightgray guibg=gray93
 " highlight ColorColumn ctermbg=gray guibg=gray93
 highlight jsThis ctermfg=blue guifg=darkgray
 " highlight jsString ctermfg=darkcyan guifg=darkcyan
@@ -200,6 +201,7 @@ iabbr reutrn return
 iabbr treu true
 iabbr thus this
 iabbr porps props
+iabbr err0r error
 
 set guioptions=
 set guicursor+=a:blinkon0

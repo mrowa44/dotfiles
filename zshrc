@@ -141,3 +141,4 @@ alias gst="git status"
 alias gum='git reset --hard ORIG_HEAD'
 alias gsup='git submodule update'
 alias gwut='git diff HEAD~1'
+alias gcf='git clean -f'
