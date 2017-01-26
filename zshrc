@@ -98,6 +98,9 @@ alias vvim="vim -u NONE"
 alias rios='react-native run-ios --simulator="iPhone 7"'
 alias ran='react-native run-android'
 alias progress='watch progress -q'
+alias s='npm start'
+alias t='npm test'
+alias l='npm run lint'
 
 dockerbash () {
   docker exec -it $1 bash

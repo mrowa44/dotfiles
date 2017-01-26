@@ -159,8 +159,6 @@ augroup END
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'altercation/vim-colors-solarized'
-Plug 'croaky/vim-colors-github'
-Plug 'reedes/vim-colors-pencil'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -178,17 +176,21 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'chemzqm/vim-jsx-improve'
+Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 " Plug 'sheerun/vim-polyglot' " turn off for js
 call plug#end()
 
 """ Colors
-" set termguicolors
+set notermguicolors
+set background=light
+let g:solarized_termcolors = 16
+colorscheme solarized
+
 " color pencil
 " color default
-highlight ColorColumn ctermbg=lightgray guibg=gray93
+" highlight ColorColumn ctermbg=lightgray guibg=gray93
 " highlight ColorColumn ctermbg=gray guibg=gray93
-highlight jsThis ctermfg=blue guifg=darkgray
+" highlight jsThis ctermfg=blue guifg=darkgray
 " highlight jsString ctermfg=darkcyan guifg=darkcyan
 
 """ Typos

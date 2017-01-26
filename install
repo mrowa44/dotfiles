@@ -27,6 +27,7 @@ brew cask install\
   1password\
   caffeine\
   flycut\
+  gimp\
   goofy\
   google-chrome\
   iterm2\
@@ -39,11 +40,16 @@ brew cask install\
   virtualbox\
   vlc
 
-# git clone https://github.com/mrowa44/dotfiles && cd dotfiles && chmod +x install && ./install
-# mkdir ~/Projects
+# if [ ! -d ~/dotfiles ]; then
+#   (cd ~ && git clone https://github.com/mrowa44/dotfiles);
+# fi
 
-# chsh -s `which zsh`
-# git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+[ -d ~/Projects ] || mkdir ~/Projects
+
+if [ $SHELL != /bin/zsh ]; then
+  chsh -s `which zsh`
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+fi
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ln -sf ${DIR}/zshrc ~/.zshrc
