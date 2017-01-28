@@ -21,6 +21,7 @@ brew install\
   tmux\
   tree\
   watch\
+  yarn\
   z
 
 brew cask install\
@@ -46,8 +47,10 @@ brew cask install\
 
 [ -d ~/Projects ] || mkdir ~/Projects
 
-if [ $SHELL != /bin/zsh ]; then
-  chsh -s `which zsh`
+zsh_path=`which zsh`
+
+if [ $SHELL != $zsh_path ]; then
+  chsh -s $zsh_path
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 fi
 
@@ -64,7 +67,8 @@ ln -sf ${DIR}/psqlrc ~/.psqlrc
 ln -sf ${DIR}/ctags ~/.ctags
 ln -sf ${DIR}/agignore ~/.agignore
 ln -sf ${DIR}/gemrc ~/.gemrc
-ln -sf ${DIR}/eslintrc ~/.eslintrc
+ln -sf ${DIR}/eslintrc.js ~/.eslintrc.js
 ln -sf ${DIR}/my.cnf ~/.my.cnf
 
-# gem install rvm tmuxinator bundler
+# xcode-select --install
+# rvm get stable --auto-dotfiles
