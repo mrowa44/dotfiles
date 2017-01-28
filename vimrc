@@ -172,12 +172,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
+Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
-" Plug 'sheerun/vim-polyglot' " turn off for js
 call plug#end()
 
 """ Colors
@@ -185,13 +184,6 @@ set notermguicolors
 set background=light
 let g:solarized_termcolors = 16
 colorscheme solarized
-
-" color pencil
-" color default
-" highlight ColorColumn ctermbg=lightgray guibg=gray93
-" highlight ColorColumn ctermbg=gray guibg=gray93
-" highlight jsThis ctermfg=blue guifg=darkgray
-" highlight jsString ctermfg=darkcyan guifg=darkcyan
 
 """ Typos
 iabbr iser user
