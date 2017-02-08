@@ -169,6 +169,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'w0rp/ale'
+  let g:ale_sign_column_always = 1
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }

@@ -57,9 +57,6 @@ extract ()
   fi
 }
 
-rejson() { redis-cli -h dm "$@" | json_pp }
-alias redis-match='redis-cli -h dm --scan --pattern' # pattern: 'escache/dupa*'
-
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" foreward-word
@@ -72,10 +69,10 @@ mkdirc() { mkdir -p "$1" && cd "$1"; }
 f() { find . -iname "$1*"; }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
+dockerbash () { docker exec -it $1 bash }
 
 alias cp="cp -vi"
 alias mv="mv -vi"
-# alias rm="rm -v"
 alias ls="ls -GF"
 alias la="ls -GFA"
 alias ps='ps aux'
@@ -83,15 +80,13 @@ alias todo='$HOME/dotfiles/todoist'
 alias j='z'
 alias -g H='| head'
 alias -g T='| tail'
-alias -g be='bundle exec'
 alias -g cat="ccat"
+alias -g be='bundle exec'
 # alias -g r='rails'
 alias ds='docker-machine env && eval $(docker-machine env)'
-alias servethis='python -m SimpleHTTPServer'
-alias watchthemstyles='sass --watch style.scss:style.css'
-alias open_ports='lsof -i -P | ag listen
-# alias open_ports='netstat -lnptu'
-alias lint="npm run lint"
+alias serve_this='python -m SimpleHTTPServer'
+alias watch_them_styles='sass --watch style.scss:style.css'
+alias open_ports='lsof -i -P | ag listen'
 alias cask="brew cask"
 alias vvim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
@@ -100,24 +95,24 @@ alias ran='react-native run-android'
 alias progress='watch progress -q'
 alias s='npm start'
 alias t='npm test'
-alias l='npm run lint'
+alias l='./node_modules/eslint/bin/eslint.js .'
 
-dockerbash () {
-  docker exec -it $1 bash
-}
-yolo () {
-  j db
-  echo "DROP DATABASE oddshot;" | mysql -h dm -u root
-  ./migrate.sh
-  ./mock_data_sql_scripts/load_mock_data.sh
-  cd -
-}
-kurwa () {
-  docker-machine start
-  j dev
-  ds && docker-compose up -d
-  j web
-}
+# yolo () {
+#   j db
+#   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
+#   ./migrate.sh
+#   ./mock_data_sql_scripts/load_mock_data.sh
+#   cd -
+# }
+# kurwa () {
+#   docker-machine start
+#   j dev
+#   ds && docker-compose up -d
+#   j web
+# }
+# rejson() { redis-cli -h dm "$@" | json_pp }
+# alias redis-match='redis-cli -h dm --scan --pattern' # pattern: 'escache/dupa*'
+
 alias ga='git add'
 alias gaa="git add --all && echo '------> change branch'"
 alias gb="git branch"
@@ -127,21 +122,21 @@ alias gco='git checkout'
 alias gcp="git cherry-pick"
 alias gd="git diff"
 alias gdc='git diff --cached'
-alias gdn='git diff --name-only'
-# alias glg="git log --graph --color=always --format='%C(auto)%h%d %s %C(blue)~%an, %cr'"
 alias glg="git log --oneline --graph --color"
 alias gm='git merge'
 alias gpl="git pull"
-alias gplr="git pull --rebase"
 alias gpsh="git push"
 alias grb='git rebase'
+alias gsh='git stash'
+alias gst="git status"
+
+alias gdn='git diff --name-only'
+alias gplr="git pull --rebase"
 alias grh='git reset HEAD'
 alias gs="git show"
-alias gsh='git stash'
 alias 'gsh popf'='git checkout -- .'
 alias gshl='git stash list'
-alias gst="git status"
 alias gum='git reset --hard ORIG_HEAD'
 alias gsup='git submodule update'
-alias gwut='git diff HEAD~1'
+alias g_defuq_i_just_did='git diff HEAD~1'
 alias gcf='git clean -f'
