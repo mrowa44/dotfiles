@@ -1,13 +1,11 @@
+""" General
 let mapleader = " "
 syntax on
 filetype plugin indent on
-
-""" General
 set hidden
 set gdefault
 set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
-set clipboard=unnamed
 set complete-=t
 set visualbell
 
@@ -33,8 +31,7 @@ set autoindent smartindent
 set expandtab smarttab
 set shiftwidth=2 softtabstop=2 tabstop=2
 
-""" Backups, undo, history
-set history=200
+""" Backups, undo
 set noswapfile
 set backup backupdir=~/.vim/backup
 set undofile undodir=~/.vim/undo
@@ -45,7 +42,7 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), "p")   | endi
 nmap     §  <esc>
 vnoremap §  <esc>
 cnoremap §  <esc>
-inoremap §  <esc>:echo "~~~~~ Use jj ~~~~~~"<cr>
+inoremap §  <esc>:echoe ">>>>>>>>>>>> Use jj, you moron <<<<<<<<<<<"<cr>
 inoremap jj <esc>
 
 cnoremap <c-p> <up>
@@ -82,23 +79,24 @@ nnoremap <bs> `[V`]
 nnoremap <leader> <Nop>
 nnoremap <leader><leader> :wa<cr>
 
+nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
+nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
+nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
 nnoremap <leader>e  :edit!<cr>
+nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ack<Space>
 nnoremap <leader>h  :nohlsearch<cr>
+nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>n  :setlocal number!<cr>
-nnoremap <leader>p  :set paste!<cr>
+nnoremap <leader>p  "+p
 nnoremap <leader>q  :quit<cr>
+nnoremap <leader>ss :source Session.vim<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :write<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>ev :vs $MYVIMRC<cr>
-nnoremap <leader>ms :mksession!<cr>
-nnoremap <leader>ss :source Session.vim<cr>
-nnoremap <leader>W  :%s/\s\+$//<cr>
-nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
-nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
+nnoremap <leader>y  "+y
 
 inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
@@ -158,7 +156,7 @@ augroup END
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/base16-vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -167,14 +165,17 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
-Plug 'wincent/ferret'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0rp/ale'
-  let g:ale_sign_column_always = 1
+Plug 'wincent/ferret'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+Plug 'ctrlpvim/ctrlp.vim'
+  if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+    let g:ctrlp_use_caching = 0
+  endif
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -182,10 +183,17 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 call plug#end()
 
 """ Colors
-set notermguicolors
 set background=light
-let g:solarized_termcolors = 16
-colorscheme solarized
+set termguicolors
+let base16colorspace=256
+color base16-grayscale-light
+" color base16-default-light
+" color base16-solarized-light
+
+""" GUI
+set guioptions=
+set guicursor+=a:blinkon0
+set guifont=Menlo:h12
 
 """ Typos
 iabbr iser user
@@ -199,13 +207,5 @@ iabbr thus this
 iabbr porps props
 iabbr err0r error
 
-set guioptions=
-set guicursor+=a:blinkon0
-set guifont=Menlo:h12
-
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
+""" Other
 let g:netrw_liststyle=3

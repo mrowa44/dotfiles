@@ -1,28 +1,36 @@
+### General
 export EDITOR=vim
 export VISUAL=vim
-export PATH="$PATH:$HOME/.rvm/bin"
+
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+source `brew --prefix`/etc/profile.d/z.sh
+
+### Version managers
+export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-
 export NVM_DIR="$HOME/.nvm"
 source "/usr/local/opt/nvm/nvm.sh"
 
-export ANDROID_HOME=/usr/local/opt/android-sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+### Bindings
+bindkey "^B" backward-kill-word
+bindkey '^G' insert-last-word
+bindkey "^W" foreward-word
+bindkey "^V" backward-word
 
-source `brew --prefix`/etc/profile.d/z.sh
+### Custom functions
+mkdirc() { mkdir -p "$1" && cd "$1"; }
+f() { find . -iname "$1*"; }
+gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
+gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
+dockerbash () { docker exec -it $1 bash }
 
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit
-
-# Colorize man pages
-man() {
+man() { # Colorize man pages
   env \
     LESS_TERMCAP_mb=$(printf "\e[1;31m") \
     LESS_TERMCAP_md=$(printf "\e[1;31m") \
@@ -34,15 +42,13 @@ man() {
     man "$@"
 }
 
-# Extract archives
-extract ()
-{
+extract () { # Extract archives
   if [ -f $1 ] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1   ;;
       *.tar.gz)    tar xzf $1   ;;
       *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
+      *.rar)       unrar x $1   ;;
       *.gz)        gunzip $1    ;;
       *.tar)       tar xf $1    ;;
       *.tbz2)      tar xjf $1   ;;
@@ -56,46 +62,6 @@ extract ()
     echo "'$1' is not a valid file"
   fi
 }
-
-bindkey "^B" backward-kill-word
-bindkey '^G' insert-last-word
-bindkey "^W" foreward-word
-bindkey "^V" backward-word
-
-alias '..'='cd ..'
-alias '...'='cd ../..'
-alias mkdir="mkdir -p"
-mkdirc() { mkdir -p "$1" && cd "$1"; }
-f() { find . -iname "$1*"; }
-gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
-gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
-dockerbash () { docker exec -it $1 bash }
-
-alias cp="cp -vi"
-alias mv="mv -vi"
-alias ls="ls -GF"
-alias la="ls -GFA"
-alias ps='ps aux'
-alias todo='$HOME/dotfiles/todoist'
-alias j='z'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g cat="ccat"
-alias -g be='bundle exec'
-# alias -g r='rails'
-alias ds='docker-machine env && eval $(docker-machine env)'
-alias serve_this='python -m SimpleHTTPServer'
-alias watch_them_styles='sass --watch style.scss:style.css'
-alias open_ports='lsof -i -P | ag listen'
-alias cask="brew cask"
-alias vvim="vim -u NONE"
-# netstat -nlp tcp | ag 8000
-alias rios='react-native run-ios --simulator="iPhone 7"'
-alias ran='react-native run-android'
-alias progress='watch progress -q'
-alias s='npm start'
-alias t='npm test'
-alias l='./node_modules/eslint/bin/eslint.js .'
 
 # yolo () {
 #   j db
@@ -111,6 +77,43 @@ alias l='./node_modules/eslint/bin/eslint.js .'
 #   j web
 # }
 # rejson() { redis-cli -h dm "$@" | json_pp }
+
+### General aliases
+alias -g H='| head'
+alias -g T='| tail'
+alias -g cat="ccat"
+
+alias '..'='cd ..'
+alias '...'='cd ../..'
+alias mkdir="mkdir -p"
+alias cp="cp -vi"
+alias mv="mv -vi"
+alias ls="ls -GF"
+alias la="ls -GFA"
+alias ps='ps aux'
+alias j='z'
+alias cask="brew cask"
+alias open_ports='lsof -i -P | ag listen'
+alias progress='watch progress -q'
+alias serve_this='python -m SimpleHTTPServer'
+alias watch_them_styles='sass --watch style.scss:style.css'
+# alias vvim="vim -u NONE"
+# netstat -nlp tcp | ag 8000
+# alias todo='$HOME/dotfiles/todoist'
+
+### Lang/tool specific aliases
+alias -g be='bundle exec'
+# alias -g r='rails'
+
+alias s='npm start'
+alias t='npm test'
+alias l='./node_modules/eslint/bin/eslint.js .'
+
+alias rios='react-native run-ios --simulator="iPhone 7"'
+alias ran='react-native run-android'
+
+alias docker_setup='docker-machine env && eval $(docker-machine env)'
+
 # alias redis-match='redis-cli -h dm --scan --pattern' # pattern: 'escache/dupa*'
 
 alias ga='git add'
@@ -140,3 +143,8 @@ alias gum='git reset --hard ORIG_HEAD'
 alias gsup='git submodule update'
 alias g_defuq_i_just_did='git diff HEAD~1'
 alias gcf='git clean -f'
+
+### Random
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
