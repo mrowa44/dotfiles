@@ -5,7 +5,6 @@ zstyle ':prezto:load' pmodule \
   'syntax-highlighting' \
   'prompt' \
   'utility' \
-  'node' \
   'history'
 
 zstyle ':prezto:module:git:status:ignore' submodules 'all'

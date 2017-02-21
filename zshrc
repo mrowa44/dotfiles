@@ -2,33 +2,55 @@
 export EDITOR=vim
 export VISUAL=vim
 
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit
-
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
 source `brew --prefix`/etc/profile.d/z.sh
 
-### Version managers
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
+### Lazy load version managers
+rvm() {
+  export PATH="$PATH:$HOME/.rvm/bin"
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+  rvm "$@"
+}
+
+nvm() {
+  export NVM_DIR="$HOME/.nvm"
+  source "/usr/local/opt/nvm/nvm.sh"
+  nvm "$@"
+}
+
+fpath=(~/.zsh/completion $fpath)
+autoload -Uz compinit && compinit
 
 ### Bindings
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" foreward-word
 bindkey "^V" backward-word
+bindkey "^R" history-incremental-pattern-search-backward
+bindkey "^S" history-incremental-pattern-search-forward
 
 ### Custom functions
 mkdirc() { mkdir -p "$1" && cd "$1"; }
 f() { find . -iname "$1*"; }
+whats_on_port() { lsof -i :$1 }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
 dockerbash () { docker exec -it $1 bash }
+
+finder() { # cd to top finder window
+  finderPath=`osascript -e 'tell application "Finder"
+      try
+        set currentFolder to (folder of the front window as alias)
+      on error
+        set currentFolder to (path to desktop folder as alias)
+      end try
+      POSIX path of currentFolder
+    end tell'`;
+  cd "$finderPath"
+}
 
 man() { # Colorize man pages
   env \
@@ -63,6 +85,11 @@ extract () { # Extract archives
   fi
 }
 
+yolo() {
+  dropdb database_development
+  createdb database_development
+  sequelize db:migrate
+}
 # yolo () {
 #   j db
 #   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
@@ -90,6 +117,7 @@ alias cp="cp -vi"
 alias mv="mv -vi"
 alias ls="ls -GF"
 alias la="ls -GFA"
+alias rm='rm'
 alias ps='ps aux'
 alias j='z'
 alias cask="brew cask"
@@ -97,6 +125,7 @@ alias open_ports='lsof -i -P | ag listen'
 alias progress='watch progress -q'
 alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
+alias ip='ipconfig getifaddr en0'
 # alias vvim="vim -u NONE"
 # netstat -nlp tcp | ag 8000
 # alias todo='$HOME/dotfiles/todoist'

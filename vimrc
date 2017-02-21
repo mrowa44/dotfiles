@@ -151,6 +151,7 @@ augroup vimrcEx
   autocmd InsertLeave * silent! set nopaste
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
+  " autocmd VimEnter   * execute "source Session.vim"
 augroup END
 
 """ Plugins
@@ -165,12 +166,8 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'wincent/ferret'
-Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'stardiviner/AutoSQLUpperCase.vim', { 'for': 'sql' }
-Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 Plug 'ctrlpvim/ctrlp.vim'
   if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
@@ -180,15 +177,20 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 call plug#end()
 
 """ Colors
-set background=light
+se background=light
 set termguicolors
 let base16colorspace=256
-color base16-grayscale-light
+" color base16-grayscale-light
 " color base16-default-light
 " color base16-solarized-light
+" color base16-grayscale-dark
+color base16-ocean
 
 """ GUI
 set guioptions=
@@ -205,7 +207,7 @@ iabbr reutrn return
 iabbr treu true
 iabbr thus this
 iabbr porps props
-iabbr err0r error
+iabbr retrun return
 
 """ Other
 let g:netrw_liststyle=3
