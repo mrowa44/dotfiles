@@ -138,11 +138,9 @@ augroup vimrcEx
   autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType sql            setlocal textwidth=120
   autocmd FileType javascript     setlocal textwidth=100
   autocmd FileType javascript     inoremap lg console.log();<left><left>
   autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
-  autocmd FileType javascript     nnoremap sr G?render<cr>:nohl<cr>
   autocmd FileType javascript     nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType ruby           inoremap bp binding.pry
   autocmd FileType qf             nnoremap <buffer> <c-l> <C-w><Enter><C-w>L
@@ -151,7 +149,6 @@ augroup vimrcEx
   autocmd InsertLeave * silent! set nopaste
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
-  " autocmd VimEnter   * execute "source Session.vim"
 augroup END
 
 """ Plugins
@@ -166,31 +163,45 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
-" Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
-  if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ctrlp_use_caching = 0
-  endif
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_use_caching = 0
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
+Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 call plug#end()
 
 """ Colors
-se background=light
 set termguicolors
-let base16colorspace=256
-" color base16-grayscale-light
-" color base16-default-light
-" color base16-solarized-light
-" color base16-grayscale-dark
 color base16-ocean
+
+function! CycleColors()
+  let colors = [
+        \ 'base16-grayscale-light',
+        \ 'base16-grayscale-dark',
+        \ 'base16-default-light',
+        \ 'base16-solarized-light',
+        \ 'base16-ocean'
+        \ ]
+  let current = index(colors, g:colors_name)
+  let colors_total = len(colors)
+  for i in range(colors_total)
+    let current += 1
+    if (current > colors_total)
+      let current = 0
+    endif
+  endfor
+  execute 'colorscheme '.colors[current]
+  redraw
+endfunction
+nnoremap <c-t> :call CycleColors()<cr>
 
 """ GUI
 set guioptions=
@@ -208,6 +219,7 @@ iabbr treu true
 iabbr thus this
 iabbr porps props
 iabbr retrun return
+iabbr separete separate
 
 """ Other
 let g:netrw_liststyle=3

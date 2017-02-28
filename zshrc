@@ -8,18 +8,15 @@ fi
 
 source `brew --prefix`/etc/profile.d/z.sh
 
-### Lazy load version managers
+### Version managers
 rvm() {
   export PATH="$PATH:$HOME/.rvm/bin"
   [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
   rvm "$@"
 }
 
-nvm() {
-  export NVM_DIR="$HOME/.nvm"
-  source "/usr/local/opt/nvm/nvm.sh"
-  nvm "$@"
-}
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
 
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
@@ -34,7 +31,7 @@ bindkey "^S" history-incremental-pattern-search-forward
 
 ### Custom functions
 mkdirc() { mkdir -p "$1" && cd "$1"; }
-f() { find . -iname "$1*"; }
+f() { find . -iname "$1*"; } # f \*.spec -> a/b/abc.spec.js
 whats_on_port() { lsof -i :$1 }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
@@ -135,7 +132,7 @@ alias -g be='bundle exec'
 # alias -g r='rails'
 
 alias s='npm start'
-alias t='npm test'
+alias t='swagger project test'
 alias l='./node_modules/eslint/bin/eslint.js .'
 
 alias rios='react-native run-ios --simulator="iPhone 7"'

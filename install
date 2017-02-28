@@ -11,8 +11,10 @@ brew install\
   diff-so-fancy\
   git\
   httpie\
+  jq\
   node\
   nvm\
+  peco\
   postgresql\
   progress\
   reattach-to-user-namespace\
@@ -25,13 +27,13 @@ brew install\
   z
 
 brew cask install\
-  1password\
   caffeine\
   flycut\
   gimp\
   goofy\
   google-chrome\
   iterm2\
+  monosnap\
   postman\
   psequel\
   sequel-pro\
@@ -72,3 +74,11 @@ ln -sf ${DIR}/my.cnf ~/.my.cnf
 
 # xcode-select --install
 # rvm get stable --auto-dotfiles
+
+# Create locate db
+# sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+
+# Enable filevault
+# sudo fdesetup enable
+
+# https://www.amazon.com/gp/sendtokindle/mac
