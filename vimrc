@@ -8,6 +8,7 @@ set backspace=indent,eol,start
 set wildmenu wildmode=list:longest,list:full
 set complete-=t
 set visualbell
+set nottimeout
 
 """ UI
 set lazyredraw
@@ -42,7 +43,7 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), "p")   | endi
 nmap     §  <esc>
 vnoremap §  <esc>
 cnoremap §  <esc>
-inoremap §  <esc>:echoe ">>>>>>>>>>>> Use jj, you moron <<<<<<<<<<<"<cr>
+inoremap §  <esc>
 inoremap jj <esc>
 
 cnoremap <c-p> <up>
@@ -88,6 +89,7 @@ nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ack<Space>
 nnoremap <leader>h  :nohlsearch<cr>
+nnoremap <leader>i  :PlugInstall<cr>
 nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  "+p
@@ -125,17 +127,18 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
+  autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
+  autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
+  autocmd BufRead,BufNewFile *.hamlc    setlocal ft=haml
+  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+  autocmd BufWritePost $MYVIMRC,$HOME/dotfiles/vimrc source $MYVIMRC
   " When editing a file, always jump to the last known cursor position
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
     \   exe "normal! g`\"" |
     \ endif
-  autocmd BufLeave * setlocal colorcolumn=
-  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
-  autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
-  autocmd BufRead,BufNewFile *.hamlc    setlocal ft=haml
-  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
-  autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript     setlocal textwidth=100
@@ -154,7 +157,7 @@ augroup END
 """ Plugins
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
-Plug 'chriskempson/base16-vim'
+Plug 'w0ng/vim-hybrid'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -168,6 +171,8 @@ Plug 'wincent/ferret'
 Plug 'ctrlpvim/ctrlp.vim'
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
   let g:ctrlp_use_caching = 0
+  let g:ctrlp_max_height = 30
+Plug 'terryma/vim-expand-region'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -176,32 +181,35 @@ Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+Plug 'oblitum/rainbow'
+  let g:rainbow_active = 0
+  nnoremap <c-c> :RainbowToggle<cr>
 call plug#end()
 
 """ Colors
 set termguicolors
-color base16-ocean
+color hybrid
 
-function! CycleColors()
-  let colors = [
-        \ 'base16-grayscale-light',
-        \ 'base16-grayscale-dark',
-        \ 'base16-default-light',
-        \ 'base16-solarized-light',
-        \ 'base16-ocean'
-        \ ]
-  let current = index(colors, g:colors_name)
-  let colors_total = len(colors)
-  for i in range(colors_total)
-    let current += 1
-    if (current > colors_total)
-      let current = 0
-    endif
-  endfor
-  execute 'colorscheme '.colors[current]
-  redraw
-endfunction
-nnoremap <c-t> :call CycleColors()<cr>
+" function! CycleColors()
+"   let colors = [
+"         \ 'base16-grayscale-light',
+"         \ 'base16-grayscale-dark',
+"         \ 'base16-default-light',
+"         \ 'base16-solarized-light',
+"         \ 'base16-ocean'
+"         \ ]
+"   let current = index(colors, g:colors_name)
+"   let colors_total = len(colors)
+"   for i in range(colors_total)
+"     let current += 1
+"     if (current > colors_total)
+"       let current = 0
+"     endif
+"   endfor
+"   execute 'colorscheme '.colors[current]
+"   redraw
+" endfunction
+" nnoremap <c-t> :call CycleColors()<cr>
 
 """ GUI
 set guioptions=

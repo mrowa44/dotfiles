@@ -1,6 +1,7 @@
 ### General
 export EDITOR=vim
 export VISUAL=vim
+export PGDATA=/usr/local/var/postgres
 
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -9,11 +10,8 @@ fi
 source `brew --prefix`/etc/profile.d/z.sh
 
 ### Version managers
-rvm() {
-  export PATH="$PATH:$HOME/.rvm/bin"
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-  rvm "$@"
-}
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 
 export NVM_DIR="$HOME/.nvm"
 source "/usr/local/opt/nvm/nvm.sh"
@@ -87,20 +85,6 @@ yolo() {
   createdb database_development
   sequelize db:migrate
 }
-# yolo () {
-#   j db
-#   echo "DROP DATABASE oddshot;" | mysql -h dm -u root
-#   ./migrate.sh
-#   ./mock_data_sql_scripts/load_mock_data.sh
-#   cd -
-# }
-# kurwa () {
-#   docker-machine start
-#   j dev
-#   ds && docker-compose up -d
-#   j web
-# }
-# rejson() { redis-cli -h dm "$@" | json_pp }
 
 ### General aliases
 alias -g H='| head'
@@ -123,24 +107,21 @@ alias progress='watch progress -q'
 alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
-# alias vvim="vim -u NONE"
-# netstat -nlp tcp | ag 8000
-# alias todo='$HOME/dotfiles/todoist'
 
 ### Lang/tool specific aliases
 alias -g be='bundle exec'
 # alias -g r='rails'
 
 alias s='npm start'
-alias t='swagger project test'
 alias l='./node_modules/eslint/bin/eslint.js .'
+alias t='mocha --recursive'
+alias d='npm run debug'
+alias mochadbg='mocha --debug-brk --inspect --recursive'
 
 alias rios='react-native run-ios --simulator="iPhone 7"'
 alias ran='react-native run-android'
 
 alias docker_setup='docker-machine env && eval $(docker-machine env)'
-
-# alias redis-match='redis-cli -h dm --scan --pattern' # pattern: 'escache/dupa*'
 
 alias ga='git add'
 alias gaa="git add --all && echo '------> change branch'"
@@ -174,3 +155,5 @@ alias gcf='git clean -f'
 export ANDROID_HOME=/usr/local/opt/android-sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+
+export PATH="$HOME/.yarn/bin:$PATH"

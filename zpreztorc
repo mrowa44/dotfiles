@@ -3,6 +3,7 @@ zstyle ':prezto:load' pmodule \
   'completion' \
   'history-substring-search' \
   'syntax-highlighting' \
+  'autosuggestions' \
   'prompt' \
   'utility' \
   'history'
@@ -13,6 +14,7 @@ zstyle ':prezto:module:prompt' theme 'pure'
 zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 zstyle ':prezto:module:syntax-highlighting' color 'yes'
+zstyle ':prezto:module:autosuggestions' color 'yes'
 
 # Auto convert .... to ../..
 # zstyle ':prezto:module:editor' dot-expansion 'yes'

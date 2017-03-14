@@ -9,6 +9,7 @@ brew install\
   ccat\
   ctags\
   diff-so-fancy\
+  docker\
   git\
   httpie\
   jq\
@@ -17,23 +18,33 @@ brew install\
   peco\
   postgresql\
   progress\
+  python\
   reattach-to-user-namespace\
   redis\
   tig\
+  tldr\
   tmux\
   tree\
   watch\
   yarn\
-  z
+  z\
+  https://raw.github.com/gleitz/howdoi/master/howdoi.rb
 
 brew cask install\
+  Caskroom/versions/safari-technology-preview\
   caffeine\
+  firefox\
+  firefoxnightly\
+  flux\
   flycut\
   gimp\
   goofy\
+  google-chrome-canary\
   google-chrome\
   iterm2\
+  macvim\
   monosnap\
+  notational-velocity\
   postman\
   psequel\
   sequel-pro\
@@ -41,7 +52,8 @@ brew cask install\
   spotify\
   thyme\
   virtualbox\
-  vlc
+  vlc\
+  wireshark
 
 # if [ ! -d ~/dotfiles ]; then
 #   (cd ~ && git clone https://github.com/mrowa44/dotfiles);
