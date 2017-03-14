@@ -30,6 +30,7 @@ bindkey "^S" history-incremental-pattern-search-forward
 ### Custom functions
 mkdirc() { mkdir -p "$1" && cd "$1"; }
 f() { find . -iname "$1*"; } # f \*.spec -> a/b/abc.spec.js
+ff() { find . -iname "*${1:-}*" }
 whats_on_port() { lsof -i :$1 }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
@@ -107,11 +108,14 @@ alias progress='watch progress -q'
 alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
+alias tmux='tmux -CC'
+alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
 ### Lang/tool specific aliases
 alias -g be='bundle exec'
 # alias -g r='rails'
 
+alias nr='npm run'
 alias s='npm start'
 alias l='./node_modules/eslint/bin/eslint.js .'
 alias t='mocha --recursive'
@@ -123,8 +127,12 @@ alias ran='react-native run-android'
 
 alias docker_setup='docker-machine env && eval $(docker-machine env)'
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 alias ga='git add'
-alias gaa="git add --all && echo '------> change branch'"
+alias gaa="git add --all && echo -e '${RED}------> current branch: ${GREEN}${branch}${RED} <------${NC}'"
 alias gb="git branch"
 alias gc!='git commit -v --amend'
 alias gc="git commit -v"

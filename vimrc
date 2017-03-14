@@ -92,7 +92,7 @@ nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>i  :PlugInstall<cr>
 nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>n  :setlocal number!<cr>
-nnoremap <leader>p  "+p
+nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>q  :quit<cr>
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
