@@ -9,13 +9,6 @@ fi
 
 source `brew --prefix`/etc/profile.d/z.sh
 
-### Version managers
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
 fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit && compinit
 
@@ -109,6 +102,7 @@ alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias tmux='tmux -CC'
+alias 'tmux ls'='tmux list-sessions'
 alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
 ### Lang/tool specific aliases
@@ -130,9 +124,12 @@ alias docker_setup='docker-machine env && eval $(docker-machine env)'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 alias ga='git add'
-alias gaa="git add --all && echo -e '${RED}------> current branch: ${GREEN}${branch}${RED} <------${NC}'"
+gaa() {
+  git add --all
+  branch=`git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,'`
+  echo -e "${RED}------> current branch: ${GREEN}${branch}${RED} <------${NC}"
+}
 alias gb="git branch"
 alias gc!='git commit -v --amend'
 alias gc="git commit -v"
@@ -165,3 +162,9 @@ export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 
 export PATH="$HOME/.yarn/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+source "/usr/local/opt/nvm/nvm.sh"
+
+export PATH="$PATH:$HOME/.rvm/bin"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
