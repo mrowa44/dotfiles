@@ -127,7 +127,6 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  autocmd BufEnter * if &ft ==# 'gitcommit' | :3 | endif
   autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
   autocmd BufLeave * setlocal colorcolumn=
   autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
@@ -145,6 +144,7 @@ augroup vimrcEx
   autocmd FileType javascript     inoremap lg console.log();<left><left>
   autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript     nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType javascript     nnoremap dg idebugger<esc>==
   autocmd FileType ruby           inoremap bp binding.pry
   autocmd FileType qf             nnoremap <buffer> <c-l> <C-w><Enter><C-w>L
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
