@@ -27,7 +27,6 @@ ff() { find . -iname "*${1:-}*" }
 whats_on_port() { lsof -i :$1 }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
-dockerbash () { docker exec -it $1 bash }
 
 finder() { # cd to top finder window
   finderPath=`osascript -e 'tell application "Finder"
@@ -75,8 +74,8 @@ extract () { # Extract archives
 }
 
 yolo() {
-  dropdb database_development
-  createdb database_development
+  dropdb github-org_development
+  createdb github-org_development
   sequelize db:migrate
 }
 
@@ -107,29 +106,31 @@ alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
 ### Lang/tool specific aliases
 alias -g be='bundle exec'
-# alias -g r='rails'
+alias -g r='rails'
 
 alias nr='npm run'
 alias s='npm start'
 alias l='./node_modules/eslint/bin/eslint.js .'
-alias t='mocha --recursive'
+alias t='npm test'
 alias d='npm run debug'
-alias mochadbg='mocha --debug-brk --inspect --recursive'
+alias mochadbg='NODE_ENV=test mocha --debug-brk --inspect --recursive'
+alias mocha='NODE_ENV=test mocha'
 
 alias rios='react-native run-ios --simulator="iPhone 7"'
 alias ran='react-native run-android'
 
 alias docker_setup='docker-machine env && eval $(docker-machine env)'
+dockerbash () { docker exec -it $1 bash }
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-alias ga='git add'
 gaa() {
   git add --all
   branch=`git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,'`
   echo -e "${RED}------> current branch: ${GREEN}${branch}${RED} <------${NC}"
 }
+alias ga='git add'
 alias gb="git branch"
 alias gc!='git commit -v --amend'
 alias gc="git commit -v"
@@ -144,10 +145,10 @@ alias gpsh="git push"
 alias grb='git rebase'
 alias gsh='git stash'
 alias gst="git status"
+alias grh='git reset HEAD'
 
 alias gdn='git diff --name-only'
 alias gplr="git pull --rebase"
-alias grh='git reset HEAD'
 alias gs="git show"
 alias 'gsh popf'='git checkout -- .'
 alias gshl='git stash list'
