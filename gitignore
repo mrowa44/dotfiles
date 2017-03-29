@@ -10,7 +10,7 @@ node_modules_prod
 npm-debug.log
 data/schema.graphql
 data/schema.json
-Session.vim
+Session.vim*
 dump.rdb
 notes.*
 npm-debug*

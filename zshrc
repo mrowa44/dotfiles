@@ -100,7 +100,6 @@ alias progress='watch progress -q'
 alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
-alias tmux='tmux -CC'
 alias 'tmux ls'='tmux list-sessions'
 alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
 
