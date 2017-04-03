@@ -5,7 +5,7 @@ filetype plugin indent on
 set hidden
 set gdefault
 set backspace=indent,eol,start
-set wildmenu wildmode=list:longest,list:full
+set wildmenu " wildmode=list:longest,list:full
 set complete-=t
 set visualbell
 set nottimeout
@@ -85,6 +85,7 @@ nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
+nnoremap <leader>g  :Ack <c-r>=expand("<cword>")<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ack<Space>
@@ -140,6 +141,7 @@ augroup vimrcEx
     \ endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType html           setlocal textwidth=130
+  autocmd FileType cs             setlocal textwidth=130
   autocmd FileType javascript     setlocal textwidth=100
   autocmd FileType javascript     inoremap lg console.log();<left><left>
   autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
@@ -158,6 +160,7 @@ augroup END
 runtime macros/matchit.vim
 call plug#begin('~/.vim/bundle')
 Plug 'w0ng/vim-hybrid'
+Plug 'vim-scripts/bclear'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -172,7 +175,6 @@ Plug 'ctrlpvim/ctrlp.vim'
   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
   let g:ctrlp_use_caching = 0
   let g:ctrlp_max_height = 30
-Plug 'terryma/vim-expand-region'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -181,53 +183,31 @@ Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
-Plug 'oblitum/rainbow'
-  let g:rainbow_active = 0
-  nnoremap <c-c> :RainbowToggle<cr>
+
+Plug 'terryma/vim-expand-region'
+Plug 'OrangeT/vim-csharp'
 call plug#end()
 
 """ Colors
 set termguicolors
-color hybrid
+set background=light
+color bclear
 
-" function! CycleColors()
-"   let colors = [
-"         \ 'base16-grayscale-light',
-"         \ 'base16-grayscale-dark',
-"         \ 'base16-default-light',
-"         \ 'base16-solarized-light',
-"         \ 'base16-ocean'
-"         \ ]
-"   let current = index(colors, g:colors_name)
-"   let colors_total = len(colors)
-"   for i in range(colors_total)
-"     let current += 1
-"     if (current > colors_total)
-"       let current = 0
-"     endif
-"   endfor
-"   execute 'colorscheme '.colors[current]
-"   redraw
-" endfunction
-" nnoremap <c-t> :call CycleColors()<cr>
+nnoremap <c-t> :call ToggleTheme()<cr>
+function! ToggleTheme()
+  if (g:colors_name == 'bclear')
+    color hybrid
+    set background=dark
+  else
+    color bclear
+    set background=light
+  endif
+endfunction
 
 """ GUI
 set guioptions=
 set guicursor+=a:blinkon0
 set guifont=Menlo:h12
-
-""" Typos
-iabbr iser user
-iabbr Teh the
-iabbr teh the
-iabbr cosnt const
-iabbr rpors props
-iabbr reutrn return
-iabbr treu true
-iabbr thus this
-iabbr porps props
-iabbr retrun return
-iabbr separete separate
 
 """ Other
 let g:netrw_liststyle=3

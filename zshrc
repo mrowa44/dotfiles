@@ -15,7 +15,7 @@ autoload -Uz compinit && compinit
 ### Bindings
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
-bindkey "^W" foreward-word
+bindkey "^W" forward-word
 bindkey "^V" backward-word
 bindkey "^R" history-incremental-pattern-search-backward
 bindkey "^S" history-incremental-pattern-search-forward
@@ -102,6 +102,7 @@ alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias t='todolist'
 
 ### Lang/tool specific aliases
 alias -g be='bundle exec'
