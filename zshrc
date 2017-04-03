@@ -73,12 +73,6 @@ extract () { # Extract archives
   fi
 }
 
-yolo() {
-  dropdb github-org_development
-  createdb github-org_development
-  sequelize db:migrate
-}
-
 ### General aliases
 alias -g H='| head'
 alias -g T='| tail'
@@ -121,6 +115,11 @@ alias ran='react-native run-android'
 
 alias docker_setup='docker-machine env && eval $(docker-machine env)'
 dockerbash () { docker exec -it $1 bash }
+
+fix_postgres() {
+  rm /usr/local/var/postgres/postmaster.pid
+  brew services restart postgresql
+}
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
