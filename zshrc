@@ -27,6 +27,12 @@ ff() { find . -iname "*${1:-}*" }
 whats_on_port() { lsof -i :$1 }
 gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
 gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
+edit() { j $1 && vim }
+
+fix_postgres() {
+  rm /usr/local/var/postgres/postmaster.pid
+  brew services restart postgresql
+}
 
 finder() { # cd to top finder window
   finderPath=`osascript -e 'tell application "Finder"
@@ -96,7 +102,6 @@ alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias t='todolist'
 
 ### Lang/tool specific aliases
 alias -g be='bundle exec'
@@ -116,10 +121,6 @@ alias ran='react-native run-android'
 alias docker_setup='docker-machine env && eval $(docker-machine env)'
 dockerbash () { docker exec -it $1 bash }
 
-fix_postgres() {
-  rm /usr/local/var/postgres/postmaster.pid
-  brew services restart postgresql
-}
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'

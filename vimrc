@@ -85,7 +85,7 @@ nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>d  :Ack <c-r>/<cr>
-nnoremap <leader>g  :Ack <c-r>=expand("<cword>")<cr>
+nnoremap <leader>g  :Ack <c-r>=expand('<cword>')<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ack<Space>
@@ -140,8 +140,8 @@ augroup vimrcEx
     \   exe "normal! g`\"" |
     \ endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
-  autocmd FileType html           setlocal textwidth=130
   autocmd FileType cs             setlocal textwidth=130
+  autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript     setlocal textwidth=100
   autocmd FileType javascript     inoremap lg console.log();<left><left>
   autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
@@ -171,10 +171,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
 Plug 'wincent/ferret'
-Plug 'ctrlpvim/ctrlp.vim'
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-  let g:ctrlp_use_caching = 0
-  let g:ctrlp_max_height = 30
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
@@ -186,6 +182,14 @@ Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 
 Plug 'terryma/vim-expand-region'
 Plug 'OrangeT/vim-csharp'
+Plug 'Yggdroot/indentLine'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+  nnoremap <c-p> :GFiles<cr>
+" Plug 'ctrlpvim/ctrlp.vim'
+"   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+"   let g:ctrlp_use_caching = 0
+"   let g:ctrlp_max_height = 30
 call plug#end()
 
 """ Colors
