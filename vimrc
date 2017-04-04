@@ -49,7 +49,6 @@ inoremap jj <esc>
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
 cnoremap <c-b> <s-left>
-" cnoremap <c-w> <s-right>
 cnoremap w!! w !sudo tee %
 
 nnoremap <c-h> <c-w>h
@@ -142,11 +141,11 @@ augroup vimrcEx
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript     setlocal textwidth=100
-  autocmd FileType javascript     inoremap lg console.log();<left><left>
-  autocmd FileType javascript     nnoremap so vi{:sort<cr><c-o>
-  autocmd FileType javascript     nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
-  autocmd FileType javascript     nnoremap dg idebugger<esc>==
+  autocmd FileType javascript,jsx setlocal textwidth=100
+  autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
+  autocmd FileType javascript,jsx nnoremap so vi{:sort<cr><c-o>
+  autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType javascript,jsx nnoremap dg idebugger<esc>==
   autocmd FileType ruby           inoremap bp binding.pry
   autocmd FileType qf             nnoremap <buffer> <c-l> <C-w><Enter><C-w>L
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
