@@ -169,3 +169,5 @@ source "/usr/local/opt/nvm/nvm.sh"
 
 export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
