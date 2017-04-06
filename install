@@ -1,7 +1,14 @@
 #!/bin/bash
 
-# http://brew.sh/
+# curl https://raw.githubusercontent.com/mrowa44/dotfiles/master/install | bash
 
+# Install Homebrew
+which -s brew
+if [[ $? != 0 ]] ; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+# Install all stuff
 brew install vim --with-override-system-vi
 brew install\
   ag\
@@ -10,9 +17,11 @@ brew install\
   ctags\
   diff-so-fancy\
   docker\
+  fzf\
   git\
   httpie\
   jq\
+  ngrep\
   node\
   nvm\
   peco\
@@ -30,8 +39,10 @@ brew install\
   z\
   https://raw.github.com/gleitz/howdoi/master/howdoi.rb
 
+# Apps
 brew cask install\
   Caskroom/versions/safari-technology-preview\
+  alfred\
   caffeine\
   firefox\
   firefoxnightly\
