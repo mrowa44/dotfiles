@@ -19,6 +19,7 @@ brew install\
   docker\
   fzf\
   git\
+  hadolint\
   httpie\
   jq\
   ngrep\
@@ -30,6 +31,7 @@ brew install\
   python\
   reattach-to-user-namespace\
   redis\
+  tidy-html5\
   tig\
   tldr\
   tmux\
@@ -120,6 +122,8 @@ ln -sf ${DIR}/my.cnf ~/.my.cnf
 # Enable filevault
 # sudo fdesetup enable
 
+# chrome://flags/#enable-javascript-harmony
+# chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
 
-yarn global add eslint fast-cli yolo-cli
+yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
