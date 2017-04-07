@@ -132,7 +132,8 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
   autocmd BufRead,BufNewFile *.hamlc    setlocal ft=haml
   autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
-  autocmd BufWritePost $MYVIMRC,$HOME/dotfiles/vimrc source $MYVIMRC
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+  autocmd BufWritePost $HOME/dotfiles/vimrc source $HOME/dotfiles/vimrc
   " When editing a file, always jump to the last known cursor position
   autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
@@ -170,25 +171,21 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
 Plug 'wincent/ferret'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+  nnoremap <c-p> :GFiles<cr>
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  xma ga <Plug>(EasyAlign)
+  xma  ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+Plug 'Yggdroot/indentLine'
 
 Plug 'terryma/vim-expand-region'
 Plug 'OrangeT/vim-csharp'
-Plug 'Yggdroot/indentLine'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug 'junegunn/fzf.vim'
-  nnoremap <c-p> :GFiles<cr>
-" Plug 'ctrlpvim/ctrlp.vim'
-"   let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-"   let g:ctrlp_use_caching = 0
-"   let g:ctrlp_max_height = 30
 call plug#end()
 
 """ Colors
