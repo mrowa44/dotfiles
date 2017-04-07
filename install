@@ -91,11 +91,11 @@ fi
 [ -d ~/Projects ] || mkdir ~/Projects
 
 # Change shell to zsh
-zsh_path=`which zsh`
-if [ $SHELL != $zsh_path ]; then
-  chsh -s $zsh_path
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-fi
+# zsh_path=`which zsh`
+# if [ $SHELL != $zsh_path ]; then
+#   chsh -s $zsh_path
+#   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
+# fi
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ln -sf ${DIR}/zshrc ~/.zshrc
@@ -113,17 +113,19 @@ ln -sf ${DIR}/gemrc ~/.gemrc
 ln -sf ${DIR}/eslintrc.js ~/.eslintrc.js
 ln -sf ${DIR}/my.cnf ~/.my.cnf
 
-# xcode-select --install
-# rvm get stable --auto-dotfiles
+xcode-select --install
+rvm get stable --auto-dotfiles
 
 # Create locate db
-# sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 
 # Enable filevault
-# sudo fdesetup enable
+sudo fdesetup enable
 
 # chrome://flags/#enable-javascript-harmony
 # chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
 
 yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
+gem install tmuxinator
+pip install howdoi yamllint
