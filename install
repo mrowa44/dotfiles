@@ -128,4 +128,4 @@ sudo fdesetup enable
 
 yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
 gem install tmuxinator
-pip install howdoi yamllint
+pit install howdoi

@@ -83,11 +83,9 @@ nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
-nnoremap <leader>d  :Ack <c-r>/<cr>
-nnoremap <leader>g  :Ack <c-r>=expand('<cword>')<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
-nnoremap <leader>g  :Ack<Space>
+nnoremap <leader>g  :Ag<cr>
 nnoremap <leader>h  :nohlsearch<cr>
 nnoremap <leader>i  :PlugInstall<cr>
 nnoremap <leader>ms :mksession!<cr>
@@ -148,7 +146,6 @@ augroup vimrcEx
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx nnoremap dg idebugger<esc>==
   autocmd FileType ruby           inoremap bp binding.pry
-  autocmd FileType qf             nnoremap <buffer> <c-l> <C-w><Enter><C-w>L
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
   autocmd InsertLeave * silent! write
   autocmd InsertLeave * silent! set nopaste
@@ -170,7 +167,6 @@ Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
-Plug 'wincent/ferret'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :GFiles<cr>
@@ -186,6 +182,7 @@ Plug 'Yggdroot/indentLine'
 
 Plug 'terryma/vim-expand-region'
 Plug 'OrangeT/vim-csharp'
+" Plug 'wincent/ferret'
 call plug#end()
 
 """ Colors
