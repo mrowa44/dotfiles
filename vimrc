@@ -9,6 +9,7 @@ set wildmenu " wildmode=list:longest,list:full
 set complete-=t
 set visualbell
 set nottimeout
+let g:netrw_liststyle=3
 
 """ UI
 set lazyredraw
@@ -21,6 +22,7 @@ set formatoptions+=j1
 set textwidth=80
 set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbreak=↪
 set showcmd laststatus=2 ruler
+set guioptions= guicursor+=a:blinkon0 guifont=Menlo:h12
 
 """ Search
 set hlsearch incsearch
@@ -69,7 +71,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
-
 nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
@@ -94,6 +95,7 @@ nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>q  :quit<cr>
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>t  :call ToggleTheme()<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :write<cr>
 nnoremap <leader>y  "+y
@@ -107,6 +109,7 @@ inoremap <c-f>   <c-x><c-f>
 
 inoremap <c-b> <c-w>
 
+""" Custom functions
 function! CleverTab()
   if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
     return "\<tab>"
@@ -120,6 +123,16 @@ function! Flash()
   redraw
   sleep 110m
   set nocursorline
+endfunction
+
+function! ToggleTheme()
+  if (g:colors_name ==? 'bclear')
+    color hybrid
+    set background=dark
+  else
+    color bclear
+    set background=light
+  endif
 endfunction
 
 """ Autocommands
@@ -142,9 +155,9 @@ augroup vimrcEx
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx setlocal textwidth=100
   autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
+  autocmd FileType javascript,jsx inoremap dg debugger;
   autocmd FileType javascript,jsx nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
-  autocmd FileType javascript,jsx nnoremap dg idebugger<esc>==
   autocmd FileType ruby           inoremap bp binding.pry
   autocmd FileChangedShell * echo "Warning: File changed outside of vim"
   autocmd InsertLeave * silent! write
@@ -186,25 +199,5 @@ Plug 'OrangeT/vim-csharp'
 call plug#end()
 
 """ Colors
-set termguicolors
-set background=light
+set termguicolors background=light
 color bclear
-
-nnoremap <c-t> :call ToggleTheme()<cr>
-function! ToggleTheme()
-  if (g:colors_name ==? 'bclear')
-    color hybrid
-    set background=dark
-  else
-    color bclear
-    set background=light
-  endif
-endfunction
-
-""" GUI
-set guioptions=
-set guicursor+=a:blinkon0
-set guifont=Menlo:h12
-
-""" Other
-let g:netrw_liststyle=3
