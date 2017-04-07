@@ -1,5 +1,5 @@
 """ General
-let mapleader = " "
+let g:mapleader = ' '
 syntax on
 filetype plugin indent on
 set hidden
@@ -36,8 +36,8 @@ set shiftwidth=2 softtabstop=2 tabstop=2
 set noswapfile
 set backup backupdir=~/.vim/backup
 set undofile undodir=~/.vim/undo
-if !isdirectory(expand(&backupdir)) | call mkdir(expand(&backupdir), "p") | endif
-if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), "p")   | endif
+if !isdirectory(expand(&backupdir)) | call mkdir(expand(&backupdir), 'p') | endif
+if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endif
 
 """ Mappings
 nmap     §  <esc>
@@ -110,7 +110,7 @@ inoremap <c-f>   <c-x><c-f>
 inoremap <c-b> <c-w>
 
 function! CleverTab()
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+  if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
     return "\<tab>"
   else
     return "\<c-p>"
@@ -195,7 +195,7 @@ color bclear
 
 nnoremap <c-t> :call ToggleTheme()<cr>
 function! ToggleTheme()
-  if (g:colors_name == 'bclear')
+  if (g:colors_name ==? 'bclear')
     color hybrid
     set background=dark
   else

@@ -58,22 +58,38 @@ brew cask install\
   notational-velocity\
   postman\
   psequel\
+  qnapi\
   sequel-pro\
   slack\
   spotify\
   thyme\
+  tomighty\
   virtualbox\
   vlc\
   wireshark
 
-# if [ ! -d ~/dotfiles ]; then
-#   (cd ~ && git clone https://github.com/mrowa44/dotfiles);
-# fi
+# Quick look plugins
+brew cask install\
+  qlcolorcode \
+  qlstephen \
+  qlmarkdown \
+  quicklook-json \
+  quicklook-csv \
+  betterzipql \
+  qlimagesize \
+  qlvideo
+
+# Clone dotfiles
+dir="$HOME/dotfiles"
+if [ ! -d $dir ]; then
+  cd $HOME
+  git clone --recursive git@github.com:mrowa44/dotfiles.git
+fi
 
 [ -d ~/Projects ] || mkdir ~/Projects
 
+# Change shell to zsh
 zsh_path=`which zsh`
-
 if [ $SHELL != $zsh_path ]; then
   chsh -s $zsh_path
   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
@@ -105,3 +121,5 @@ ln -sf ${DIR}/my.cnf ~/.my.cnf
 # sudo fdesetup enable
 
 # https://www.amazon.com/gp/sendtokindle/mac
+
+yarn global add eslint fast-cli yolo-cli
