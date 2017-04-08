@@ -1,24 +1,6 @@
 [user]
   name  = Justyna Rachowicz
   email = mrowa44@gmail.com
-[alias]
-  a   = add
-  aa  = add --all
-  br  = branch
-  cm  = commit -v
-  co  = checkout
-  df  = diff
-  dc = diff --cached
-  m   = merge
-  pl  = pull
-  plr = pull --rebase
-  psh = push
-  rb  = rebase
-  rh  = reset HEAD
-  sh  = stash
-  st  = status
-  cp  = cherry-pick
-  lg  = log --graph --oneline --color
 [grep]
   lineNumber = true
 [push]
@@ -38,6 +20,6 @@
   diff = diff-so-fancy | less --tabs=1,5 -RFX
   show = diff-so-fancy | less --tabs=1,5 -RFX
 [rerere]
-	enabled = true
+  enabled = true
 [merge]
-	conflictstyle = diff3
+  conflictstyle = diff3
