@@ -20,7 +20,7 @@ set scrolloff=8
 set splitbelow splitright
 set formatoptions+=j1
 set textwidth=80
-set list listchars=tab:»\ ,extends:›,precedes:‹,nbsp:•,trail:• showbreak=↪
+set list listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 set showcmd laststatus=2 ruler
 set guioptions= guicursor+=a:blinkon0 guifont=Menlo:h12
 
@@ -88,7 +88,7 @@ nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ag<cr>
 nnoremap <leader>h  :nohlsearch<cr>
-nnoremap <leader>i  :PlugInstall<cr>
+nnoremap <leader>i  :source $MYVIMRC<cr>:PlugInstall<cr>
 nnoremap <leader>ms :mksession!<cr>
 nnoremap <leader>n  :setlocal number!<cr>
 nnoremap <leader>p  o<esc>"+p

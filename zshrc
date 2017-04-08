@@ -3,37 +3,21 @@ export EDITOR=vim
 export VISUAL=vim
 export PGDATA=/usr/local/var/postgres
 
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-source `brew --prefix`/etc/profile.d/z.sh
-
-fpath=(~/.zsh/completion $fpath)
-autoload -Uz compinit && compinit
-
 ### Bindings
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" forward-word
-bindkey "^V" backward-word
-bindkey "^R" history-incremental-pattern-search-backward
-bindkey "^S" history-incremental-pattern-search-forward
+bindkey "^P" up-line-or-search
+bindkey "^N" down-line-or-search
 
 ### Custom functions
-mkdirc() { mkdir -p "$1" && cd "$1"; }
 f() { find . -iname "$1*"; } # f \*.spec -> a/b/abc.spec.js
 ff() { find . -iname "*${1:-}*" }
 whats_on_port() { lsof -i :$1 }
-gJapierdoleCotojestzabrancz() { git log --oneline --color HEAD..$1 }
-gJaJebeAlecotojestzabranchseriopytam() { git diff HEAD..$1 }
-edit() { j $1 && vim }
-
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
 }
-
 finder() { # cd to top finder window
   finderPath=`osascript -e 'tell application "Finder"
       try
@@ -46,53 +30,15 @@ finder() { # cd to top finder window
   cd "$finderPath"
 }
 
-man() { # Colorize man pages
-  env \
-    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;32m") \
-    man "$@"
-}
-
-extract () { # Extract archives
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1   ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *)           echo "'$1' cannot be extracted via extract()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
-### General aliases
+### Aliases
 alias -g H='| head'
 alias -g T='| tail'
 alias -g cat="ccat"
-
-alias '..'='cd ..'
-alias '...'='cd ../..'
-alias mkdir="mkdir -p"
-alias cp="cp -vi"
-alias mv="mv -vi"
 alias ls="ls -GF"
 alias la="ls -GFA"
-alias rm='rm'
-alias ps='ps aux'
+alias ll='ls -lh'
+alias '..'='cd ..'
+alias '...'='cd ../..'
 alias j='z'
 alias cask="brew cask"
 alias open_ports='lsof -i -P | ag listen'
@@ -101,73 +47,42 @@ alias serve_this='python -m SimpleHTTPServer'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
-alias sniff="sudo ngrep -d 'en0' -t '^(GET|POST) ' 'tcp and port 80'"
-
-### Lang/tool specific aliases
-alias -g be='bundle exec'
-alias -g r='rails'
 
 alias nr='npm run'
 alias s='npm start'
 alias l='./node_modules/eslint/bin/eslint.js .'
 alias t='npm test'
 alias d='npm run debug'
-alias mochadbg='NODE_ENV=test mocha --debug-brk --inspect --recursive'
-alias mocha='NODE_ENV=test mocha'
-
-alias rios='react-native run-ios --simulator="iPhone 7"'
-alias ran='react-native run-android'
-
-alias docker_setup='docker-machine env && eval $(docker-machine env)'
-dockerbash () { docker exec -it $1 bash }
-
-
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-NC='\033[0m' # No Color
-gaa() {
-  git add --all
-  branch=`git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,'`
-  echo -e "${RED}------> current branch: ${GREEN}${branch}${RED} <------${NC}"
-}
-alias ga='git add'
-alias gb="git branch"
-alias gc!='git commit -v --amend'
-alias gc="git commit -v"
-alias gco='git checkout'
-alias gcp="git cherry-pick"
-alias gd="git diff"
-alias gdc='git diff --cached'
-alias glg="git log --oneline --graph --color"
-alias gm='git merge'
-alias gpl="git pull"
-alias gpsh="git push"
-alias grb='git rebase'
-alias gsh='git stash'
-alias gst="git status"
-alias grh='git reset HEAD'
-
-alias gdn='git diff --name-only'
-alias gplr="git pull --rebase"
-alias gs="git show"
-alias 'gsh popf'='git checkout -- .'
-alias gshl='git stash list'
-alias gum='git reset --hard ORIG_HEAD'
-alias gsup='git submodule update'
-alias g_defuq_i_just_did='git diff HEAD~1'
-alias gcf='git clean -f'
 
 ### Random
-export ANDROID_HOME=/usr/local/opt/android-sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-
+source `brew --prefix`/etc/profile.d/z.sh
 export PATH="$HOME/.yarn/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-source "/usr/local/opt/nvm/nvm.sh"
-
-export PATH="$PATH:$HOME/.rvm/bin"
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+autoload -Uz compinit
+compinit
+
+### Plugins
+source ~/.zplug/init.zsh
+zplug mafredri/zsh-async
+zplug sindresorhus/pure, use:pure.zsh, as:theme
+zplug zsh-users/zsh-completions
+zplug mrowa44/vanilla-git-aliases
+zplug lib/history, from:oh-my-zsh
+zplug lib/completion, from:oh-my-zsh
+ COMPLETION_WAITING_DOTS=true
+zplug modules/utility, from:prezto
+zplug modules/node, from:prezto
+zplug modules/ruby, from:prezto
+zplug zuxfoucault/colored-man-pages_mod
+zplug zsh-users/zsh-autosuggestions
+zplug zsh-users/zsh-syntax-highlighting, defer:2
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+zplug load

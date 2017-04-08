@@ -39,6 +39,7 @@ brew install\
   watch\
   yarn\
   z\
+  zplug\
   https://raw.github.com/gleitz/howdoi/master/howdoi.rb
 
 # Apps
@@ -98,20 +99,22 @@ fi
 # fi
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ln -sf ${DIR}/zshrc ~/.zshrc
-ln -sf ${DIR}/zpreztorc ~/.zpreztorc
-ln -sf ${DIR}/zsh ~/.zsh
-ln -sf ${DIR}/vimrc ~/.vimrc
-ln -sf ${DIR}/vim ~/.vim
-ln -sf ${DIR}/gitconfig ~/.gitconfig
-ln -sf ${DIR}/gitignore ~/.gitignore
-ln -sf ${DIR}/tmux.conf ~/.tmux.conf
-ln -sf ${DIR}/psqlrc ~/.psqlrc
-ln -sf ${DIR}/ctags ~/.ctags
-ln -sf ${DIR}/agignore ~/.agignore
-ln -sf ${DIR}/gemrc ~/.gemrc
-ln -sf ${DIR}/eslintrc.js ~/.eslintrc.js
-ln -sf ${DIR}/my.cnf ~/.my.cnf
+cd ~
+ln -sf ${DIR}/zshrc .zshrc
+ln -sf ${DIR}/zpreztorc .zpreztorc
+ln -sf ${DIR}/zsh .zsh
+ln -sf ${DIR}/vimrc .vimrc
+ln -sf ${DIR}/vim .vim
+ln -sf ${DIR}/gitconfig .gitconfig
+ln -sf ${DIR}/gitignore .gitignore
+ln -sf ${DIR}/tmux.conf .tmux.conf
+ln -sf ${DIR}/psqlrc .psqlrc
+ln -sf ${DIR}/ctags .ctags
+ln -sf ${DIR}/agignore .agignore
+ln -sf ${DIR}/gemrc .gemrc
+ln -sf ${DIR}/eslintrc.js .eslintrc.js
+ln -sf ${DIR}/my.cnf .my.cnf
+cd dotfiles
 
 xcode-select --install
 rvm get stable --auto-dotfiles
@@ -128,4 +131,4 @@ sudo fdesetup enable
 
 yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
 gem install tmuxinator
-pit install howdoi
+pip install howdoi
