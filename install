@@ -136,4 +136,4 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.c
 
 yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
 gem install tmuxinator
-pip install howdoi
+pip install howdoi flake8 pylint
