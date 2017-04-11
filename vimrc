@@ -140,9 +140,10 @@ augroup vimrcEx
   autocmd!
   autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
   autocmd BufLeave * setlocal colorcolumn=
-  autocmd BufRead,BufNewFile *.md       setlocal ft=markdown spell
-  autocmd BufRead,BufNewFile *.hamlc    setlocal ft=haml
-  autocmd BufRead,BufNewFile *.jbuilder setlocal ft=ruby
+  autocmd BufRead,BufNewFile *.md        setlocal ft=markdown spell
+  autocmd BufRead,BufNewFile *.hamlc     setlocal ft=haml
+  autocmd BufRead,BufNewFile *.jbuilder  setlocal ft=ruby
+  autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
   autocmd BufWritePost $HOME/dotfiles/vimrc source $HOME/dotfiles/vimrc
   " When editing a file, always jump to the last known cursor position
