@@ -182,7 +182,8 @@ Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-  nnoremap <c-p> :GFiles<cr>
+  nnoremap <c-p> :Files<cr>
+  let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma  ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
