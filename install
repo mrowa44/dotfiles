@@ -22,6 +22,7 @@ brew install\
   hadolint\
   httpie\
   jq\
+  mas\
   ngrep\
   node\
   nvm\
@@ -39,14 +40,12 @@ brew install\
   watch\
   yarn\
   z\
-  zplug\
   https://raw.github.com/gleitz/howdoi/master/howdoi.rb
 
 # Apps
 brew cask install\
   Caskroom/versions/safari-technology-preview\
   alfred\
-  caffeine\
   firefox\
   firefoxnightly\
   flux\
@@ -57,7 +56,6 @@ brew cask install\
   google-chrome\
   iterm2\
   mactex\
-  macvim\
   monosnap\
   notational-velocity\
   postman\
@@ -67,7 +65,7 @@ brew cask install\
   slack\
   spotify\
   texpad\
-  thyme\
+  # thyme\
   tomighty\
   virtualbox\
   vlc\
@@ -83,6 +81,10 @@ brew cask install\
   betterzipql \
   qlimagesize \
   qlvideo
+
+mas install \
+  937984704 \ # Amphetamine
+  1090969894 # Escape
 
 # Clone dotfiles
 dir="$HOME/dotfiles"
@@ -128,7 +130,8 @@ sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 sudo fdesetup enable
 
 # Install vim plug
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# TODO: wrap that in some if
+# curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # chrome://flags/#enable-javascript-harmony
 # chrome://flags/#automatic-tab-discarding
