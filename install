@@ -2,7 +2,7 @@
 
 # curl https://raw.githubusercontent.com/mrowa44/dotfiles/master/install | bash
 
-dotfilesdir="$HOME/dotfiles"
+dotfiles="$HOME/dotfiles"
 
 # Install Homebrew
 which -s brew
@@ -11,12 +11,12 @@ if [[ $? != 0 ]] ; then
 fi
 
 # Clone dotfiles
-if [ ! -d $dotfilesdir ]; then
+if [ ! -d $dotfiles ]; then
   cd $HOME
   git clone --recursive git@github.com:mrowa44/dotfiles.git
 fi
 
-cd $dotfilesdir
+cd $dotfiles
 brew tap Homebrew/bundle
 brew bundle
 
@@ -36,24 +36,18 @@ ln -sf ${DIR}/agignore .agignore
 ln -sf ${DIR}/gemrc .gemrc
 ln -sf ${DIR}/eslintrc.js .eslintrc.js
 ln -sf ${DIR}/my.cnf .my.cnf
-cd $dotfilesdir
+cd $dotfiles
 
 xcode-select --install
-rvm get stable --auto-dotfiles
+# rvm get stable --auto-dotfiles
 
-# Create locate db
-sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
-
-# Enable filevault
-sudo fdesetup enable
-
-# Install vim plug
-# curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Enable filevault if it's not already
+fdesetup status || sudo fdesetup enable
 
 # chrome://flags/#enable-javascript-harmony
 # chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
 
-yarn global add eslint fast-cli yolo-cli csslint jsonlint sass-lint
+npm -g install eslint fast-cli yolo-cli csslint jsonlint sass-lint
 gem install tmuxinator
 pip install howdoi flake8 pylint
