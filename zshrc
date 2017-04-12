@@ -1,7 +1,6 @@
 ### General
 export EDITOR=vim
 export VISUAL=vim
-# export PGDATA=/usr/local/var/postgres
 
 ### Bindings
 bindkey "^B" backward-kill-word
@@ -37,14 +36,12 @@ alias wut='tldr' # too hard to type
 
 alias nr='npm run'
 alias s='npm start'
-alias l='./node_modules/eslint/bin/eslint.js .'
 alias t='npm test'
 alias d='npm run debug'
 
 ### Random
 source `brew --prefix`/etc/profile.d/z.sh
 export PATH="$HOME/.yarn/bin:$PATH"
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Plugins
 if [[ ! -d ~/.zplug ]]; then
@@ -70,6 +67,3 @@ if ! zplug check --verbose; then
   zplug install
 fi
 zplug load
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
