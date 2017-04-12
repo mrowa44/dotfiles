@@ -1,7 +1,7 @@
 ### General
 export EDITOR=vim
 export VISUAL=vim
-export PGDATA=/usr/local/var/postgres
+# export PGDATA=/usr/local/var/postgres
 
 ### Bindings
 bindkey "^B" backward-kill-word
@@ -18,17 +18,6 @@ fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
 }
-finder() { # cd to top finder window
-  finderPath=`osascript -e 'tell application "Finder"
-      try
-        set currentFolder to (folder of the front window as alias)
-      on error
-        set currentFolder to (path to desktop folder as alias)
-      end try
-      POSIX path of currentFolder
-    end tell'`;
-  cd "$finderPath"
-}
 
 ### Aliases
 alias -g H='| head'
@@ -44,6 +33,7 @@ alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
+alias wut='tldr' # too hard to type
 
 alias nr='npm run'
 alias s='npm start'
@@ -54,32 +44,32 @@ alias d='npm run debug'
 ### Random
 source `brew --prefix`/etc/profile.d/z.sh
 export PATH="$HOME/.yarn/bin:$PATH"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-autoload -Uz compinit
-compinit
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Plugins
+if [[ ! -d ~/.zplug ]]; then
+  git clone https://github.com/zplug/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+fi
 source ~/.zplug/init.zsh
-zplug mafredri/zsh-async
-zplug sindresorhus/pure, use:pure.zsh, as:theme
-zplug zsh-users/zsh-completions
-zplug mrowa44/vanilla-git-aliases
-zplug lib/history, from:oh-my-zsh
-zplug lib/completion, from:oh-my-zsh
+zplug "mafredri/zsh-async"
+zplug "sindresorhus/pure", use:pure.zsh, as:theme
+zplug "zsh-users/zsh-completions"
+zplug "mrowa44/vanilla-git-aliases"
+zplug "modules/utility", from:prezto
+# zplug "modules/node", from:prezto
+# zplug "modules/ruby", from:prezto
+zplug "lib/history", from:oh-my-zsh
+zplug "plugins/osx", from:oh-my-zsh
+zplug "lib/completion", from:oh-my-zsh
  COMPLETION_WAITING_DOTS=true
-zplug modules/utility, from:prezto
-zplug modules/node, from:prezto
-zplug modules/ruby, from:prezto
-zplug zuxfoucault/colored-man-pages_mod
-zplug zsh-users/zsh-autosuggestions
-zplug zdharma/fast-syntax-highlighting, defer:2
-
-# Install plugins if there are plugins that have not been installed
+zplug "zuxfoucault/colored-man-pages_mod"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zdharma/fast-syntax-highlighting"
 if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+  zplug install
 fi
 zplug load
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

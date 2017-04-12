@@ -138,8 +138,9 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
   autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
+  autocmd BufEnter *.md setlocal colorcolumn=
   autocmd BufRead,BufNewFile *.md        setlocal ft=markdown spell
   autocmd BufRead,BufNewFile *.hamlc     setlocal ft=haml
   autocmd BufRead,BufNewFile *.jbuilder  setlocal ft=ruby
@@ -184,7 +185,7 @@ Plug 'w0rp/ale'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :Files<cr>
-  let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma  ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)

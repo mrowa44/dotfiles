@@ -2,105 +2,23 @@
 
 # curl https://raw.githubusercontent.com/mrowa44/dotfiles/master/install | bash
 
+dotfilesdir="$HOME/dotfiles"
+
 # Install Homebrew
 which -s brew
 if [[ $? != 0 ]] ; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-# Install all stuff
-brew install vim --with-override-system-vi
-brew install\
-  ag\
-  cask\
-  ccat\
-  ctags\
-  diff-so-fancy\
-  docker\
-  fzf\
-  git\
-  hadolint\
-  httpie\
-  jq\
-  mas\
-  ngrep\
-  node\
-  nvm\
-  peco\
-  postgresql\
-  progress\
-  python\
-  reattach-to-user-namespace\
-  redis\
-  tidy-html5\
-  tig\
-  tldr\
-  tmux\
-  tree\
-  watch\
-  yarn\
-  z\
-  https://raw.github.com/gleitz/howdoi/master/howdoi.rb
-
-# Apps
-brew cask install\
-  Caskroom/versions/safari-technology-preview\
-  alfred\
-  firefox\
-  firefoxnightly\
-  flux\
-  flycut\
-  gimp\
-  goofy\
-  google-chrome-canary\
-  google-chrome\
-  iterm2\
-  mactex\
-  monosnap\
-  notational-velocity\
-  postman\
-  psequel\
-  qnapi\
-  sequel-pro\
-  slack\
-  spotify\
-  texpad\
-  # thyme\
-  tomighty\
-  virtualbox\
-  vlc\
-  wireshark
-
-# Quick look plugins
-brew cask install\
-  qlcolorcode \
-  qlstephen \
-  qlmarkdown \
-  quicklook-json \
-  quicklook-csv \
-  betterzipql \
-  qlimagesize \
-  qlvideo
-
-mas install \
-  937984704 \ # Amphetamine
-  1090969894 # Escape
-
 # Clone dotfiles
-dir="$HOME/dotfiles"
-if [ ! -d $dir ]; then
+if [ ! -d $dotfilesdir ]; then
   cd $HOME
   git clone --recursive git@github.com:mrowa44/dotfiles.git
 fi
 
-[ -d ~/Projects ] || mkdir ~/Projects
-
-# Change shell to zsh
-# zsh_path=`which zsh`
-# if [ $SHELL != $zsh_path ]; then
-#   chsh -s $zsh_path
-#   git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
-# fi
+cd $dotfilesdir
+brew tap Homebrew/bundle
+brew bundle
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd ~
@@ -118,7 +36,7 @@ ln -sf ${DIR}/agignore .agignore
 ln -sf ${DIR}/gemrc .gemrc
 ln -sf ${DIR}/eslintrc.js .eslintrc.js
 ln -sf ${DIR}/my.cnf .my.cnf
-cd dotfiles
+cd $dotfilesdir
 
 xcode-select --install
 rvm get stable --auto-dotfiles
@@ -130,7 +48,6 @@ sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 sudo fdesetup enable
 
 # Install vim plug
-# TODO: wrap that in some if
 # curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # chrome://flags/#enable-javascript-harmony
