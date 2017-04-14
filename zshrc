@@ -1,22 +1,9 @@
-### General
-export EDITOR=vim
-export VISUAL=vim
-
 ### Bindings
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" forward-word
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
-
-### Custom functions
-f() { find . -iname "$1*"; } # f \*.spec -> a/b/abc.spec.js
-ff() { find . -iname "*${1:-}*" }
-whats_on_port() { lsof -i :$1 }
-fix_postgres() {
-  rm /usr/local/var/postgres/postmaster.pid
-  brew services restart postgresql
-}
 
 ### Aliases
 alias -g H='| head'
@@ -28,20 +15,22 @@ alias '...'='cd ../..'
 alias j='z'
 alias cask="brew cask"
 alias open_ports='lsof -i -P | ag listen'
+whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
-alias wut='tldr' # too hard to type
+alias y='yarn'
+alias ys='yarn start'
+alias yt='yarn test'
+alias yd='yarn debug'
+alias '?'='tldr'
+alias rm='rm'
 
-alias nr='npm run'
-alias s='npm start'
-alias t='npm test'
-alias d='npm run debug'
-
-### Random
-source `brew --prefix`/etc/profile.d/z.sh
-export PATH="$HOME/.yarn/bin:$PATH"
+fix_postgres() {
+  rm /usr/local/var/postgres/postmaster.pid
+  brew services restart postgresql
+}
 
 ### Plugins
 if [[ ! -d ~/.zplug ]]; then
@@ -67,3 +56,9 @@ if ! zplug check --verbose; then
   zplug install
 fi
 zplug load
+
+### Random
+source `brew --prefix`/etc/profile.d/z.sh
+export EDITOR=vim
+export PATH="$HOME/.yarn/bin:$PATH"
+

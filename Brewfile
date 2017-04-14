@@ -36,6 +36,7 @@ brew 'z'
 brew 'zplug'
 brew 'zsh'
 
+cask 'alfred2'
 cask 'caprine'
 cask 'docker'
 cask 'firefox'
@@ -70,4 +71,3 @@ cask 'vlc'
 cask 'wireshark'
 
 mas 'Amphetamine', id: 937984704
-mas 'Escape', id: 1090969894
