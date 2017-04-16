@@ -38,6 +38,7 @@ brew 'zsh'
 
 cask 'alfred2'
 cask 'caprine'
+cask 'caption'
 cask 'docker'
 cask 'firefox'
 cask 'firefoxdeveloperedition'
