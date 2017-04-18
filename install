@@ -48,6 +48,6 @@ fdesetup status || sudo fdesetup enable
 # chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
 
-npm -g install eslint fast-cli yolo-cli csslint jsonlint sass-lint
+npm -g install eslint fast-cli yolo-cli csslint jsonlint sass-lint mocha
 gem install tmuxinator
 pip install howdoi flake8 pylint
