@@ -196,7 +196,6 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'xolox/vim-colorscheme-switcher' | Plug 'xolox/vim-misc'
   let g:colorscheme_switcher_exclude_builtins = 1
   nnoremap <c-t> :NextColorScheme<cr>
-Plug 'ervandew/supertab'
 Plug 'terryma/vim-expand-region'
 Plug 'OrangeT/vim-csharp'
 " Plug 'wincent/ferret'
