@@ -1,3 +1,5 @@
+tap 'homebrew/bundle'
+
 tap 'caskroom/cask'
 tap 'caskroom/versions'
 tap 'homebrew/bundle'

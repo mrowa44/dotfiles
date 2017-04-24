@@ -17,7 +17,6 @@ if [ ! -d $dotfiles ]; then
 fi
 
 cd $dotfiles
-brew tap Homebrew/bundle
 brew bundle
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

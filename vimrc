@@ -95,7 +95,6 @@ nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>q  :quit<cr>
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>t  :call ToggleTheme()<cr>
 nnoremap <leader>u  :vs#<cr>
 nnoremap <leader>w  :write<cr>
 nnoremap <leader>y  "+y
@@ -123,16 +122,6 @@ function! Flash()
   redraw
   sleep 110m
   set nocursorline
-endfunction
-
-function! ToggleTheme()
-  if (g:colors_name ==? 'bclear')
-    color hybrid
-    set background=dark
-  else
-    color bclear
-    set background=light
-  endif
 endfunction
 
 """ Autocommands
@@ -201,6 +190,13 @@ Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 Plug 'Yggdroot/indentLine'
 
+Plug 'terryma/vim-smooth-scroll'
+  noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 12, 3)<CR>
+  noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 12, 3)<CR>
+Plug 'xolox/vim-colorscheme-switcher' | Plug 'xolox/vim-misc'
+  let g:colorscheme_switcher_exclude_builtins = 1
+  nnoremap <c-t> :NextColorScheme<cr>
+Plug 'ervandew/supertab'
 Plug 'terryma/vim-expand-region'
 Plug 'OrangeT/vim-csharp'
 " Plug 'wincent/ferret'
