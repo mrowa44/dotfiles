@@ -128,7 +128,7 @@ endfunction
 augroup vimrcEx
   autocmd!
   autocmd BufLeave * setlocal colorcolumn=
-  autocmd BufEnter * let &colorcolumn=join(range(&textwidth,999),",")
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,999),",")
   autocmd BufEnter *.md setlocal colorcolumn=
   autocmd BufRead,BufNewFile *.md        setlocal ft=markdown spell
   autocmd BufRead,BufNewFile *.hamlc     setlocal ft=haml
