@@ -27,6 +27,7 @@ alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
 alias yd='yarn debug'
 alias '?'='tldr'
 alias rm='rm'
+alias gpshh='git push origin master && git push heroku master'
 
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid

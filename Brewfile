@@ -33,6 +33,7 @@ brew 'tree'
 brew 'vim', args: ['with-override-system-vi']
 brew 'watch'
 brew 'wget'
+brew 'wine'
 brew 'yarn'
 brew 'z'
 brew 'zplug'
