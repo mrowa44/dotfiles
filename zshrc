@@ -22,12 +22,19 @@ alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
-alias yt='NODE_ENV=test yarn test'
-alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
+yt() {
+  NODE_ENV=test sequelize db:migrate
+  NODE_ENV=test yarn test
+}
+yti() {
+  NODE_ENV=test sequelize db:migrate
+  NODE_ENV=test mocha --debug-brk --inspect --recursive
+}
 alias yd='yarn debug'
 alias '?'='tldr'
 alias rm='rm'
 alias gpshh='git push origin master && git push heroku master'
+alias seq='sequelize'
 
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
