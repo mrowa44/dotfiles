@@ -9,6 +9,7 @@ set wildmenu
 set complete-=t
 set visualbell
 let g:netrw_liststyle=3
+set lazyredraw
 
 """ UI
 set linebreak
@@ -165,6 +166,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
 Plug 'Yggdroot/indentLine'
+Plug 'bronson/vim-visual-star-search'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :Files<cr>
   let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'

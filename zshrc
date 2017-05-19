@@ -18,6 +18,7 @@ alias open_ports='lsof -i -P | ag listen'
 whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
+alias serve_this='python -m SimpleHTTPServer'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
