@@ -24,11 +24,9 @@ alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
 yt() {
-  NODE_ENV=test sequelize db:migrate
   NODE_ENV=test yarn test
 }
 yti() {
-  NODE_ENV=test sequelize db:migrate
   NODE_ENV=test mocha --debug-brk --inspect --recursive
 }
 alias yd='yarn debug'
