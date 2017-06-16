@@ -143,9 +143,8 @@ augroup vimrcEx
   autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
   autocmd FileType javascript,jsx nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
-  " autocmd InsertLeave * silent! write
   autocmd TextChanged,InsertLeave,FocusLost * wall
-  autocmd CursorHold * checktime
+  autocmd BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
 augroup END
