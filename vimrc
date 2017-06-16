@@ -5,30 +5,29 @@
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 call plug#begin('~/.vim/bundle')
-Plug 'vim-scripts/bclear'
 Plug 'endel/vim-github-colorscheme'
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
-" Plug 'kshenoy/vim-signature'
 Plug 'w0rp/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-visual-star-search'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :Files<cr>
-  " let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
+  let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   xma  ga <Plug>(EasyAlign)
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 Plug 'sheerun/vim-polyglot'
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'svg'] }
+" Plug 'kshenoy/vim-signature'
 " Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+" Plug 'tpope/vim-repeat'
 call plug#end()
 
 """ General
@@ -42,7 +41,6 @@ set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 """ UI
 set splitbelow splitright breakindent textwidth=80
 set showcmd visualbell list
-set guioptions= guicursor+=a:blinkon0 guifont=Menlo:h12
 set hlsearch ignorecase smartcase showmatch
 set termguicolors background=light
 color github
@@ -54,6 +52,9 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endi
 
 """ Mappings
 inoremap jj <esc>
+inoremap kk <esc>:w<cr>
+nnoremap \ :q<cr>
+nnoremap <cr> :w<cr>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
@@ -74,8 +75,8 @@ nnoremap <c-o> <c-o>zz:call Flash()<cr>
 nnoremap <c-i> <c-i>zz:call Flash()<cr>
 nnoremap * *zz:call Flash()<cr>
 nnoremap # #zz:call Flash()<cr>
-" nnoremap j gj
-" nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
@@ -87,7 +88,6 @@ nnoremap <leader><leader> :wa<cr>
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
-" nnoremap <leader>c  :cd %:p:h<cr>:pwd<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ag<cr>
