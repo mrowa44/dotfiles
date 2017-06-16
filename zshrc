@@ -31,13 +31,14 @@ yti() {
 }
 alias yd='yarn debug'
 alias '?'='tldr'
-alias rm='rm'
-alias gpshh='git push origin master && yarn release'
 alias seq='sequelize'
 
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
+}
+fix_rubygems() {
+  gem update --system
 }
 
 ### Plugins
