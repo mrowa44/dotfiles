@@ -43,6 +43,8 @@ xcode-select --install
 # Enable filevault if it's not already
 fdesetup status || sudo fdesetup enable
 
+defaults write NSGlobalDomain KeyRepeat -float 1.5
+
 # chrome://flags/#enable-javascript-harmony
 # chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
