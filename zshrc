@@ -11,6 +11,7 @@ alias -g T='| tail'
 alias -g cat="ccat"
 alias ls="ls -GF"
 alias ll='ls -lh'
+alias la='ls -lha'
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias j='z'
@@ -51,6 +52,7 @@ prompt pure
 
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history share_history histignorealldups # shared hist between sessions
+unsetopt beep # turn off fucking bell when tabbing
 zstyle ':completion:*' menu select # highlight tabbing
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case insensitive compl
 
