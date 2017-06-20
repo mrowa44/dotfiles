@@ -10,6 +10,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g cat="ccat"
 alias ls="ls -GF"
+alias ll='ls -lh'
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias j='z'
@@ -48,14 +49,10 @@ autoload -U promptinit compinit
 promptinit; compinit;
 prompt pure
 
-# auto select first autocompl:
-setopt MENU_COMPLETE
-# shared hist between sessions:
-setopt append_history share_history histignorealldups
-# highlight tabbing
-zstyle ':completion:*' menu select
-# case insensitive compl
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
+setopt MENU_COMPLETE # auto select first autocompl
+setopt append_history share_history histignorealldups # shared hist between sessions
+zstyle ':completion:*' menu select # highlight tabbing
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case insensitive compl
 
 export EDITOR=vim
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
