@@ -19,6 +19,7 @@ whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias serve_this='python -m SimpleHTTPServer'
+alias static='watch_them_styles & serve_this'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
@@ -32,6 +33,7 @@ yti() {
 alias yd='yarn debug'
 alias '?'='tldr'
 alias seq='sequelize'
+alias be='bundle exec'
 
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
@@ -41,33 +43,22 @@ fix_rubygems() {
   gem update --system
 }
 
-### Plugins
-if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
-fi
-source ~/.zplug/init.zsh
-zplug "mafredri/zsh-async"
-zplug "sindresorhus/pure", use:pure.zsh, as:theme
-zplug "zsh-users/zsh-completions"
-zplug "mrowa44/vanilla-git-aliases"
-zplug "modules/utility", from:prezto
-# zplug "modules/node", from:prezto
-# zplug "modules/ruby", from:prezto
-zplug "lib/history", from:oh-my-zsh
-zplug "plugins/osx", from:oh-my-zsh
-zplug "lib/completion", from:oh-my-zsh
- COMPLETION_WAITING_DOTS=true
-zplug "zuxfoucault/colored-man-pages_mod"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zdharma/fast-syntax-highlighting"
-if ! zplug check --verbose; then
-  zplug install
-fi
-zplug load
-
 ### Random
-source `brew --prefix`/etc/profile.d/z.sh
+autoload -U promptinit compinit
+promptinit; compinit;
+prompt pure
+
+# auto select first autocompl:
+setopt MENU_COMPLETE
+# shared hist between sessions:
+setopt append_history share_history histignorealldups
+# highlight tabbing
+zstyle ':completion:*' menu select
+# case insensitive compl
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
+
 export EDITOR=vim
-export PATH="$HOME/.yarn/bin:$PATH"
+source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
+source `brew --prefix`/etc/profile.d/z.sh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 

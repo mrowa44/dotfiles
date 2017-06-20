@@ -1,0 +1,3 @@
+[submodule "vanilla-git-aliases"]
+	path = vanilla-git-aliases
+	url = https://github.com/mrowa44/vanilla-git-aliases

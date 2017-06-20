@@ -38,6 +38,7 @@ brew 'yarn'
 brew 'z'
 brew 'zplug'
 brew 'zsh'
+brew 'zsh-syntax-highlighting'
 
 cask 'alfred2'
 cask 'caprine'
