@@ -21,7 +21,7 @@ whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias serve_this='python -m SimpleHTTPServer'
-alias static='watch_them_styles & serve_this'
+alias static='watch_them_styles & serve_this & open http://localhost:8000'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
@@ -60,4 +60,3 @@ export EDITOR=vim
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-

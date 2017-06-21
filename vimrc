@@ -53,6 +53,7 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endi
 """ Mappings
 inoremap jj <esc>
 inoremap kk <esc>:w<cr>
+inoremap jk <esc>dd
 nnoremap \ :q<cr>
 nnoremap <cr> :w<cr>
 
@@ -81,7 +82,6 @@ nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
-nnoremap 99 :q<cr>
 nnoremap <bs> `[V`]
 nnoremap <leader><leader> :wa<cr>
 
