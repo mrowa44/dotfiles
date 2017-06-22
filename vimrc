@@ -141,6 +141,7 @@ augroup vimrcEx
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx setlocal textwidth=100
   autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
+  autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType javascript,jsx nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd TextChanged,InsertLeave,FocusLost * wall
