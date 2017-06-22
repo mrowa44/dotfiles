@@ -55,6 +55,7 @@ setopt append_history share_history histignorealldups # shared hist between sess
 unsetopt beep # turn off fucking bell when tabbing
 zstyle ':completion:*' menu select # highlight tabbing
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case insensitive compl
+zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # shift tab to reverse compl selection
 
 export EDITOR=vim
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
