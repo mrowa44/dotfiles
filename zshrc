@@ -9,6 +9,7 @@ bindkey "^N" down-line-or-search
 alias -g H='| head'
 alias -g T='| tail'
 alias -g cat="ccat"
+alias e='exit'
 alias ls="ls -GF"
 alias ll='ls -lh'
 alias la='ls -lha'
