@@ -60,5 +60,6 @@ zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # sh
 
 export EDITOR=vim
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
+source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
