@@ -34,7 +34,6 @@ call plug#end()
 let g:mapleader = ' '
 set hidden
 set gdefault
-" set complete-=t
 set lazyredraw
 set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 
@@ -42,7 +41,7 @@ set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set splitbelow splitright breakindent textwidth=80
 set showcmd visualbell list
 set hlsearch ignorecase smartcase showmatch
-set termguicolors background=light
+set termguicolors
 color github
 
 """ Backups, undo

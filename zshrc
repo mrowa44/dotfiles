@@ -9,7 +9,6 @@ bindkey "^N" down-line-or-search
 alias -g H='| head'
 alias -g T='| tail'
 alias -g cat="ccat"
-alias e='exit'
 alias ls="ls -GF"
 alias ll='ls -lh'
 alias la='ls -lha'
@@ -27,26 +26,17 @@ alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
-yt() {
-  NODE_ENV=test yarn test
-}
-yti() {
-  NODE_ENV=test mocha --debug-brk --inspect --recursive
-}
+yt() { NODE_ENV=test yarn test }
+yti() { NODE_ENV=test mocha --debug-brk --inspect --recursive }
 alias yd='yarn debug'
-alias '?'='tldr'
-alias seq='sequelize'
-alias be='bundle exec'
 
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
 }
-fix_rubygems() {
-  gem update --system
-}
+fix_rubygems() { gem update --system }
 
-### Random
+### ZSH setup stuff
 autoload -U promptinit compinit
 promptinit; compinit;
 prompt pure
@@ -61,5 +51,6 @@ zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # sh
 export EDITOR=vim
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
+export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
