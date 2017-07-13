@@ -26,10 +26,13 @@ alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
-yt() { NODE_ENV=test yarn test }
-yti() { NODE_ENV=test mocha --debug-brk --inspect --recursive }
-alias yd='yarn debug'
+alias yt='NODE_ENV=test yarn test'
+alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
 
+tx() { # attach to a session with name of current directory or create one
+  dir=${PWD##*/}
+  tmux -CC a -t ${dir} || tmux -CC new -s ${dir}
+}
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
@@ -49,8 +52,24 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|
 zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # shift tab to reverse compl selection
 
 export EDITOR=vim
+export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
-export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+man() {
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    PAGER="${commands[less]:-$PAGER}" \
+    _NROFF_U=1 \
+    PATH="$HOME/bin:$PATH" \
+    man "$@"
+}
+export PATH=/usr/local/miniconda3/bin:"$PATH"
