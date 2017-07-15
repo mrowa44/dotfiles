@@ -20,7 +20,7 @@ alias open_ports='lsof -i -P | ag listen'
 whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
-alias serve_this='python -m SimpleHTTPServer'
+alias serve_this='python -m http.server'
 alias static='watch_them_styles & serve_this & open http://localhost:8000'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
@@ -73,3 +73,7 @@ man() {
     man "$@"
 }
 export PATH=/usr/local/miniconda3/bin:"$PATH"
+
+jj() {
+  j "$@" && tx
+}
