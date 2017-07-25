@@ -142,7 +142,7 @@ augroup vimrcEx
   autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
-  autocmd FileType javascript,jsx nnoremap so vi{:sort<cr><c-o>
+  autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd BufEnter,BufRead,CursorHold * checktime
