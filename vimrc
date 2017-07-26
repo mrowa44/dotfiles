@@ -42,7 +42,7 @@ set splitbelow splitright breakindent textwidth=80
 set showcmd visualbell list
 set hlsearch ignorecase smartcase showmatch
 set termguicolors
-color github
+color Base2Tone_SeaDark
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
