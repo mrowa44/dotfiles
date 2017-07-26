@@ -14,7 +14,6 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'
-Plug 'Yggdroot/indentLine'
 Plug 'bronson/vim-visual-star-search'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :Files<cr>
@@ -24,10 +23,13 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 Plug 'sheerun/vim-polyglot'
-Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'svg'] }
+Plug 'lilydjwg/colorizer'
+Plug 'rakr/vim-two-firewatch'
+Plug 'atelierbram/Base2Tone-vim'
+Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 " Plug 'kshenoy/vim-signature'
-" Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 " Plug 'tpope/vim-repeat'
+" Plug 'Yggdroot/indentLine'
 call plug#end()
 
 """ General
