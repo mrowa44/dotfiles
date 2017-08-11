@@ -21,5 +21,3 @@
   show = diff-so-fancy | less --tabs=1,5 -RFX
 [rerere]
   enabled = true
-[merge]
-  conflictstyle = diff3
