@@ -141,13 +141,13 @@ augroup vimrcEx
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx setlocal textwidth=100
-  autocmd FileType javascript,jsx inoremap lg console.log();<left><left>
+  autocmd FileType javascript,jsx inoremap lg console.log('dupa', );<left><left>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd TextChanged,InsertLeave,FocusLost * wall
-  autocmd BufEnter,BufRead,CursorHold * checktime
+  autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
 augroup END
