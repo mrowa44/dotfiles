@@ -28,10 +28,16 @@ alias y='yarn'
 alias ys='yarn start'
 alias yt='NODE_ENV=test yarn test'
 alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
+alias sl='yarn stylelint'
+alias el='eslint'
+alias gpshh='git push && open $(git remote get-url origin)'
 
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
   tmux -CC a -t ${dir} || tmux -CC new -s ${dir}
+}
+youtube_mp3() {
+  youtube-dl --extract-audio -i --audio-format mp3 "$@"
 }
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid

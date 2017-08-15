@@ -32,6 +32,10 @@ Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 " Plug 'Yggdroot/indentLine'
 call plug#end()
 
+let g:ale_linters = {
+\   'scss': ['stylelint'],
+\}
+
 """ General
 let g:mapleader = ' '
 set hidden
