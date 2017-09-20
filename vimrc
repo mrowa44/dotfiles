@@ -23,10 +23,15 @@ Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
 Plug 'sheerun/vim-polyglot'
-Plug 'lilydjwg/colorizer'
+" Plug 'lilydjwg/colorizer'
+Plug 'ap/vim-css-color'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty', { 'for': ['js', 'jsx'] }
+  let g:vim_jsx_pretty_colorful_config = 1
 Plug 'rakr/vim-two-firewatch'
 Plug 'atelierbram/Base2Tone-vim'
-Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+" Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+Plug 'wincent/ferret'
 " Plug 'kshenoy/vim-signature'
 " Plug 'tpope/vim-repeat'
 " Plug 'Yggdroot/indentLine'
@@ -150,6 +155,7 @@ augroup vimrcEx
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType qf unmap <cr>
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="

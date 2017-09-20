@@ -2,8 +2,8 @@
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" forward-word
-bindkey "^P" up-line-or-search
-bindkey "^N" down-line-or-search
+bindkey "^P" up-line-or-history
+bindkey "^N" down-line-or-history
 
 ### Aliases
 alias -g H='| head'
@@ -31,6 +31,7 @@ alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
 alias sl='yarn stylelint'
 alias el='eslint'
 alias gpshh='git push && open $(git remote get-url origin)'
+alias touhc='touch' # please
 
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
@@ -51,7 +52,7 @@ promptinit; compinit;
 prompt pure
 
 setopt MENU_COMPLETE # auto select first autocompl
-setopt append_history share_history histignorealldups # shared hist between sessions
+setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
 unsetopt beep # turn off fucking bell when tabbing
 zstyle ':completion:*' menu select # highlight tabbing
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case insensitive compl
@@ -60,7 +61,7 @@ zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # sh
 export EDITOR=vim
 export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
-source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
