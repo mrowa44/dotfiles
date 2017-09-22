@@ -49,5 +49,5 @@ defaults write NSGlobalDomain KeyRepeat -float 1.5
 # chrome://flags/#automatic-tab-discarding
 # https://www.amazon.com/gp/sendtokindle/mac
 
-npm -g install eslint yolo-cli csslint jsonlint sass-lint mocha snyk pure-prompt
+npm install -g eslint yolo-cli csslint jsonlint sass-lint mocha snyk pure-prompt
 pip install howdoi flake8 pylint

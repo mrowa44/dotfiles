@@ -1,11 +1,13 @@
 """ Plugins
-" if empty(glob('~/.vim/autoload/plug.vim'))
-"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-"         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-" endif
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 call plug#begin('~/.vim/bundle')
 Plug 'endel/vim-github-colorscheme'
+Plug 'rakr/vim-two-firewatch'
+Plug 'atelierbram/Base2Tone-vim'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -14,32 +16,25 @@ Plug 'tpope/vim-endwise'
 Plug 'rstacruz/vim-closer'
 Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'
-Plug 'bronson/vim-visual-star-search'
+Plug 'farmergreg/vim-lastplace'
+Plug 'wincent/ferret'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
   nnoremap <c-p> :Files<cr>
   let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  xma  ga <Plug>(EasyAlign)
-  nmap ga <Plug>(EasyAlign)
   nmap gaa <Plug>(EasyAlign)ip
+Plug 'junegunn/vim-slash'
+  noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 Plug 'sheerun/vim-polyglot'
-" Plug 'lilydjwg/colorizer'
-Plug 'ap/vim-css-color'
+Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['js', 'jsx'] }
   let g:vim_jsx_pretty_colorful_config = 1
-Plug 'rakr/vim-two-firewatch'
-Plug 'atelierbram/Base2Tone-vim'
-" Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
-Plug 'wincent/ferret'
+Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
 " Plug 'kshenoy/vim-signature'
 " Plug 'tpope/vim-repeat'
 " Plug 'Yggdroot/indentLine'
 call plug#end()
-
-let g:ale_linters = {
-\   'scss': ['stylelint'],
-\}
 
 """ General
 let g:mapleader = ' '
@@ -80,12 +75,6 @@ nnoremap <left>  <c-w>H
 nnoremap <down>  <c-w>J
 nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
-nnoremap <expr> n (v:searchforward ? 'n:call Flash()<cr>' : 'N:call Flash()<cr>')
-nnoremap <expr> N (v:searchforward ? 'N:call Flash()<cr>' : 'n:call Flash()<cr>')
-nnoremap <c-o> <c-o>zz:call Flash()<cr>
-nnoremap <c-i> <c-i>zz:call Flash()<cr>
-nnoremap * *zz:call Flash()<cr>
-nnoremap # #zz:call Flash()<cr>
 nnoremap j gj
 nnoremap k gk
 nnoremap Q @q
@@ -126,13 +115,6 @@ function! CleverTab()
   endif
 endfunction
 
-function! Flash()
-  set cursorline
-  redraw
-  sleep 110m
-  set nocursorline
-endfunction
-
 """ Autocommands
 augroup vimrcEx
   autocmd!
@@ -141,16 +123,11 @@ augroup vimrcEx
   autocmd BufEnter * let &colorcolumn=(&textwidth+1)
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell colorcolumn=
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
-  " When editing a file, always jump to the last known cursor position
-  autocmd BufReadPost *
-        \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft != 'gitcommit' |
-        \   exe "normal! g`\"" |
-        \ endif
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx setlocal textwidth=100
-  autocmd FileType javascript,jsx inoremap lg console.log('dupa', );<left><left>
+  autocmd FileType javascript,jsx inoremap lg<tab> console.log('dupa', );<left><left>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
