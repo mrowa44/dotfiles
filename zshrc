@@ -1,4 +1,5 @@
 ### Bindings
+bindkey -e
 bindkey "^B" backward-kill-word
 bindkey '^G' insert-last-word
 bindkey "^W" forward-word
@@ -15,6 +16,7 @@ alias la='ls -lha'
 alias '..'='cd ..'
 alias '...'='cd ../..'
 alias j='z'
+alias f="fd"
 alias cask="brew cask"
 alias open_ports='lsof -i -P | ag listen'
 whats_on_port() { lsof -i :$1 }
@@ -40,6 +42,20 @@ tx() { # attach to a session with name of current directory or create one
 youtube_mp3() {
   youtube-dl --extract-audio -i --audio-format mp3 "$@"
 }
+man() { # colorful man pages
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    PAGER="${commands[less]:-$PAGER}" \
+    _NROFF_U=1 \
+    PATH="$HOME/bin:$PATH" \
+    man "$@"
+}
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
@@ -61,26 +77,9 @@ zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # sh
 export EDITOR=vim
 export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
-# source ~/dotfiles/zsh-autosuggestions/zsh-autosuggestions.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-man() {
-  env \
-    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;32m") \
-    PAGER="${commands[less]:-$PAGER}" \
-    _NROFF_U=1 \
-    PATH="$HOME/bin:$PATH" \
-    man "$@"
-}
-export PATH=/usr/local/miniconda3/bin:"$PATH"
-
-jj() {
+jj() { # "jump" to directory of a project and start tmux session
   j "$@" && tx
 }

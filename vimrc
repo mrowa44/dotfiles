@@ -13,9 +13,10 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
-Plug 'rstacruz/vim-closer'
+Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'w0rp/ale'
+Plug 'Yggdroot/indentLine'
 Plug 'farmergreg/vim-lastplace'
 Plug 'wincent/ferret'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
@@ -23,17 +24,17 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegu
   let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
   nmap gaa <Plug>(EasyAlign)ip
-Plug 'junegunn/vim-slash'
-  noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 Plug 'sheerun/vim-polyglot'
 Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['js', 'jsx'] }
   let g:vim_jsx_pretty_colorful_config = 1
 Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
+" Plug 'rstacruz/vim-closer'
 " Plug 'kshenoy/vim-signature'
 " Plug 'tpope/vim-repeat'
-" Plug 'Yggdroot/indentLine'
+" Plug 'junegunn/vim-slash'
+"   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 call plug#end()
 
 """ General
@@ -48,7 +49,8 @@ set splitbelow splitright breakindent textwidth=80
 set showcmd visualbell list
 set hlsearch ignorecase smartcase showmatch
 set termguicolors
-color Base2Tone_SeaDark
+" color Base2Tone_SeaDark
+color two-firewatch
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
@@ -118,20 +120,20 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  autocmd BufLeave * setlocal colorcolumn= norelativenumber nonumber
-  autocmd BufEnter * setlocal relativenumber number
-  autocmd BufEnter * let &colorcolumn=(&textwidth+1)
+  autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ',')
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell colorcolumn=
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx setlocal textwidth=100
-  autocmd FileType javascript,jsx inoremap lg<tab> console.log('dupa', );<left><left>
+  autocmd FileType javascript,jsx inoremap lg console.log('dupa', );<left><left>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType javascript,jsx nnoremap sr G?render<cr>
   autocmd FileType qf unmap <cr>
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
