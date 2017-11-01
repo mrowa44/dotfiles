@@ -135,6 +135,7 @@ augroup vimrcEx
   autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx nnoremap sr G?render<cr>
   autocmd FileType qf unmap <cr>
+  autocmd FileType crontab setlocal nowritebackup
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="

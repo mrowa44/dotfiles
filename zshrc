@@ -34,6 +34,7 @@ alias sl='yarn stylelint'
 alias el='eslint'
 alias gpshh='git push && open $(git remote get-url origin)'
 alias touhc='touch' # please
+alias '?'='howdoi'
 
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
@@ -41,6 +42,12 @@ tx() { # attach to a session with name of current directory or create one
 }
 youtube_mp3() {
   youtube-dl --extract-audio -i --audio-format mp3 "$@"
+}
+kill_them_all() {
+  ps aux | ag "$@" | awk '{print $2}' | xargs kill
+}
+burn_them_all() {
+  ps aux | ag "$@" | awk '{print $2}' | xargs kill -9
 }
 man() { # colorful man pages
   env \
