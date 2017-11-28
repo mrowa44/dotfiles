@@ -5,36 +5,33 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.vim/bundle')
-Plug 'endel/vim-github-colorscheme'
-Plug 'rakr/vim-two-firewatch'
-Plug 'atelierbram/Base2Tone-vim'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'jiangmiao/auto-pairs'
-Plug 'airblade/vim-gitgutter'
-Plug 'w0rp/ale'
-Plug 'Yggdroot/indentLine'
-Plug 'farmergreg/vim-lastplace'
-Plug 'wincent/ferret'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
-  nnoremap <c-p> :Files<cr>
-  let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  nmap gaa <Plug>(EasyAlign)ip
-Plug 'sheerun/vim-polyglot'
-Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
-Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty', { 'for': ['js', 'jsx'] }
-  let g:vim_jsx_pretty_colorful_config = 1
-Plug 'chemzqm/vim-jsx-improve', { 'for': ['js', 'jsx'] }
-" Plug 'rstacruz/vim-closer'
-" Plug 'kshenoy/vim-signature'
-" Plug 'tpope/vim-repeat'
-" Plug 'junegunn/vim-slash'
-"   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-endwise'
+  Plug 'jiangmiao/auto-pairs'
+  Plug 'kshenoy/vim-signature'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'w0rp/ale'
+  Plug 'Yggdroot/indentLine'
+  Plug 'farmergreg/vim-lastplace'
+  Plug 'wincent/ferret'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
+   nnoremap <c-p> :Files<cr>
+   let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
+  Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+   nmap gaa <Plug>(EasyAlign)ip
+  Plug 'sheerun/vim-polyglot'
+  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+  Plug 'arcticicestudio/nord-vim'
+  " Plug 'endel/vim-github-colorscheme'
+  " Plug 'atelierbram/Base2Tone-vim'
+  " Plug 'tyrannicaltoucan/vim-deep-space'
+  " Plug 'romanzolotarev/vim-mini'
+  " Plug 'rstacruz/vim-closer'
+  " Plug 'tpope/vim-repeat'
+  " Plug 'junegunn/vim-slash'
+  "   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 call plug#end()
 
 """ General
@@ -43,14 +40,15 @@ set hidden
 set gdefault
 set lazyredraw
 set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
+set backspace=indent,eol,start
 
 """ UI
 set splitbelow splitright breakindent textwidth=80
-set showcmd visualbell list
+set noruler showcmd laststatus=2 nolist visualbell
 set hlsearch ignorecase smartcase showmatch
-set termguicolors
-" color Base2Tone_SeaDark
-color two-firewatch
+set notermguicolors
+set background=dark
+color nord
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
@@ -83,8 +81,8 @@ nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
-nnoremap <bs> `[V`]
 nnoremap <leader><leader> :wa<cr>
+" nnoremap <bs> `[V`]
 
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
@@ -109,6 +107,14 @@ inoremap <c-f>   <c-x><c-f>
 inoremap <c-b> <c-w>
 
 """ Custom functions
+function! Snippet(name)
+  if a:name == 'react'
+    0r ~/dotfiles/snippets/react.js
+  endif
+endfunction
+
+command! -nargs=1 S call Snippet(<f-args>)
+
 function! CleverTab()
   if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
     return "\<tab>"
@@ -121,7 +127,8 @@ endfunction
 augroup vimrcEx
   autocmd!
   autocmd BufLeave * setlocal colorcolumn=
-  autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ',')
+  " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ' ,')
+  autocmd BufEnter * let &colorcolumn=&textwidth+1
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell colorcolumn=
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd FileType gitcommit      setlocal textwidth=72 spell
