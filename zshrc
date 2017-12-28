@@ -33,9 +33,16 @@ alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
 alias sl='yarn stylelint'
 alias el='eslint'
 alias gpshh='git push && open $(git remote get-url origin)'
+alias org='open $(git remote get-url origin)'
+alias origin='open $(git remote get-url origin)'
 alias touhc='touch' # please
 alias '?'='howdoi'
+alias md='open -a MacDown'
+alias cc='~/node_modules/create-component-app/dist/index.js'
 
+comp() {
+  touch src/components/"$@".{js,test.js,scss}
+}
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
   tmux -CC a -t ${dir} || tmux -CC new -s ${dir}
