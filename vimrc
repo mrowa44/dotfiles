@@ -6,6 +6,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-endwise'
@@ -13,6 +14,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'kshenoy/vim-signature'
   Plug 'airblade/vim-gitgutter'
   Plug 'w0rp/ale'
+    let g:ale_linters = { 'scss' : [] }
   Plug 'Yggdroot/indentLine'
   Plug 'farmergreg/vim-lastplace'
   Plug 'wincent/ferret'
@@ -21,15 +23,15 @@ call plug#begin('~/.vim/bundle')
    let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
   Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
    nmap gaa <Plug>(EasyAlign)ip
+   xmap ga <Plug>(EasyAlign)
   Plug 'sheerun/vim-polyglot'
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
-  Plug 'arcticicestudio/nord-vim'
-  " Plug 'endel/vim-github-colorscheme'
-  " Plug 'atelierbram/Base2Tone-vim'
-  " Plug 'tyrannicaltoucan/vim-deep-space'
-  " Plug 'romanzolotarev/vim-mini'
+
+  Plug 'endel/vim-github-colorscheme'
+  Plug 'owickstrom/vim-colors-paramount'
+  Plug 'atelierbram/Base2Tone-vim'
+  " Plug 'arcticicestudio/nord-vim'
   " Plug 'rstacruz/vim-closer'
-  " Plug 'tpope/vim-repeat'
   " Plug 'junegunn/vim-slash'
   "   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 call plug#end()
@@ -43,12 +45,16 @@ set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set backspace=indent,eol,start
 
 """ UI
-set splitbelow splitright breakindent textwidth=80
-set noruler showcmd laststatus=2 nolist visualbell
+set splitbelow splitright breakindent textwidth=80 nofoldenable
+set ruler noshowcmd nolist visualbell title
 set hlsearch ignorecase smartcase showmatch
-set notermguicolors
-set background=dark
-color nord
+set wildmenu wildmode=longest,list,full
+set termguicolors
+set colorcolumn=
+color Base2Tone_EveningDark
+hi VertSplit ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
+set fillchars+=vert:\ 
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
@@ -83,6 +89,7 @@ nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
 " nnoremap <bs> `[V`]
+nnoremap <F10> :Goyo<cr>
 
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
@@ -108,8 +115,17 @@ inoremap <c-b> <c-w>
 
 """ Custom functions
 function! Snippet(name)
-  if a:name == 'react'
-    0r ~/dotfiles/snippets/react.js
+  if a:name == 'comp'
+    0r ~/dotfiles/snippets/comp.js
+    normal Gdd<c-o>
+  endif
+  if a:name == 'fcomp'
+    0r ~/dotfiles/snippets/functionalComp.js
+    normal Gdd<c-o>
+  endif
+  if a:name == 'ctest'
+    0r ~/dotfiles/snippets/ctest.js
+    normal Gdd<c-o>
   endif
 endfunction
 
@@ -126,25 +142,25 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  autocmd BufLeave * setlocal colorcolumn=
+  " autocmd BufLeave * setlocal colorcolumn=
   " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ' ,')
-  autocmd BufEnter * let &colorcolumn=&textwidth+1
-  autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell colorcolumn=
+  " autocmd BufEnter * let &colorcolumn=&textwidth+1
+  autocmd BufRead,BufNewFile,BufEnter,InsertEnter * nohlsearch
+  autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
-  autocmd FileType gitcommit      setlocal textwidth=72 spell
-  autocmd FileType cs             setlocal textwidth=130
-  autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx setlocal textwidth=100
-  autocmd FileType javascript,jsx inoremap lg console.log('dupa', );<left><left>
-  autocmd FileType ruby inoremap lg binding.pry
-  autocmd FileType ruby nnoremap sfs /binding.pry<cr>
-  autocmd FileType javascript,jsx,json nnoremap so vi{:sort<cr><c-o>
-  autocmd FileType javascript,jsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
-  autocmd FileType javascript,jsx nnoremap sr G?render<cr>
-  autocmd FileType qf unmap <cr>
-  autocmd FileType crontab setlocal nowritebackup
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
+  autocmd FileType gitcommit      setlocal textwidth=72 spell
+  autocmd FileType cs             setlocal textwidth=130
+  autocmd FileType html           setlocal textwidth=130
+  autocmd FileType javascript,jsx,typescript setlocal textwidth=100
+  autocmd FileType javascript,jsx,typescript inoremap lg console.log('dupa', );<left><left>
+  autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
+  autocmd FileType ruby inoremap lg binding.pry
+  autocmd FileType ruby nnoremap sfs /binding.pry<cr>
+  autocmd FileType qf unmap <cr>
+  autocmd FileType crontab setlocal nowritebackup
 augroup END
