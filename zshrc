@@ -38,7 +38,6 @@ alias origin='open $(git remote get-url origin)'
 alias touhc='touch' # please
 alias '?'='howdoi'
 alias md='open -a MacDown'
-alias cc='~/node_modules/create-component-app/dist/index.js'
 
 comp() {
   touch src/components/"$@".{js,test.js,scss}
@@ -98,6 +97,9 @@ jj() { # "jump" to directory of a project and start tmux session
   j "$@" && tx
 }
 
-# export NVM_DIR="$HOME/.nvm"
-# . "/usr/local/opt/nvm/nvm.sh"
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+autoload -U add-zsh-hook
+
+eval $(thefuck --alias)
