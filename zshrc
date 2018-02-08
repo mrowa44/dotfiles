@@ -29,7 +29,8 @@ alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
 alias yt='NODE_ENV=test yarn test'
-alias yti='NODE_ENV=test mocha --debug-brk --inspect --recursive'
+alias yti='NODE_ENV=test mocha --inspect-brk --recursive'
+alias ytd='node --inspect-brk ./node_modules/netguru-react-scripts/bin/react-scripts.js test --env=jsdom'
 alias sl='yarn stylelint'
 alias el='eslint'
 alias gpshh='git push && open $(git remote get-url origin)'
@@ -41,6 +42,9 @@ alias md='open -a MacDown'
 
 comp() {
   touch src/components/"$@".{js,test.js,scss}
+}
+view() {
+  touch src/views/"$@".{js,test.js,scss}
 }
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
@@ -97,9 +101,9 @@ jj() { # "jump" to directory of a project and start tmux session
   j "$@" && tx
 }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-autoload -U add-zsh-hook
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# autoload -U add-zsh-hook
 
 eval $(thefuck --alias)
