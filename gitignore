@@ -17,4 +17,5 @@ npm-debug*
 .env.*
 dupa.*
 yolo.json*
+yolo.js
 yarn-error.log
