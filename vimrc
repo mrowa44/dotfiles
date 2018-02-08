@@ -15,7 +15,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'airblade/vim-gitgutter'
   Plug 'w0rp/ale'
     let g:ale_linters = { 'scss' : [] }
-  Plug 'Yggdroot/indentLine'
+  " Plug 'Yggdroot/indentLine'
   Plug 'farmergreg/vim-lastplace'
   Plug 'wincent/ferret'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
