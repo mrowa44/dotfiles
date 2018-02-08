@@ -6,7 +6,9 @@ import X from './X';
 
 describe('X', () => {
   test('renders correctly', () => {
-    const component = shallow(<X />);
+    const component = shallow((
+      <X />
+    ));
     expect(toJson(component)).toMatchSnapshot();
   });
 });
