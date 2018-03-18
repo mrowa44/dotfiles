@@ -28,3 +28,5 @@
 	required = true
 [alias]
   unused = !git branch --merged master | ag -L master | xargs -n 1 git branch -d
+[credential]
+	helper = osxkeychain
