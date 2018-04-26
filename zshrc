@@ -41,6 +41,7 @@ alias touhc='touch' # please
 alias '?'='howdoi'
 alias md='open -a MacDown'
 alias alert="osascript -e 'display notification \"completed!\" with title \"Done!\"'"
+alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
 
 comp() {
   touch src/components/"$@".{js,test.js,scss}
