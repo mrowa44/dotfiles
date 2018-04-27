@@ -27,6 +27,6 @@
 	process = git-lfs filter-process
 	required = true
 [alias]
-  unused = !git branch --merged master | ag -L master | xargs -n 1 git branch -d
+  unused = !git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d
 [credential]
 	helper = osxkeychain
