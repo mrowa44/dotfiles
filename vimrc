@@ -148,6 +148,7 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile,BufEnter,InsertEnter * nohlsearch
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
+  autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
   autocmd TextChanged,InsertLeave,FocusLost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
