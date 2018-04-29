@@ -76,6 +76,16 @@ man() { # colorful man pages
     PATH="$HOME/bin:$PATH" \
     man "$@"
 }
+rm_deep_node_modules() {
+  find . -type d -name '*node_modules*' -maxdepth 2
+  echo
+  echo 'Are you sure you want to remote those directories?'
+  read -n 1 REPLY
+  if [[ ! $REPLY =~ ^[Yy]$ ]] then
+    echo 'Ok, removing'
+    find . -type d -name '*node_modules*' -maxdepth 2 | xargs rm -rf
+  fi
+}
 fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
