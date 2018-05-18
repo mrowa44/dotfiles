@@ -49,6 +49,7 @@ set splitbelow splitright breakindent textwidth=80 nofoldenable
 set ruler noshowcmd nolist visualbell title
 set hlsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
+set laststatus=2
 set termguicolors
 set colorcolumn=
 color Base2Tone_EveningDark
