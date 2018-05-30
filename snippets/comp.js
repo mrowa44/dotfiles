@@ -1,7 +1,10 @@
+// @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class X extends React.Component {
+type Props = {
+};
+
+class X extends React.Component<Props> {
   render() {
     return (
       <div>
