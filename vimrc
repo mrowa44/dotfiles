@@ -20,7 +20,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'wincent/ferret'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    nnoremap <c-p> :Files<cr>
-   let $FZF_DEFAULT_COMMAND = 'ag --hidden -g ""'
+   let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep -g ""'
   Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
    nmap gaa <Plug>(EasyAlign)ip
    xmap ga <Plug>(EasyAlign)
@@ -30,6 +30,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'endel/vim-github-colorscheme'
   Plug 'owickstrom/vim-colors-paramount'
   Plug 'atelierbram/Base2Tone-vim'
+  " Plug 'Yggdroot/indentLine'
   " Plug 'arcticicestudio/nord-vim'
   " Plug 'rstacruz/vim-closer'
   " Plug 'junegunn/vim-slash'
@@ -104,6 +105,7 @@ nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>y  "+y
+nnoremap <leader>/  :BLines<cr>
 
 inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>

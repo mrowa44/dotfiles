@@ -112,7 +112,7 @@ source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 jj() { # "jump" to directory of a project and start tmux session
-  j "$@" && tx
+  j "$@" && nvm use --silent && tx
 }
 
 export NVM_DIR="$HOME/.nvm"
