@@ -16,6 +16,8 @@ call plug#begin('~/.vim/bundle')
   Plug 'w0rp/ale'
     let g:ale_linters = { 'scss' : [] }
   " Plug 'Yggdroot/indentLine'
+  " Plug 'flowtype/vim-flow', { 'for': ['js'] }
+  " let g:flow#enable = 1
   Plug 'farmergreg/vim-lastplace'
   Plug 'wincent/ferret'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
@@ -25,6 +27,7 @@ call plug#begin('~/.vim/bundle')
    nmap gaa <Plug>(EasyAlign)ip
    xmap ga <Plug>(EasyAlign)
   Plug 'sheerun/vim-polyglot'
+    let g:javascript_plugin_flow = 1
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
   Plug 'endel/vim-github-colorscheme'
@@ -133,6 +136,13 @@ function! Snippet(name)
 endfunction
 
 command! -nargs=1 S call Snippet(<f-args>)
+
+function! TransformJsToCss()
+  %s/,/;
+  %s/'//
+endfunction
+
+command! Transform call TransformJsToCss()
 
 function! CleverTab()
   if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
