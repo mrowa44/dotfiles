@@ -43,6 +43,8 @@ alias '?'='howdoi'
 alias md='open -a MacDown'
 alias alert="osascript -e 'display notification \"completed!\" with title \"Done!\"'"
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
+alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
+alias lint_changed="gd --name-only develop | ag js | xargs ./gabi-react/node_modules/eslint/bin/eslint.js"
 
 comp() {
   touch src/components/"$@".{js,test.js,scss}
@@ -53,6 +55,9 @@ view() {
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
   tmux -CC a -t ${dir} || tmux -CC new -s ${dir}
+}
+copy() { # to clipboard
+  pbcopy < $@
 }
 youtube_mp3() {
   youtube-dl --extract-audio -i --audio-format mp3 "$@"
@@ -92,6 +97,8 @@ fix_postgres() {
   brew services restart postgresql
 }
 fix_rubygems() { gem update --system }
+# set right path
+fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
 
 ### ZSH setup stuff
 autoload -U promptinit compinit
@@ -112,7 +119,7 @@ source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 jj() { # "jump" to directory of a project and start tmux session
-  j "$@" && nvm use --silent && tx
+  j "$@" && tx
 }
 
 export NVM_DIR="$HOME/.nvm"
