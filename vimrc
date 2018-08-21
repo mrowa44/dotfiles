@@ -170,7 +170,7 @@ augroup vimrcEx
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript inoremap lg console.log('<C-R>=expand("%:t:r")<esc>', );<left><left>
+  autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue', );<left><left>
   autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
