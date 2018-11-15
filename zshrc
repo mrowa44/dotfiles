@@ -9,7 +9,7 @@ bindkey "^N" down-line-or-history
 ### Aliases
 alias -g H='| head'
 alias -g T='| tail'
-alias -g cat="ccat"
+alias -g cat="bat"
 alias ls="ls -GF"
 alias ll='ls -lh'
 alias la='ls -lha'
@@ -44,8 +44,12 @@ alias md='open -a MacDown'
 alias alert="osascript -e 'display notification \"completed!\" with title \"Done!\"'"
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
-alias lint_changed="gd --name-only develop | ag js | xargs ./gabi-react/node_modules/eslint/bin/eslint.js"
+alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_modules/eslint/bin/eslint.js"
 
+help() {
+  tldr "$@"
+  howdoi "$@"
+}
 comp() {
   touch src/components/"$@".{js,test.js,scss}
 }
@@ -82,6 +86,11 @@ man() { # colorful man pages
     PATH="$HOME/bin:$PATH" \
     man "$@"
 }
+pg() {
+  process_list="$(ps ax -o pid,ppid,user,pcpu,pmem,rss,cputime,state,comm)"
+  head -n1 <(echo $process_list)
+  command grep -i --color "$1" <(echo $process_list)
+}
 rm_deep_node_modules() {
   find . -type d -name '*node_modules*' -maxdepth 2
   echo
@@ -105,6 +114,8 @@ autoload -U promptinit compinit
 promptinit; compinit;
 prompt pure
 
+PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
+
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
 unsetopt beep # turn off fucking bell when tabbing
@@ -119,7 +130,8 @@ source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 jj() { # "jump" to directory of a project and start tmux session
-  j "$@" && tx
+  j "$@"
+  tx
 }
 
 export NVM_DIR="$HOME/.nvm"

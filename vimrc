@@ -22,7 +22,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'wincent/ferret'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    nnoremap <c-p> :Files<cr>
-   let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep -g ""'
+   let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
   Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
    nmap gaa <Plug>(EasyAlign)ip
    xmap ga <Plug>(EasyAlign)
@@ -51,7 +51,7 @@ set backspace=indent,eol,start
 """ UI
 set splitbelow splitright breakindent textwidth=80 nofoldenable
 set ruler noshowcmd nolist visualbell title
-set hlsearch ignorecase smartcase showmatch
+set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
 set laststatus=2
 set termguicolors
