@@ -21,3 +21,4 @@ yolo.js
 yarn-error.log
 *.icloud
 .eslintcache
+**/.DS_Store
