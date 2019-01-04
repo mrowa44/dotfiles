@@ -21,14 +21,15 @@ call plug#begin('~/.vim/bundle')
   Plug 'farmergreg/vim-lastplace'
   Plug 'wincent/ferret'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
-   nnoremap <c-p> :Files<cr>
    let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
+   nnoremap <c-p> :Files<cr>
   Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
    nmap gaa <Plug>(EasyAlign)ip
    xmap ga <Plug>(EasyAlign)
   Plug 'sheerun/vim-polyglot'
     let g:javascript_plugin_flow = 1
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+  Plug 'vim-scripts/svg.vim'
 
   Plug 'endel/vim-github-colorscheme'
   Plug 'owickstrom/vim-colors-paramount'
@@ -170,7 +171,7 @@ augroup vimrcEx
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue', );<left><left>
+  autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue; font-weight: bold;', );<left><left>
   autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
