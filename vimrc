@@ -48,6 +48,7 @@ set gdefault
 set lazyredraw
 set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set backspace=indent,eol,start
+lang en_US
 
 """ UI
 set splitbelow splitright breakindent textwidth=80 nofoldenable
