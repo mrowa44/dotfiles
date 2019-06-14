@@ -51,3 +51,8 @@ defaults write NSGlobalDomain KeyRepeat -float 1.5
 
 npm install -g eslint yolo-cli csslint jsonlint sass-lint mocha snyk pure-prompt
 pip install howdoi flake8 pylint
+
+# https://superuser.com/questions/362372/how-to-change-the-login-shell-on-mac-os-x-from-bash-to-zsh#362374
+# chsh -s /bin/zsh
+
+# https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
