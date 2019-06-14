@@ -27,12 +27,11 @@ call plug#begin('~/.vim/bundle')
    nmap gaa <Plug>(EasyAlign)ip
    xmap ga <Plug>(EasyAlign)
   Plug 'sheerun/vim-polyglot'
-    let g:javascript_plugin_flow = 1
+    let g:javascript_plugin_flow = 0
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
   Plug 'vim-scripts/svg.vim'
 
-  Plug 'endel/vim-github-colorscheme'
-  Plug 'owickstrom/vim-colors-paramount'
+  " Plug 'endel/vim-github-colorscheme'
   Plug 'atelierbram/Base2Tone-vim'
   " Plug 'Yggdroot/indentLine'
   " Plug 'arcticicestudio/nord-vim'
@@ -50,7 +49,7 @@ set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set backspace=indent,eol,start
 lang en_US
 
-""" UI
+" """ UI
 set splitbelow splitright breakindent textwidth=80 nofoldenable
 set ruler noshowcmd nolist visualbell title
 set hlsearch incsearch ignorecase smartcase showmatch
@@ -68,7 +67,7 @@ set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
 if !isdirectory(expand(&backupdir)) | call mkdir(expand(&backupdir), 'p') | endif
 if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endif
 
-""" Mappings
+" """ Mappings
 inoremap jj <esc>
 inoremap kk <esc>:w<cr>
 inoremap jk <esc>dd
@@ -90,13 +89,13 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap j gj
 nnoremap k gk
-nnoremap Q @q
+" nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
-" nnoremap <bs> `[V`]
-nnoremap <F10> :Goyo<cr>
+" " nnoremap <bs> `[V`]
+" nnoremap <F10> :Goyo<cr>
 
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
@@ -116,12 +115,12 @@ inoremap <tab>   <c-r>=CleverTab()<cr>
 inoremap <s-tab> <c-n>
 inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>
-inoremap <c-l>   <c-x><c-l>
-inoremap <c-f>   <c-x><c-f>
+" inoremap <c-l>   <c-x><c-l>
+" inoremap <c-f>   <c-x><c-f>
 
 inoremap <c-b> <c-w>
 
-""" Custom functions
+" """ Custom functions
 function! Snippet(name)
   if a:name == 'comp'
     0r ~/dotfiles/snippets/comp.js
@@ -139,12 +138,12 @@ endfunction
 
 command! -nargs=1 S call Snippet(<f-args>)
 
-function! TransformJsToCss()
-  %s/,/;
-  %s/'//
-endfunction
+" function! TransformJsToCss()
+"   %s/,/;
+"   %s/'//
+" endfunction
 
-command! Transform call TransformJsToCss()
+" command! Transform call TransformJsToCss()
 
 function! CleverTab()
   if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
@@ -157,6 +156,12 @@ endfunction
 """ Autocommands
 augroup vimrcEx
   autocmd!
+  autocmd InsertLeave,FocusLost * wall
+  autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
+  autocmd VimResized * execute "normal! \<c-w>="
+  autocmd VimLeave   * execute "mksession!"
+  autocmd BufLeave * setlocal nocursorline
+  autocmd BufEnter * setlocal cursorline
   " autocmd BufLeave * setlocal colorcolumn=
   " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ' ,')
   " autocmd BufEnter * let &colorcolumn=&textwidth+1
@@ -164,10 +169,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
-  autocmd TextChanged,InsertLeave,FocusLost * wall
-  autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
-  autocmd VimResized * execute "normal! \<c-w>="
-  autocmd VimLeave   * execute "mksession!"
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
