@@ -45,6 +45,7 @@ alias alert="osascript -e 'display notification \"completed!\" with title \"Done
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
 alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_modules/eslint/bin/eslint.js"
+alias circle_local="circleci local execute --job build"
 
 help() {
   tldr "$@"
@@ -115,6 +116,7 @@ promptinit; compinit;
 prompt pure
 
 PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
+PATH="/usr/local/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
@@ -134,9 +136,13 @@ jj() { # "jump" to directory of a project and start tmux session
   tx
 }
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+ export NVM_DIR="$HOME/.nvm"
+ [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+ [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+
 autoload -U add-zsh-hook
 
 eval $(thefuck --alias)
+
+nvm use default
+export TERM=xterm-256color

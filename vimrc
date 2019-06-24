@@ -14,7 +14,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'kshenoy/vim-signature'
   Plug 'airblade/vim-gitgutter'
   Plug 'w0rp/ale'
-    let g:ale_linters = { 'scss' : [] }
+    " let g:ale_linters = { 'scss' : [] }
   " Plug 'Yggdroot/indentLine'
   " Plug 'flowtype/vim-flow', { 'for': ['js'] }
   " let g:flow#enable = 1
@@ -31,13 +31,13 @@ call plug#begin('~/.vim/bundle')
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
   Plug 'vim-scripts/svg.vim'
 
-  " Plug 'endel/vim-github-colorscheme'
   Plug 'atelierbram/Base2Tone-vim'
+  " Plug 'endel/vim-github-colorscheme'
   " Plug 'Yggdroot/indentLine'
   " Plug 'arcticicestudio/nord-vim'
   " Plug 'rstacruz/vim-closer'
   " Plug 'junegunn/vim-slash'
-  "   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
+    " noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
 call plug#end()
 
 """ General
@@ -56,10 +56,13 @@ set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
 set laststatus=2
 set termguicolors
-set colorcolumn=
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" set colorcolumn=
 color Base2Tone_EveningDark
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
+hi EndOfBuffer ctermbg=NONE guibg=NONE guifg=bg
 set fillchars+=vert:\ 
 
 """ Backups, undo
@@ -67,10 +70,12 @@ set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
 if !isdirectory(expand(&backupdir)) | call mkdir(expand(&backupdir), 'p') | endif
 if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endif
 
-" """ Mappings
+""" Mappings
 inoremap jj <esc>
 inoremap kk <esc>:w<cr>
 inoremap jk <esc>dd
+" inoremap § <esc>
+" map § <esc>
 nnoremap \ :q<cr>
 nnoremap <cr> :w<cr>
 
@@ -94,10 +99,9 @@ nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
-" " nnoremap <bs> `[V`]
+nnoremap <bs> `[V`]
 " nnoremap <F10> :Goyo<cr>
 
-nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>e  :edit!<cr>
@@ -153,26 +157,46 @@ function! CleverTab()
   endif
 endfunction
 
+function! Flash()
+  hi StatusLineLit ctermfg=bg ctermbg=fg guibg=#6c6783 guifg=bg
+  hi StatusLineUnlit ctermbg=bg guibg=bg
+  hi clear StatusLine | hi link StatusLine StatusLineLit
+  " set cursorline
+  redraw
+  sleep 40m
+  " set nocursorline
+  hi clear StatusLine | hi link StatusLine StatusLineUnlit
+  redraw
+  sleep 40m
+  hi clear StatusLine | hi link StatusLine StatusLineLit
+  redraw
+  sleep 40m
+  hi clear StatusLine | hi link StatusLine StatusLineUnlit
+endfunction
+
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  autocmd InsertLeave,FocusLost * wall
+  " autocmd InsertLeave,FocusLost,CursorHold,TextYankPost * wall | call Flash()
+  autocmd InsertLeave,FocusLost,CursorHold,TextYankPost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
+  " autocmd BufWrite,FileWritePost * call Flash()
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
-  autocmd BufLeave * setlocal nocursorline
-  autocmd BufEnter * setlocal cursorline
-  " autocmd BufLeave * setlocal colorcolumn=
-  " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,240), ' ,')
+  " autocmd BufLeave * setlocal nocursorline
+  " autocmd BufEnter * setlocal cursorline
+  autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
   " autocmd BufEnter * let &colorcolumn=&textwidth+1
   autocmd BufRead,BufNewFile,BufEnter,InsertEnter * nohlsearch
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
+  autocmd BufRead,BufEnter vimrc setlocal ft=vim
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx,typescript setlocal textwidth=100
+  autocmd FileType javascript,jsx,typescript setlocal textwidth=120
   autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue; font-weight: bold;', );<left><left>
   autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
@@ -181,4 +205,3 @@ augroup vimrcEx
   autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
 augroup END
-
