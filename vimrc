@@ -19,25 +19,33 @@ call plug#begin('~/.vim/bundle')
   " Plug 'flowtype/vim-flow', { 'for': ['js'] }
   " let g:flow#enable = 1
   Plug 'farmergreg/vim-lastplace'
+  Plug 'ajh17/VimCompletesMe'
+    " let g:vcm_direction = 'p'
+    " set completeopt+=longest
   Plug 'wincent/ferret'
+  Plug 'SirVer/ultisnips'
+    set rtp^=$HOME/dotfiles
+    let g:UltiSnipsSnippetsDir='/Users/rachowicz/dotfiles/vim_snippets'
+    let g:UltiSnipsSnippetDirectories=["vim_snippets"]
+    let g:UltiSnipsExpandTrigger="<c-i>"
+    let g:UltiSnipsJumpForwardTrigger="<c-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
    nnoremap <c-p> :Files<cr>
-  Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-   nmap gaa <Plug>(EasyAlign)ip
-   xmap ga <Plug>(EasyAlign)
+  " Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+  "  nmap gaa <Plug>(EasyAlign)ip
+  "  xmap ga <Plug>(EasyAlign)
   Plug 'sheerun/vim-polyglot'
     let g:javascript_plugin_flow = 0
-  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+  " Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+  Plug 'ap/vim-css-color', { 'for': ['scss', 'css'] }
   Plug 'vim-scripts/svg.vim'
 
   Plug 'atelierbram/Base2Tone-vim'
   " Plug 'endel/vim-github-colorscheme'
-  " Plug 'Yggdroot/indentLine'
-  " Plug 'arcticicestudio/nord-vim'
-  " Plug 'rstacruz/vim-closer'
-  " Plug 'junegunn/vim-slash'
-    " noremap <expr> <plug>(slash-after) 'zz'.slash#blink(3, 110)
+  Plug 'junegunn/vim-slash'
+    noremap <expr> <plug>(slash-after) 'zz'.slash#blink(2, 110)
 call plug#end()
 
 """ General
@@ -48,6 +56,7 @@ set lazyredraw
 set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set backspace=indent,eol,start
 lang en_US
+filetype plugin indent on
 
 " """ UI
 set splitbelow splitright breakindent textwidth=80 nofoldenable
@@ -94,7 +103,7 @@ nnoremap <up>    <c-w>K
 nnoremap <right> <c-w>L
 nnoremap j gj
 nnoremap k gk
-" nnoremap Q @q
+nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
@@ -114,9 +123,11 @@ nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>y  "+y
 nnoremap <leader>/  :BLines<cr>
+nnoremap n nzz
+nnoremap N Nzz
 
-inoremap <tab>   <c-r>=CleverTab()<cr>
-inoremap <s-tab> <c-n>
+" inoremap <tab>   <c-r>=CleverTab()<cr>
+" inoremap <s-tab> <c-n>
 inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>
 " inoremap <c-l>   <c-x><c-l>
@@ -196,7 +207,7 @@ augroup vimrcEx
   autocmd FileType gitcommit      setlocal textwidth=72 spell
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx,typescript setlocal textwidth=120
+  autocmd FileType javascript,jsx,typescript setlocal textwidth=100
   autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue; font-weight: bold;', );<left><left>
   autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>

@@ -1,12 +1,13 @@
+snippet comp
 // @flow
 import * as React from 'react';
 
-import styles from './X.cssmodule.scss';
+import styles from './$1.cssmodule.scss';
 
 type Props = {
 };
 
-class X extends React.Component<Props> {
+class $1 extends React.Component<Props> {
   render() {
     return (
       <div>
@@ -16,4 +17,5 @@ class X extends React.Component<Props> {
   }
 }
 
-export default X;
+export default $1;
+endsnippet
