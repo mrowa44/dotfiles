@@ -35,17 +35,19 @@ alias yti='NODE_ENV=test mocha --inspect-brk --recursive'
 alias ytd='node --inspect-brk ./node_modules/netguru-react-scripts/bin/react-scripts.js test --env=jsdom'
 alias sl='yarn stylelint'
 alias el='eslint'
-alias gpshh='git push && open $(git remote get-url origin)'
+alias gpshh='git push -u && open $(git remote get-url origin)'
 alias org='open $(git remote get-url origin)'
 alias origin='open $(git remote get-url origin)'
 alias touhc='touch' # please
 alias '?'='howdoi'
 alias md='open -a MacDown'
-alias alert="osascript -e 'display notification \"completed!\" with title \"Done!\"'"
+alias alert="; osascript -e 'display notification \"completed!\" with title \"Done!\" sound name \"Purr\"'"
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
 alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_modules/eslint/bin/eslint.js"
 alias circle_local="circleci local execute --job build"
+alias icons='open src/gabi-assets/images/icons'
+alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs open'
 
 help() {
   tldr "$@"
@@ -125,6 +127,9 @@ zstyle ':completion:*' menu select # highlight tabbing
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*' # case insensitive compl
 zmodload zsh/complist && bindkey -M menuselect '^[[Z' reverse-menu-complete # shift tab to reverse compl selection
 
+set show-all-if-ambiguous on
+set completion-ignore-case on
+
 export EDITOR=vim
 # export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
@@ -146,3 +151,16 @@ eval $(thefuck --alias)
 
 nvm use default
 export TERM=xterm-256color
+export PATH="/usr/local/sbin:$PATH"
+
+# make all apps in /Applications available from the command line
+# https://hamberg.no/erlend/posts/2014-02-15-make-mac-apps-available-from-cmd-line.html
+for a in {$HOME,}/Applications/*.app(N) ; do
+    eval "\${\${a:t:l:r}//[ -]/}() {\
+        if (( \$# == 0 )); then\
+            open ${(qq)a};\
+        else\
+            open -a ${(qq)a} \$@;\
+        fi\
+    }"
+done

@@ -10,42 +10,80 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-endwise'
-  Plug 'jiangmiao/auto-pairs'
-  Plug 'kshenoy/vim-signature'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'w0rp/ale'
-    " let g:ale_linters = { 'scss' : [] }
-  " Plug 'Yggdroot/indentLine'
-  " Plug 'flowtype/vim-flow', { 'for': ['js'] }
-  " let g:flow#enable = 1
   Plug 'farmergreg/vim-lastplace'
-  Plug 'ajh17/VimCompletesMe'
-    " let g:vcm_direction = 'p'
-    " set completeopt+=longest
-  Plug 'wincent/ferret'
+  Plug 'kshenoy/vim-signature'
+  Plug 'jiangmiao/auto-pairs'
+    let g:AutoPairsFlyMode = 0
+    let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```'}
+    let g:AutoPairsMoveCharacter = ""
+  Plug 'airblade/vim-gitgutter'
+    set updatetime=100
+    let g:gitgutter_override_sign_column_highlight = 0
+    nmap ga <Plug>GitGutterStageHunk
+  Plug 'dense-analysis/ale'
+    let b:ale_fixers = {'javascript': ['eslint']}
+    let g:ale_fix_on_save = 1
+    highlight clear ALEErrorSign
+    highlight clear ALEWarningSign
+    nmap <silent> [e <Plug>(ale_previous_wrap)
+    nmap <silent> ]e <Plug>(ale_next_wrap)
   Plug 'SirVer/ultisnips'
     set rtp^=$HOME/dotfiles
-    let g:UltiSnipsSnippetsDir='/Users/rachowicz/dotfiles/vim_snippets'
+    let g:UltiSnipsSnippetsDir='~dotfiles/vim_snippets'
     let g:UltiSnipsSnippetDirectories=["vim_snippets"]
-    let g:UltiSnipsExpandTrigger="<c-i>"
+    let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+  Plug 'ervandew/supertab'
+    set completeopt+=menuone,preview
+    let g:SuperTabLongestHighlight = 1
+  Plug 'wincent/ferret'
+    let g:FerretHlsearch=0
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
-   let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
    nnoremap <c-p> :Files<cr>
-  " Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-  "  nmap gaa <Plug>(EasyAlign)ip
-  "  xmap ga <Plug>(EasyAlign)
+   imap <c-f> <plug>(fzf-complete-file-ag)
+   let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
+   let g:fzf_layout = { 'down': '~30%' }
+   " https://github.com/junegunn/fzf.vim/issues/346
+   command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+   " Files command with preview window
+   command! -bang -nargs=? -complete=dir Files
+     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Statement'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
     let g:javascript_plugin_flow = 0
-  " Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
-  Plug 'ap/vim-css-color', { 'for': ['scss', 'css'] }
+  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
   Plug 'vim-scripts/svg.vim'
-
   Plug 'atelierbram/Base2Tone-vim'
   " Plug 'endel/vim-github-colorscheme'
-  Plug 'junegunn/vim-slash'
-    noremap <expr> <plug>(slash-after) 'zz'.slash#blink(2, 110)
+  " Plug 'junegunn/vim-slash'
+  "   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(2, 110)
+  Plug 'itchyny/lightline.vim'
+    set noshowmode
+    let g:lightline = {
+          \ 'colorscheme': 'one',
+          \ 'component_function': {
+          \   'filename': 'FilenameForLightline'
+          \ }
+          \ }
+    function! FilenameForLightline()
+      return expand('%:p')
+    endfunction
+  " Plug 'TaDaa/vimade'
 call plug#end()
 
 """ General
@@ -65,13 +103,23 @@ set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
 set laststatus=2
 set termguicolors
+set scroll=20
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " set colorcolumn=
 color Base2Tone_EveningDark
+" color Base2Tone_SeaDark
+" color Base2Tone_SpaceDark
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi EndOfBuffer ctermbg=NONE guibg=NONE guifg=bg
+" GitGutter doesn't change sign bg color
+highlight GitGutterAdd    guibg=NONE ctermbg=NONE
+highlight GitGutterChange guibg=NONE ctermbg=NONE
+highlight GitGutterDelete guibg=NONE ctermbg=NONE
+highlight GitGutterChangeDelete guibg=NONE ctermbg=NONE
+highlight ALEWarningSign ctermfg=yellow guifg=Orange
+highlight ALEErrorSign ctermfg=red guifg=Red
 set fillchars+=vert:\ 
 
 """ Backups, undo
@@ -83,9 +131,13 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endi
 inoremap jj <esc>
 inoremap kk <esc>:w<cr>
 inoremap jk <esc>dd
-" inoremap § <esc>
-" map § <esc>
+map § <esc>
+imap § <esc>
+nmap § <esc>
+cmap § <esc>
+vmap § <esc>
 nnoremap \ :q<cr>
+" cnoremap \ :q<cr>
 nnoremap <cr> :w<cr>
 
 cnoremap <c-p> <up>
@@ -109,7 +161,6 @@ nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
 nnoremap <bs> `[V`]
-" nnoremap <F10> :Goyo<cr>
 
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
@@ -122,84 +173,29 @@ nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 nnoremap <leader>y  "+y
+vnoremap <leader>y  "+y
 nnoremap <leader>/  :BLines<cr>
+nnoremap <leader>c :set cursorcolumn!<cr>
 nnoremap n nzz
 nnoremap N Nzz
 
-" inoremap <tab>   <c-r>=CleverTab()<cr>
-" inoremap <s-tab> <c-n>
 inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>
 " inoremap <c-l>   <c-x><c-l>
-" inoremap <c-f>   <c-x><c-f>
 
 inoremap <c-b> <c-w>
-
-" """ Custom functions
-function! Snippet(name)
-  if a:name == 'comp'
-    0r ~/dotfiles/snippets/comp.js
-    normal Gdd<c-o>
-  endif
-  if a:name == 'fcomp'
-    0r ~/dotfiles/snippets/functionalComp.js
-    normal Gdd<c-o>
-  endif
-  if a:name == 'ctest'
-    0r ~/dotfiles/snippets/ctest.js
-    normal Gdd<c-o>
-  endif
-endfunction
-
-command! -nargs=1 S call Snippet(<f-args>)
-
-" function! TransformJsToCss()
-"   %s/,/;
-"   %s/'//
-" endfunction
-
-" command! Transform call TransformJsToCss()
-
-function! CleverTab()
-  if strpart( getline('.'), 0, col('.')-1 ) =~# '^\s*$'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-
-function! Flash()
-  hi StatusLineLit ctermfg=bg ctermbg=fg guibg=#6c6783 guifg=bg
-  hi StatusLineUnlit ctermbg=bg guibg=bg
-  hi clear StatusLine | hi link StatusLine StatusLineLit
-  " set cursorline
-  redraw
-  sleep 40m
-  " set nocursorline
-  hi clear StatusLine | hi link StatusLine StatusLineUnlit
-  redraw
-  sleep 40m
-  hi clear StatusLine | hi link StatusLine StatusLineLit
-  redraw
-  sleep 40m
-  hi clear StatusLine | hi link StatusLine StatusLineUnlit
-endfunction
 
 """ Autocommands
 augroup vimrcEx
   autocmd!
-  " autocmd InsertLeave,FocusLost,CursorHold,TextYankPost * wall | call Flash()
   autocmd InsertLeave,FocusLost,CursorHold,TextYankPost * wall
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
-  " autocmd BufWrite,FileWritePost * call Flash()
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
-  " autocmd BufLeave * setlocal nocursorline
-  " autocmd BufEnter * setlocal cursorline
-  autocmd BufLeave * setlocal colorcolumn=
+  autocmd BufLeave * set colorcolumn=
   autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
   " autocmd BufEnter * let &colorcolumn=&textwidth+1
-  autocmd BufRead,BufNewFile,BufEnter,InsertEnter * nohlsearch
+  autocmd BufRead,BufReadPost,BufNewFile,BufEnter,InsertEnter * nohlsearch
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
@@ -208,11 +204,10 @@ augroup vimrcEx
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript inoremap lg console.log('%c <C-R>=expand("%:t:r")<esc>', 'color: blue; font-weight: bold;', );<left><left>
   autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
-  autocmd FileType qf unmap <cr>
+  " autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
 augroup END

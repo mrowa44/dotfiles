@@ -32,3 +32,5 @@
   unused-develop = !git branch --merged develop | grep -v '^[ *]*develop$' | xargs git branch -d
 [credential]
 	helper = osxkeychain
+[commit]
+	gpgsign = false

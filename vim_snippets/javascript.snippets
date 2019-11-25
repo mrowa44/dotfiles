@@ -1,0 +1,26 @@
+snippet fun "function"
+function ${1:function_name}(${2}) {
+	${0:${VISUAL}}
+}
+endsnippet
+
+snippet switch
+switch (${1:expression}) {
+	case '${3:case}':
+		${4}
+		break;
+		${0}
+	default:
+		${2}
+}
+endsnippet
+
+snippet lg "magic console.log" A
+console.log('%c `!v expand("%:t:r")`', 'color: blue; font-weight: bold;', $1);
+endsnippet
+
+snippet if "if (condition) { ... }"
+if (${1:true}) {
+	${0:${VISUAL}}
+}
+endsnippet

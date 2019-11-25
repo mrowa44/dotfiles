@@ -1,21 +1,133 @@
-snippet comp
+snippet comp "flow component" b
 // @flow
 import * as React from 'react';
 
-import styles from './$1.cssmodule.scss';
+import styles from './${1:ComponentName}.cssmodule.scss';
 
 type Props = {
 };
 
 class $1 extends React.Component<Props> {
-  render() {
-    return (
-      <div>
-        dupa
-      </div>
-    );
-  }
+	render() {
+		$0
+		return (
+			<div>
+				dupa
+			</div>
+		);
+	}
 }
 
 export default $1;
+endsnippet
+
+snippet comp "standard component" b
+import React from 'react';
+
+import styles from './${1:ComponentName}.module.scss';
+
+class $1 extends React.Component {
+	render() {
+		return (
+			<div>
+				dupa
+			</div>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
+snippet comp "page with layout component" b
+import React from 'react';
+
+import Layout from 'components/layout';
+import Text from 'components/Text';
+import SEO from 'components/seo';
+import styles from './${1:ComponentName}.module.scss';
+
+class $1 extends React.Component {
+	render() {
+		return (
+      <Layout>
+        <SEO title="$1" />
+        <div className={styles.container}>
+        </div>
+      </Layout>
+		);
+	}
+}
+
+export default $1;
+endsnippet
+
+snippet <Text "Text component" Ai
+<Text>
+	$0
+</Text>
+endsnippet
+
+snippet "<[A-Za-z" ]* class" "react className" rA
+`!p snip.rv = match.group()`Name={styles.$0}
+endsnippet
+
+snippet iprop
+import PropTypes from 'prop-types';
+endsnippet
+
+snippet itext
+import Text from 'components/Text';
+endsnippet
+
+snippet iclass
+import cx from 'classnames';
+endsnippet
+
+snippet icx
+import cx from 'classnames';
+endsnippet
+
+snippet con
+export default connect(${1:mapStateToProps}, ${2:mapDispatchToProps})(`!v expand("%:t:r")`);
+endsnippet
+
+snippet cx
+import cx from 'classnames';
+endsnippet
+
+snippet cdm
+componentDidMount() {
+	${1}
+}
+endsnippet
+
+snippet cdup
+componentDidUpdate(prevProps, prevState) {
+	${1}
+}
+endsnippet
+
+snippet cwm
+componentWillMount() {
+	${1}
+}
+endsnippet
+
+snippet cwr
+componentWillReceiveProps(nextProps) {
+	${1}
+}
+endsnippet
+
+snippet cwun
+componentWillUnmount() {
+	${1}
+}
+endsnippet
+
+snippet cwu
+componentWillUpdate(nextProps, nextState) {
+	${1}
+}
 endsnippet
