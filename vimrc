@@ -19,7 +19,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'airblade/vim-gitgutter'
     set updatetime=100
     let g:gitgutter_override_sign_column_highlight = 0
-    nmap ga <Plug>GitGutterStageHunk
+    nmap ga <Plug>(GitGutterStageHunk)
   Plug 'dense-analysis/ale'
     let b:ale_fixers = {'javascript': ['eslint']}
     let g:ale_fix_on_save = 1
@@ -93,7 +93,7 @@ set gdefault
 set lazyredraw
 set smartindent expandtab shiftwidth=2 softtabstop=2 tabstop=2
 set backspace=indent,eol,start
-lang en_US
+" lang en_US
 filetype plugin indent on
 
 " """ UI
@@ -204,7 +204,7 @@ augroup vimrcEx
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace<cr>
+  autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>

@@ -131,6 +131,7 @@ set show-all-if-ambiguous on
 set completion-ignore-case on
 
 export EDITOR=vim
+export LC_ALL=en_US.UTF-8
 # export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source `brew --prefix`/etc/profile.d/z.sh
