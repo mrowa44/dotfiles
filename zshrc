@@ -42,6 +42,7 @@ alias touhc='touch' # please
 alias '?'='howdoi'
 alias md='open -a MacDown'
 alias alert="; osascript -e 'display notification \"completed!\" with title \"Done!\" sound name \"Purr\"'"
+alias a=alert
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
 alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
 alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_modules/eslint/bin/eslint.js"

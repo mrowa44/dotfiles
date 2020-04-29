@@ -34,3 +34,5 @@
 	helper = osxkeychain
 [commit]
 	gpgsign = false
+[pull]
+	rebase = true
