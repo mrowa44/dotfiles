@@ -102,10 +102,10 @@ set ruler noshowcmd nolist visualbell title
 set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
 set laststatus=2
-set termguicolors
+" set termguicolors
 set scroll=20
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 " set colorcolumn=
 color Base2Tone_EveningDark
 " color Base2Tone_SeaDark

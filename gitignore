@@ -22,3 +22,6 @@ yarn-error.log
 *.icloud
 .eslintcache
 **/.DS_Store
+all_highlights/*
+last_kindle_read.txt
+fyodor_output/
