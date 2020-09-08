@@ -62,6 +62,26 @@ class $1 extends React.Component {
 export default $1;
 endsnippet
 
+snippet comp "functional component" b
+// @flow
+import * as React from 'react';
+
+import styles from './${1:ComponentName}.cssmodule.scss';
+
+type Props = {
+};
+
+function $1(props: Props) {
+  return (
+    <div>
+      dupa
+    </div>
+  );
+}
+
+export default $1;
+endsnippet
+
 snippet <Text "Text component" Ai
 <Text>
 	$0

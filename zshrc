@@ -149,7 +149,7 @@ jj() { # "jump" to directory of a project and start tmux session
 
 autoload -U add-zsh-hook
 
-eval $(thefuck --alias)
+# eval $(thefuck --alias)
 
 nvm use default
 export TERM=xterm-256color
