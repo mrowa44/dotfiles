@@ -15,7 +15,7 @@ function getDate() {
   if (minutes >= 45) {
     const nextH = hours + 1;
     const hour = nextH > 23 ? '00' : nextH;
-    return `${hour}:00`;
+    return `${hours}:45`;
   }
   return `${hours}:${minutes}`;
 }
