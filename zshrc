@@ -49,6 +49,7 @@ alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_mo
 alias circle_local="circleci local execute --job build"
 alias icons='open src/gabi-assets/images/icons'
 alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs open'
+alias t="touch"
 
 help() {
   tldr "$@"
@@ -112,6 +113,9 @@ fix_postgres() {
 fix_rubygems() { gem update --system }
 # set right path
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
+generate_release_notes() {
+  git log --grep="GA-" --pretty=format:"%s" --author-date-order master...develop
+}
 
 ### ZSH setup stuff
 autoload -U promptinit compinit

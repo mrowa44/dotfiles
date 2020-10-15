@@ -83,7 +83,7 @@ export default $1;
 endsnippet
 
 snippet useState "useState" b
-const [$1, set${1/\w+\s*/\u$0/g}] = useState(${3:''})${0:;}
+const [$1, set${1/\w+\s*/\u$0/g}] = React.useState(${3:})${0:;}
 endsnippet
 
 snippet useEffect "useEffect" b
@@ -118,16 +118,40 @@ snippet icx
 import cx from 'classnames';
 endsnippet
 
-snippet con
-export default connect(${1:mapStateToProps}, ${2:mapDispatchToProps})(`!v expand("%:t:r")`);
-endsnippet
-
 snippet cx
 import cx from 'classnames';
 endsnippet
 
+snippet iconn
+import { connect } from 'react-redux';
+endsnippet
+
+snippet navigate
+import { navigate } from 'helpers/navigation';
+endsnippet
+
+snippet nav
+import { navigate } from 'helpers/navigation';
+endsnippet
+
 snippet image
 import { imagePath } from 'helpers/assets';
+endsnippet
+
+snippet inv
+import { InvisibleButton } from 'components/Button';
+endsnippet
+
+snippet iamplitude
+import { amplitudeLogEvent } from 'actions/amplitude';
+endsnippet
+
+snippet iamp
+import { amplitudeLogEvent } from 'actions/amplitude';
+endsnippet
+
+snippet con
+export default connect(${1:mapStateToProps})(`!v expand("%:t:r")`);
 endsnippet
 
 snippet cdm
