@@ -114,7 +114,7 @@ fix_rubygems() { gem update --system }
 # set right path
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
 generate_release_notes() {
-  git log --grep="GA-" --pretty=format:"%s" --author-date-order master...develop | xargs -L1 echo "-"
+  git log --grep="GA-" --pretty=format:"%s" --no-merges --author-date-order master...develop | xargs -L1 echo "-"
 }
 
 ### ZSH setup stuff
