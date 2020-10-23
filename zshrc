@@ -50,6 +50,8 @@ alias circle_local="circleci local execute --job build"
 alias icons='open src/gabi-assets/images/icons'
 alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs open'
 alias t="touch"
+alias sb="yarn storybook"
+alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js"
 
 help() {
   tldr "$@"
@@ -113,9 +115,6 @@ fix_postgres() {
 fix_rubygems() { gem update --system }
 # set right path
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
-generate_release_notes() {
-  git log --grep="GA-" --pretty=format:"%s" --no-merges --author-date-order master...develop | xargs -L1 echo "-"
-}
 
 ### ZSH setup stuff
 autoload -U promptinit compinit
@@ -170,3 +169,5 @@ for a in {$HOME,}/Applications/*.app(N) ; do
         fi\
     }"
 done
+
+source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
