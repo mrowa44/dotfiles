@@ -1,7 +1,7 @@
 // Prerequisites
 //
 // - JIRA_TOKEN and JIRA_EMAIL should be set in the env
-// - npm install -g jira-client
+// - npm install jira-client
 // 
 // Run:
 //    node ~/releaseNotesGenerator.js
