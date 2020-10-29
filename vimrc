@@ -180,6 +180,8 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap <c-i> <c-i>zz
 nnoremap <c-o> <c-o>zz
+nnoremap * *zz
+nnoremap # #zz
 
 inoremap <c-k>   <c-x><c-p>
 inoremap <c-j>   <c-x><c-n>

@@ -117,8 +117,11 @@ fix_rubygems() { gem update --system }
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
 
 ### ZSH setup stuff
-autoload -U promptinit compinit
-promptinit; compinit;
+# https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories#comment58565664_22753363
+autoload -U promptinit
+autoload -U compinit
+compinit;
+promptinit;
 prompt pure
 
 PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
