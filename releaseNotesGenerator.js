@@ -30,7 +30,7 @@ exec('git log --grep="GA-" --pretty=format:"%s" --no-merges --author-date-order 
 
   Promise.all(searched.map(id => jira.findIssue(id)))
     .then(issues => {
-      const titles = issues.map(i => `- ${i.fields.summary} - ${i.key}`);
+      const titles = issues.map(i => `- ${i.key} - ${i.fields.summary}`);
       process.stdout.write(titles.join('\n'));
     });
 });
