@@ -196,8 +196,8 @@ augroup vimrcEx
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
-  autocmd BufLeave * set colorcolumn=
-  autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
+  " autocmd BufLeave * set colorcolumn=
+  " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
   " autocmd BufEnter * let &colorcolumn=&textwidth+1
   autocmd BufRead,BufReadPost,BufNewFile,BufEnter,InsertEnter * nohlsearch
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
@@ -205,6 +205,7 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
   autocmd BufRead,BufEnter vimrc setlocal ft=vim
   autocmd FileType gitcommit      setlocal textwidth=72 spell
+  autocmd FileType gitcommit      :normal A
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript setlocal textwidth=100

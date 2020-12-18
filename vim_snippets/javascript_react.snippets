@@ -82,14 +82,37 @@ function $1(props: Props) {
 export default $1;
 endsnippet
 
+snippet story "storybook story" b
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+
+import { StoryDecorator, StoryItem, StorySection } from './components';
+
+// import from '../src/';
+
+storiesOf('test', module)
+  .addDecorator((storyFn) => (
+    <StoryDecorator>
+      {storyFn()}
+    </StoryDecorator>
+  ))
+  .add('normal', () => (
+    <StorySection>
+      <StoryItem>
+				test
+      </StoryItem>
+		</StorySection>
+  ));
+endsnippet
+
 snippet useState "useState" b
 const [$1, set${1/\w+\s*/\u$0/g}] = React.useState(${3:})${0:;}
 endsnippet
 
 snippet useEffect "useEffect" b
-useEffect(() => {
+React.useEffect(() => {
   $1
-})${0:;}
+}, [])${0:;}
 endsnippet
 
 snippet <Text "Text component" Ai
@@ -133,6 +156,11 @@ endsnippet
 snippet nav
 import { navigate } from 'helpers/navigation';
 endsnippet
+
+snippet inav 
+import { navigate } from 'helpers/navigation';
+endsnippet
+
 
 snippet image
 import { imagePath } from 'helpers/assets';
