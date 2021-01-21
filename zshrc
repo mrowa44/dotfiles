@@ -37,6 +37,7 @@ alias sl='yarn stylelint'
 alias ysb='yarn storybook'
 alias el='eslint'
 alias gpshh='git push -u && open $(git remote get-url origin) && a'
+alias gpsh='gpsh || a'
 alias gpll='git pull && yarn && a'
 alias org='open $(git remote get-url origin)'
 alias origin='open $(git remote get-url origin)'
@@ -60,10 +61,7 @@ help() {
   howdoi "$@"
 }
 comp() {
-  touch src/components/"$@".{js,test.js,scss}
-}
-view() {
-  touch src/views/"$@".{js,test.js,scss}
+  touch "$@".{js,cssmodule.scss}
 }
 tx() { # attach to a session with name of current directory or create one
   dir=${PWD##*/}
