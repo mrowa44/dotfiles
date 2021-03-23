@@ -42,6 +42,7 @@ alias gpll='git pull && yarn && a'
 alias org='open $(git remote get-url origin)'
 alias origin='open $(git remote get-url origin)'
 alias touhc='touch' # please
+alias eixt="exit"
 alias '?'='howdoi'
 alias md='open -a MacDown'
 alias alert="; osascript -e 'display notification \"completed!\" with title \"Done!\" sound name \"Purr\"'"
@@ -174,3 +175,10 @@ for a in {$HOME,}/Applications/*.app(N) ; do
 done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+#compdef toggl
+_toggl() {
+  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _TOGGL_COMPLETE=complete-zsh  toggl)
+}
+if [[ "$(basename -- ${(%):-%x})" != "_toggl" ]]; then
+  compdef _toggl toggl
+fi

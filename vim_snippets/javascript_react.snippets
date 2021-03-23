@@ -121,7 +121,7 @@ snippet <Text "Text component" Ai
 </Text>
 endsnippet
 
-snippet "<[A-Za-z" ]* class" "react className" rA
+snippet "<[A-Za-z"={} ]* class" "react className" rA
 `!p snip.rv = match.group()`Name={styles.$0}
 endsnippet
 
@@ -146,6 +146,14 @@ import cx from 'classnames';
 endsnippet
 
 snippet iconn
+import { connect } from 'react-redux';
+endsnippet
+
+snippet iconnect
+import { connect } from 'react-redux';
+endsnippet
+
+snippet icon
 import { connect } from 'react-redux';
 endsnippet
 
@@ -216,4 +224,8 @@ snippet cwu
 componentWillUpdate(nextProps, nextState) {
 	${1}
 }
+endsnippet
+
+snippet eslint-disable-default 
+/* eslint-disable import/prefer-default-export */
 endsnippet
