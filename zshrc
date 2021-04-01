@@ -56,6 +56,7 @@ alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs op
 alias t="touch"
 alias sb="yarn storybook"
 alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js"
+alias generate_release_notes_and_copy="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && echo 'Copied.'"
 
 help() {
   tldr "$@"
