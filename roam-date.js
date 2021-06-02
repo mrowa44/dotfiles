@@ -1,8 +1,9 @@
 const Sugar = require('sugar-date');
 
-function formatDate(input) {
+function formatDate(input, suffixDayName = false) {
   const date = new Sugar.Date(input).format('{Month} {do}, {year}');
-  return `[[${date.raw}]]`;
+  const day = new Sugar.Date(input).format('{Weekday}');
+  return suffixDayName ? `[[${date.raw}]] - ${day.raw}` : `[[${date.raw}]]`;
 }
 
 function getDays(query) {
@@ -11,11 +12,11 @@ function getDays(query) {
   const daysMap = [...Array(daysNum).keys()].map(i => i + 1);
   if (queryNum > 0) {
     return daysMap.map((inDays) => {
-      return formatDate(`in ${inDays} days`);
+      return formatDate(`in ${inDays} days`, true);
     });
   } else {
     return daysMap.map((daysAgo) => {
-      return formatDate(`${daysAgo} days ago`);
+      return formatDate(`${daysAgo} days ago`, true);
     });
   }
 }
