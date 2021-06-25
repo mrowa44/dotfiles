@@ -58,3 +58,5 @@ pip install howdoi flake8 pylint
 # https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
 
 # git submodule update --init --recursive
+
+# sudo chown -R $(whoami) /usr/local/Cellar/node

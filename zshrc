@@ -30,6 +30,7 @@ alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
 alias yw='yarn watch'
+alias ywlb='yarn whitelabel'
 alias yt='NODE_ENV=test yarn test'
 alias yti='NODE_ENV=test mocha --inspect-brk --recursive'
 alias ytd='node --inspect-brk ./node_modules/netguru-react-scripts/bin/react-scripts.js test --env=jsdom'
@@ -57,6 +58,7 @@ alias t="touch"
 alias sb="yarn storybook"
 alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js"
 alias generate_release_notes_and_copy="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && echo 'Copied.'"
+alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
 
 help() {
   tldr "$@"
@@ -159,7 +161,7 @@ autoload -U add-zsh-hook
 
 # eval $(thefuck --alias)
 
-nvm use default
+nvm use stable
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 

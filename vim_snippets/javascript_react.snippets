@@ -82,6 +82,23 @@ function $1(props: Props) {
 export default $1;
 endsnippet
 
+snippet comp "functional component no flow" b
+import * as React from 'react';
+import PropTypes from 'prop-types';
+
+import styles from './${1:ComponentName}.module.scss';
+
+function $1(props) {
+  return (
+    <div>
+      dupa
+    </div>
+  );
+}
+
+export default $1;
+endsnippet
+
 snippet story "storybook story" b
 import React from 'react';
 import { storiesOf } from '@storybook/react';
@@ -114,6 +131,11 @@ React.useEffect(() => {
   $1
 }, [])${0:;}
 endsnippet
+
+snippet useContext "useContext" b
+const $0 = React.useContext($1);
+endsnippet
+
 
 snippet <Text "Text component" Ai
 <Text>
@@ -186,12 +208,32 @@ import { InvisibleButton } from 'components/Button';
 endsnippet
 
 snippet iamplitude
-import { amplitudeLogEvent } from 'actions/amplitude';
+import * as amplitudeActions from 'actions/amplitude';
+endsnippet
+
+snippet iampl?
+import * as amplitudeActions from 'actions/amplitude';
 endsnippet
 
 snippet iamp
-import { amplitudeLogEvent } from 'actions/amplitude';
+import * as amplitudeActions from 'actions/amplitude';
 endsnippet
+
+snippet it
+import { ThemeContext } from 'components/Theme';
+endsnippet
+
+snippet itheme
+import { ThemeContext } from 'components/Theme';
+endsnippet
+
+snippet theme
+const theme = React.useContext(ThemeContext);
+endsnippet
+
+
+
+
 
 snippet con
 export default connect(${1:mapStateToProps})(`!v expand("%:t:r")`);
@@ -234,5 +276,9 @@ componentWillUpdate(nextProps, nextState) {
 endsnippet
 
 snippet eslint-disable-default 
+/* eslint-disable import/prefer-default-export */
+endsnippet
+
+snippet eslint-ignore
 /* eslint-disable import/prefer-default-export */
 endsnippet
