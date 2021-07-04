@@ -22,37 +22,22 @@ brew bundle
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd ~
 ln -sf ${DIR}/zshrc .zshrc
-ln -sf ${DIR}/zpreztorc .zpreztorc
+# ln -sf ${DIR}/zpreztorc .zpreztorc
 ln -sf ${DIR}/zsh .zsh
 ln -sf ${DIR}/vimrc .vimrc
 ln -sf ${DIR}/vim .vim
 ln -sf ${DIR}/gitconfig .gitconfig
 ln -sf ${DIR}/gitignore .gitignore
 ln -sf ${DIR}/tmux.conf .tmux.conf
-ln -sf ${DIR}/psqlrc .psqlrc
-ln -sf ${DIR}/ctags .ctags
+# ln -sf ${DIR}/psqlrc .psqlrc
+# ln -sf ${DIR}/ctags .ctags
 ln -sf ${DIR}/agignore .agignore
-ln -sf ${DIR}/gemrc .gemrc
-ln -sf ${DIR}/eslintrc.js .eslintrc.js
-ln -sf ${DIR}/my.cnf .my.cnf
+# ln -sf ${DIR}/gemrc .gemrc
+# ln -sf ${DIR}/my.cnf .my.cnf
 cd $dotfiles
 
 xcode-select --install
 # rvm get stable --auto-dotfiles
-
-# Enable filevault if it's not already
-fdesetup status || sudo fdesetup enable
-
-defaults write NSGlobalDomain KeyRepeat -float 1.5
-
-# chrome://flags/#enable-javascript-harmony
-# chrome://flags/#automatic-tab-discarding
-# https://www.amazon.com/gp/sendtokindle/mac
-
-npm install -g eslint yolo-cli csslint jsonlint sass-lint mocha snyk pure-prompt
-pip install howdoi flake8 pylint
-
-# https://superuser.com/questions/362372/how-to-change-the-login-shell-on-mac-os-x-from-bash-to-zsh#362374
 # chsh -s /bin/zsh
 
 # https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
