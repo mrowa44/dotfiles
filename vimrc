@@ -37,8 +37,6 @@ call plug#begin('~/.vim/bundle')
   Plug 'ervandew/supertab'
     set completeopt+=menuone,preview
     let g:SuperTabLongestHighlight = 1
-  Plug 'wincent/ferret'
-    let g:FerretHlsearch=0
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    nnoremap <c-p> :Files<cr>
    imap <c-f> <plug>(fzf-complete-file-ag)
@@ -67,11 +65,7 @@ call plug#begin('~/.vim/bundle')
   Plug 'sheerun/vim-polyglot'
     let g:javascript_plugin_flow = 0
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
-  Plug 'vim-scripts/svg.vim'
   Plug 'atelierbram/Base2Tone-vim'
-  " Plug 'endel/vim-github-colorscheme'
-  " Plug 'junegunn/vim-slash'
-  "   noremap <expr> <plug>(slash-after) 'zz'.slash#blink(2, 110)
   Plug 'itchyny/lightline.vim'
     set noshowmode
     let g:lightline = {
@@ -83,7 +77,28 @@ call plug#begin('~/.vim/bundle')
     function! FilenameForLightline()
       return expand('%:p')
     endfunction
+  Plug 'jszakmeister/vim-togglecursor'
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  "   let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 
+  "         \ 'coc-html', 'coc-eslint', 'coc-stylelint', 'coc-tslint', 'coc-tsserver',
+  "         \ 'coc-browser', 'coc-html-css-support']
+  "   set cmdheight=2
+  "   set updatetime=300
+  "   set shortmess+=c
+  "   " Use `[g` and `]g` to navigate diagnostics
+  "   " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+  "   nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  "   nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  "   " Make <CR> auto-select the first completion item and notify coc.nvim to
+  "   " format on enter, <cr> could be remapped by other vim plugin
+  "   inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+  "         \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+  "   inoremap <silent><expr> <c-space> coc#refresh()
+  " Plug 'wincent/ferret'
+  "   let g:FerretHlsearch=0
+  " Plug 'vim-scripts/svg.vim'
   " Plug 'TaDaa/vimade'
+  "   let g:vimade.fadelevel = 0.7
 call plug#end()
 
 """ General
@@ -110,10 +125,7 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-" set colorcolumn=
 color Base2Tone_EveningDark
-" color Base2Tone_SeaDark
-" color Base2Tone_SpaceDark
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi EndOfBuffer ctermbg=NONE guibg=NONE guifg=bg
@@ -133,16 +145,13 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endi
 
 """ Mappings
 inoremap jj <esc>
-inoremap kk <esc>:w<cr>
-inoremap jk <esc>dd
+inoremap kk <esc>
 map § <esc>
 imap § <esc>
 nmap § <esc>
 cmap § <esc>
 vmap § <esc>
 nnoremap \ :q<cr>
-" cnoremap \ :q<cr>
-nnoremap <cr> :w<cr>
 
 cnoremap <c-p> <up>
 cnoremap <c-n> <down>
@@ -168,6 +177,7 @@ nnoremap <leader><leader> :wa<cr>
 nnoremap <bs> `[V`]
 
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
+nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
 nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>

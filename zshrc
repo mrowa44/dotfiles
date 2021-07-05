@@ -128,7 +128,7 @@ compinit;
 promptinit;
 prompt pure
 
-PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
+# PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
 PATH="/usr/local/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
@@ -143,7 +143,6 @@ set completion-ignore-case on
 
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
-# export NVM_LAZY_LOAD=true && source ~/dotfiles/zsh-nvm/zsh-nvm.plugin.zsh
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -153,9 +152,9 @@ jj() { # "jump" to directory of a project and start tmux session
   tx
 }
 
- export NVM_DIR="$HOME/.nvm"
- [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
- [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 autoload -U add-zsh-hook
 
@@ -178,10 +177,3 @@ for a in {$HOME,}/Applications/*.app(N) ; do
 done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
-#compdef toggl
-_toggl() {
-  eval $(env COMMANDLINE="${words[1,$CURRENT]}" _TOGGL_COMPLETE=complete-zsh  toggl)
-}
-if [[ "$(basename -- ${(%):-%x})" != "_toggl" ]]; then
-  compdef _toggl toggl
-fi
