@@ -32,11 +32,14 @@ ln -sf ${DIR}/tmux.conf .tmux.conf
 # ln -sf ${DIR}/psqlrc .psqlrc
 # ln -sf ${DIR}/ctags .ctags
 ln -sf ${DIR}/agignore .agignore
+ln -sf ${DIR}/ctags .ctags
 # ln -sf ${DIR}/gemrc .gemrc
 # ln -sf ${DIR}/my.cnf .my.cnf
 cd $dotfiles
 
 xcode-select --install
+defaults write com.apple.screencapture location ~/Downloads
+
 # rvm get stable --auto-dotfiles
 # chsh -s /bin/zsh
 

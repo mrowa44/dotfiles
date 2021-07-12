@@ -78,6 +78,23 @@ call plug#begin('~/.vim/bundle')
       return expand('%:p')
     endfunction
   Plug 'jszakmeister/vim-togglecursor'
+  " Plug 'ludovicchabant/vim-gutentags'
+  "   let g:gutentags_generate_on_new = 1
+  "   let g:gutentags_generate_on_missing = 1
+  "   let g:gutentags_generate_on_write = 1
+  "   let g:gutentags_generate_on_empty_buffer = 0
+  " Plug 'kristijanhusak/vim-js-file-import', {'do': 'yarn'}
+  "   set tags=tags;/
+  "   let g:js_file_import_sort_after_insert = 1
+  "   let g:js_file_import_use_fzf = 1
+  "   let g:js_file_import_from_root = 1
+  "   let g:js_file_import_root = getcwd().'/src'
+  Plug 'Galooshi/vim-import-js'
+
+
+
+
+    " let g:js_file_import_root_alias = '@/'
   " Plug 'neoclide/coc.nvim', {'branch': 'release'}
   "   let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 
   "         \ 'coc-html', 'coc-eslint', 'coc-stylelint', 'coc-tslint', 'coc-tsserver',
@@ -116,8 +133,10 @@ set splitbelow splitright breakindent textwidth=80 nofoldenable
 set ruler noshowcmd nolist visualbell title
 set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
+set wildignore+=*node_modules/**
 set laststatus=2
 set scroll=20
+set autoread
 
 set background=dark
 set t_Co=256
@@ -183,7 +202,7 @@ nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ag<cr>
 nnoremap <leader>h  :nohlsearch<cr>
-nnoremap <leader>i  :source $MYVIMRC<cr>:PlugInstall<cr>
+nnoremap <leader>iv  :source $MYVIMRC<cr>:PlugInstall<cr>
 nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>

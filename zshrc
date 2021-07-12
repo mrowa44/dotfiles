@@ -38,7 +38,7 @@ alias sl='yarn stylelint'
 alias ysb='yarn storybook'
 alias el='eslint'
 alias gpshh='git push -u && open $(git remote get-url origin) && a'
-alias gpsh='gpsh || a'
+alias gpsh='gpsh && a || a'
 alias gpll='git pull && yarn && a'
 alias org='open $(git remote get-url origin)'
 alias origin='open $(git remote get-url origin)'
@@ -130,6 +130,9 @@ prompt pure
 
 # PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
 PATH="/usr/local/bin:$PATH"
+# export PATH="$(yarn global bin):$PATH"
+# export PATH="$PATH:$(yarn global bin)"
+export PATH="/usr/local/lib/node_modules/yarn/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
@@ -160,7 +163,7 @@ autoload -U add-zsh-hook
 
 # eval $(thefuck --alias)
 
-nvm use stable
+nvm use default
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 

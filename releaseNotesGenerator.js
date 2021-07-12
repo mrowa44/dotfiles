@@ -1,6 +1,15 @@
 // Prerequisites
 //
 // - JIRA_TOKEN and JIRA_EMAIL should be set in the env
+//   https://id.atlassian.com/manage-profile/security > API tokens
+//
+//   In ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL:
+//   export JIRA_TOKEN=abc
+//   export JIRA_EMAIL=abc
+//
+//   In .bashrc or whatever shell:
+//   source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+//
 // - npm install jira-client
 // 
 // Run:
@@ -26,11 +35,15 @@ const jira = new JiraApi({
 });
 
 exec('git log --grep="GA-" --pretty=format:"%s" --no-merges --author-date-order origin/master...develop', function(err, log) {
+  if (err) { console.log(err); }
   const searched = log.match(/GA(-| )\d+/gi).filter((v, i, a) => a.indexOf(v) === i);
 
-  Promise.all(searched.map(id => jira.findIssue(id.replace(' ', '-')).catch(e => e)))
+  Promise.all(searched.map(id => jira.findIssue(id.replace(' ', '-')).catch(e => console.log(e))))
     .then(issues => {
       const titles = issues.map(i => i.key ? `- ${i.key} - ${i.fields?.summary}` : null);
       process.stdout.write(titles.filter(Boolean).join('\n'));
+    })
+    .catch(error => {
+      console.log(error);
     });
 });
