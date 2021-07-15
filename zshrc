@@ -56,8 +56,7 @@ alias icons='open src/gabi-assets/images/icons'
 alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs open'
 alias t="touch"
 alias sb="yarn storybook"
-alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js"
-alias generate_release_notes_and_copy="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && echo 'Copied.'"
+alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && pbpaste && echo '\n\nCopied.'"
 alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
 
 help() {

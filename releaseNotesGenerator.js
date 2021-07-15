@@ -36,14 +36,17 @@ const jira = new JiraApi({
 
 exec('git log --grep="GA-" --pretty=format:"%s" --no-merges --author-date-order origin/master...develop', function(err, log) {
   if (err) { console.log(err); }
-  const searched = log.match(/GA(-| )\d+/gi).filter((v, i, a) => a.indexOf(v) === i);
+  const searched = log.match(/GA(-| )\d+/gi).filter((v, i, a) => a.indexOf(v) === i).filter((v) => v !== 'GA-0');
 
-  Promise.all(searched.map(id => jira.findIssue(id.replace(' ', '-')).catch(e => console.log(e))))
+  let result = '';
+  Promise.all(searched.map(id => jira.findIssue(id.replace(' ', '-'))))
     .then(issues => {
       const titles = issues.map(i => i.key ? `- ${i.key} - ${i.fields?.summary}` : null);
-      process.stdout.write(titles.filter(Boolean).join('\n'));
+      const formatted = titles.filter(Boolean).join('\n');
+      result = formatted;
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {})
+    .finally(() => {
+      process.stdout.write(result);
     });
 });
