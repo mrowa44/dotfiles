@@ -58,6 +58,7 @@ alias t="touch"
 alias sb="yarn storybook"
 alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && pbpaste && echo '\n\nCopied.'"
 alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
+alias ios="npx react-native run-ios"
 
 help() {
   tldr "$@"
@@ -131,7 +132,7 @@ prompt pure
 PATH="/usr/local/bin:$PATH"
 # export PATH="$(yarn global bin):$PATH"
 # export PATH="$PATH:$(yarn global bin)"
-export PATH="/usr/local/lib/node_modules/yarn/bin:$PATH"
+export PATH="node_modules/.bin:/usr/local/lib/node_modules/yarn/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
