@@ -5,6 +5,7 @@ vendor
 .git/
 bower_components/
 node_modules/
+Pods/
 *un~
 .keep
 .DS_Store
@@ -15,3 +16,4 @@ node_modules/
 *.gif
 *.bmp
 *.zip
+*.lock

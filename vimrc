@@ -4,6 +4,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
 call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
@@ -11,32 +12,34 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-endwise'
   Plug 'farmergreg/vim-lastplace'
-  Plug 'kshenoy/vim-signature'
+  " Plug 'kshenoy/vim-signature'
   Plug 'jiangmiao/auto-pairs'
     let g:AutoPairsFlyMode = 0
     let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```'}
     let g:AutoPairsMoveCharacter = ""
-  Plug 'airblade/vim-gitgutter'
-    set updatetime=100
-    let g:gitgutter_override_sign_column_highlight = 0
-    nmap ga <Plug>(GitGutterStageHunk)
-  Plug 'dense-analysis/ale'
-    let b:ale_fixers = {'javascript': ['eslint']}
-    let g:ale_fix_on_save = 1
-    highlight clear ALEErrorSign
-    highlight clear ALEWarningSign
-    nmap <silent> [e <Plug>(ale_previous_wrap)
-    nmap <silent> ]e <Plug>(ale_next_wrap)
+  " Plug 'airblade/vim-gitgutter'
+  "   set updatetime=100
+  "   let g:gitgutter_override_sign_column_highlight = 0
+  "   nmap ga <Plug>(GitGutterStageHunk)
+  " Plug 'dense-analysis/ale'
+  "   let b:ale_fixers = {'javascript': ['eslint']}
+  "   let g:ale_fix_on_save = 1
+  "   highlight clear ALEErrorSign
+  "   highlight clear ALEWarningSign
+  "   nmap <silent> [e <Plug>(ale_previous_wrap)
+  "   nmap <silent> ]e <Plug>(ale_next_wrap)
+
   Plug 'SirVer/ultisnips'
     set rtp^=$HOME/dotfiles
     let g:UltiSnipsSnippetsDir='~dotfiles/vim_snippets'
     let g:UltiSnipsSnippetDirectories=["vim_snippets"]
-    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsExpandTrigger="<c-]>"
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-  Plug 'ervandew/supertab'
-    set completeopt+=menuone,preview
-    let g:SuperTabLongestHighlight = 1
+
+  " Plug 'ervandew/supertab'
+  "   set completeopt+=menuone,preview
+  "   let g:SuperTabLongestHighlight = 1
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    nnoremap <c-p> :Files<cr>
    imap <c-f> <plug>(fzf-complete-file-ag)
@@ -47,7 +50,6 @@ call plug#begin('~/.vim/bundle')
    " Files command with preview window
    command! -bang -nargs=? -complete=dir Files
      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
     let g:fzf_colors =
     \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
@@ -63,35 +65,83 @@ call plug#begin('~/.vim/bundle')
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
-    let g:javascript_plugin_flow = 0
+    " let g:javascript_plugin_flow = 0
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
   Plug 'atelierbram/Base2Tone-vim'
   Plug 'itchyny/lightline.vim'
     set noshowmode
     let g:lightline = {
-          \ 'colorscheme': 'one',
-          \ 'component_function': {
-          \   'filename': 'FilenameForLightline'
-          \ }
-          \ }
-    function! FilenameForLightline()
-      return expand('%:p')
+            \ 'colorscheme': 'one',
+            \ 'component_function': {
+            \   'filename': 'LightlineFilename',
+            \ }
+            \ }
+    function! LightlineFilename()
+      let root = fnamemodify(get(b:, 'git_dir'), ':h')
+      let path = expand('%:p')
+      if path[:len(root)-1] ==# root
+        return path[len(root)+1:]
+      endif
+      return expand('%')
     endfunction
-  Plug 'jszakmeister/vim-togglecursor'
-  " Plug 'ludovicchabant/vim-gutentags'
-  "   let g:gutentags_generate_on_new = 1
-  "   let g:gutentags_generate_on_missing = 1
-  "   let g:gutentags_generate_on_write = 1
-  "   let g:gutentags_generate_on_empty_buffer = 0
-  " Plug 'kristijanhusak/vim-js-file-import', {'do': 'yarn'}
-  "   set tags=tags;/
-  "   let g:js_file_import_sort_after_insert = 1
-  "   let g:js_file_import_use_fzf = 1
-  "   let g:js_file_import_from_root = 1
-  "   let g:js_file_import_root = getcwd().'/src'
-  Plug 'Galooshi/vim-import-js'
+    
+  " Plug 'jszakmeister/vim-togglecursor'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  let g:coc_global_extensions = []
+    if isdirectory('./tsconfig.json')
+      let g:coc_global_extensions += ['coc-tsserver']
+    endif
+    if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+      let g:coc_global_extensions += ['coc-prettier']
+    endif
+    if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+      let g:coc_global_extensions += ['coc-eslint']
+    endif
+    set signcolumn=number
+
+    " function! ShowDocIfNoDiagnostic(timer_id)
+    "   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+    "     silent call CocActionAsync('doHover')
+    "   endif
+    " endfunction
+
+    " function! s:show_hover_doc()
+    "   call timer_start(500, 'ShowDocIfNoDiagnostic')
+    " endfunction
+
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+
+    " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources
+    inoremap <silent><expr> <Tab>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<Tab>" :
+          \ coc#refresh()
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+    set cmdheight=2
+    set updatetime=4300
+    set shortmess+=c
+
+    " nnoremap <silent> K :call <SID>show_documentation()<CR>
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+      else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+      endif
+    endfunction
 
 
+    nmap <c-f>  <Plug>(coc-format-selected)
+    xmap <c-f>  <Plug>(coc-format-selected)
 
 
     " let g:js_file_import_root_alias = '@/'
@@ -111,11 +161,6 @@ call plug#begin('~/.vim/bundle')
   "   inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
   "         \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
   "   inoremap <silent><expr> <c-space> coc#refresh()
-  " Plug 'wincent/ferret'
-  "   let g:FerretHlsearch=0
-  " Plug 'vim-scripts/svg.vim'
-  " Plug 'TaDaa/vimade'
-  "   let g:vimade.fadelevel = 0.7
 call plug#end()
 
 """ General
@@ -147,6 +192,7 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 color Base2Tone_EveningDark
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
+hi LineNr ctermbg=NONE guibg=NONE
 hi EndOfBuffer ctermbg=NONE guibg=NONE guifg=bg
 " GitGutter doesn't change sign bg color
 highlight GitGutterAdd    guibg=NONE ctermbg=NONE
@@ -190,7 +236,6 @@ nnoremap k gk
 nnoremap Q @q
 nnoremap - $
 nnoremap Y y$
-" nnoremap J Jx
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
 nnoremap <bs> `[V`]
@@ -242,11 +287,18 @@ augroup vimrcEx
   autocmd FileType gitcommit      :normal A
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx,typescript setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
+  autocmd FileType javascript,jsx,typescript,tsx setlocal textwidth=100
+  autocmd FileType javascript,jsx,typescript,tsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
   autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   " autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
+
+
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+  " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+  " autocmd CursorHoldI * :call <SID>show_hover_doc()
+  " autocmd CursorHold * :call <SID>show_hover_doc()
 augroup END
