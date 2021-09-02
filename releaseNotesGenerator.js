@@ -20,6 +20,8 @@
 // Or create a shell alias
 //    alias generate_release_notes="node ~/releaseNotesGenerator.js"
 //
+// To avoid duplicates you should first pull newest master and develop branches
+//    git pull --all
 const { exec } = require('child_process');
 const JiraApi = require('jira-client');
 
