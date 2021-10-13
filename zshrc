@@ -15,6 +15,8 @@ alias ll='ls -lh'
 alias la='ls -lha'
 alias '..'='cd ..'
 alias '...'='cd ../..'
+alias '....'='cd ../../..'
+alias '.....'='cd ../../../..'
 alias j='z'
 alias f="fd"
 alias cask="brew cask"
@@ -159,6 +161,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
+export PATH="$PATH:$HOME/.rvm/bin"
+
 autoload -U add-zsh-hook
 
 # eval $(thefuck --alias)
@@ -180,3 +184,4 @@ for a in {$HOME,}/Applications/*.app(N) ; do
 done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+

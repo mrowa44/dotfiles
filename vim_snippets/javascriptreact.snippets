@@ -1,94 +1,8 @@
-snippet comp "flow component" b
-// @flow
-import * as React from 'react';
-
-import styles from './${1:ComponentName}.cssmodule.scss';
-
-type Props = {
-};
-
-class $1 extends React.Component<Props> {
-	render() {
-		$0
-		return (
-			<div>
-				dupa
-			</div>
-		);
-	}
-}
-
-export default $1;
-endsnippet
-
-snippet comp "standard component" b
-import React from 'react';
-
-import styles from './${1:ComponentName}.module.scss';
-
-class $1 extends React.Component {
-	render() {
-		return (
-			<div>
-				dupa
-			</div>
-		);
-	}
-}
-
-export default $1;
-endsnippet
-
-snippet comp "page with layout component" b
-import React from 'react';
-
-import Layout from 'components/layout';
-import Text from 'components/Text';
-import SEO from 'components/seo';
-import styles from './${1:ComponentName}.module.scss';
-
-class $1 extends React.Component {
-	render() {
-		return (
-      <Layout>
-        <SEO title="$1" />
-        <div className={styles.container}>
-        </div>
-      </Layout>
-		);
-	}
-}
-
-export default $1;
-endsnippet
-
 snippet comp "functional component" b
-// @flow
-import * as React from 'react';
-
-import styles from './${1:ComponentName}.cssmodule.scss';
-
-type Props = {
-};
-
-function $1(props: Props) {
-  return (
-    <div>
-      dupa
-    </div>
-  );
-}
-
-export default $1;
-endsnippet
-
-snippet comp "functional component no flow" b
-import * as React from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import styles from './${1:ComponentName}.module.scss';
-
-function $1(props) {
+const $1 = (props) => {
   return (
     <div>
       dupa
@@ -143,8 +57,12 @@ snippet <Text "Text component" Ai
 </Text>
 endsnippet
 
+# snippet "<[A-Za-z"={} ]* class" "react className" rA
+# `!p snip.rv = match.group()`Name={styles.$0}
+# endsnippet
+
 snippet "<[A-Za-z"={} ]* class" "react className" rA
-`!p snip.rv = match.group()`Name={styles.$0}
+`!p snip.rv = match.group()`Name=""
 endsnippet
 
 snippet iprop
@@ -281,4 +199,12 @@ endsnippet
 
 snippet eslint-ignore
 /* eslint-disable import/prefer-default-export */
+endsnippet
+
+snippet lg "magic console.log" A
+console.log('%c `!v expand("%:t:r")`', 'color: teal; font-weight: bold;', $1);
+endsnippet
+
+snippet icon "icon import" A
+import { Icon } from "@circle-react-shared/Icon";
 endsnippet

@@ -144,6 +144,8 @@ call plug#begin('~/.vim/bundle')
     xmap <c-f>  <Plug>(coc-format-selected)
 
 
+    Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
+
     " let g:js_file_import_root_alias = '@/'
   " Plug 'neoclide/coc.nvim', {'branch': 'release'}
   "   let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 
