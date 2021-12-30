@@ -291,7 +291,7 @@ augroup vimrcEx
   autocmd FileType html           setlocal textwidth=130
   autocmd FileType javascript,jsx,typescript,tsx setlocal textwidth=100
   autocmd FileType javascript,jsx,typescript,tsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
-  autocmd FileType javascript,jsx,json,typescript nnoremap so vi{:sort<cr><c-o>
+  autocmd FileType javascript,jsx,json,typescript,tsx nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
   " autocmd FileType qf unmap <cr>
@@ -304,3 +304,8 @@ augroup vimrcEx
   " autocmd CursorHoldI * :call <SID>show_hover_doc()
   " autocmd CursorHold * :call <SID>show_hover_doc()
 augroup END
+
+command Locales vs ../../../config/locales/en.yml
+command Icons vs ../../../app/assets/images/sprite/icons.svg
+command Uikit vs components/shared/uikit/index.js
+command Gblame Git blame

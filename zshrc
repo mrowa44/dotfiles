@@ -38,6 +38,7 @@ alias yti='NODE_ENV=test mocha --inspect-brk --recursive'
 alias ytd='node --inspect-brk ./node_modules/netguru-react-scripts/bin/react-scripts.js test --env=jsdom'
 alias sl='yarn stylelint'
 alias ysb='yarn storybook'
+alias fs='foreman start'
 alias el='eslint'
 alias gpshh='git push -u && open $(git remote get-url origin) && a'
 alias gpsh='gpsh && a || a'
@@ -121,6 +122,14 @@ fix_postgres() {
 fix_rubygems() { gem update --system }
 # set right path
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
+fix_circle() {
+  yarn
+  bundle
+  rake db:migrate
+  gco -- app/*/*.rb db/*.rb
+  alert
+  foreman start
+}
 
 ### ZSH setup stuff
 # https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories#comment58565664_22753363

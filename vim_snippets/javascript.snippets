@@ -24,3 +24,212 @@ if (${1:true}) {
 	${0:${VISUAL}}
 }
 endsnippet
+
+snippet comp "functional component" b
+import React from 'react';
+
+function $1(props) {
+  return (
+    <div>
+      dupa
+    </div>
+  );
+}
+
+export default $1;
+endsnippet
+
+snippet story "storybook story" b
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+
+import { StoryDecorator, StoryItem, StorySection } from './components';
+
+// import from '../src/';
+
+storiesOf('test', module)
+  .addDecorator((storyFn) => (
+    <StoryDecorator>
+      {storyFn()}
+    </StoryDecorator>
+  ))
+  .add('normal', () => (
+    <StorySection>
+      <StoryItem>
+				test
+      </StoryItem>
+		</StorySection>
+  ));
+endsnippet
+
+snippet useState "useState" b
+const [$1, set${1/\w+\s*/\u$0/g}] = React.useState(${3:})${0:;}
+endsnippet
+
+snippet useEffect "useEffect" b
+React.useEffect(() => {
+  $1
+}, [])${0:;}
+endsnippet
+
+snippet iuseBoolean
+import { useBoolean } from "@circle-react/hooks/utils/useBoolean";
+endsnippet
+
+snippet useBoolean
+const [$1, set$1, toggle$1] = useBoolean(false);
+endsnippet
+
+snippet useContext "useContext" b
+const $0 = React.useContext($1);
+endsnippet
+
+snippet <Text "Text component" Ai
+<Text>
+	$0
+</Text>
+endsnippet
+
+# snippet "<[A-Za-z"={} ]* class" "react className" rA
+# `!p snip.rv = match.group()`Name={styles.$0}
+# endsnippet
+
+snippet "<[A-Za-z"={} ]* class" "react className" rA
+`!p snip.rv = match.group()`Name="">
+endsnippet
+
+snippet iprop
+import PropTypes from 'prop-types';
+endsnippet
+
+snippet itext
+import Text from 'components/Text';
+endsnippet
+
+snippet iclass
+import cx from 'classnames';
+endsnippet
+
+snippet icx
+import cx from 'classnames';
+endsnippet
+
+snippet cx
+import cx from 'classnames';
+endsnippet
+
+snippet iconnect
+import { connect } from 'react-redux';
+endsnippet
+
+snippet icomp
+import { compose } from 'redux';
+endsnippet
+
+snippet icompose
+import { compose } from 'redux';
+endsnippet
+
+snippet navigate
+import { navigate } from 'helpers/navigation';
+endsnippet
+
+snippet nav
+import { navigate } from 'helpers/navigation';
+endsnippet
+
+snippet inav 
+import { navigate } from 'helpers/navigation';
+endsnippet
+
+snippet image
+import { imagePath } from 'helpers/assets';
+endsnippet
+
+snippet inv
+import { InvisibleButton } from 'components/Button';
+endsnippet
+
+snippet iamplitude
+import * as amplitudeActions from 'actions/amplitude';
+endsnippet
+
+snippet iampl?
+import * as amplitudeActions from 'actions/amplitude';
+endsnippet
+
+snippet iamp
+import * as amplitudeActions from 'actions/amplitude';
+endsnippet
+
+snippet it
+import { ThemeContext } from 'components/Theme';
+endsnippet
+
+snippet itheme
+import { ThemeContext } from 'components/Theme';
+endsnippet
+
+snippet theme
+const theme = React.useContext(ThemeContext);
+endsnippet
+
+
+
+
+
+snippet con
+export default connect(${1:mapStateToProps})(`!v expand("%:t:r")`);
+endsnippet
+
+snippet cdm
+componentDidMount() {
+	${1}
+}
+endsnippet
+
+snippet cdup
+componentDidUpdate(prevProps, prevState) {
+	${1}
+}
+endsnippet
+
+snippet cwm
+componentWillMount() {
+	${1}
+}
+endsnippet
+
+snippet cwr
+componentWillReceiveProps(nextProps) {
+	${1}
+}
+endsnippet
+
+snippet cwun
+componentWillUnmount() {
+	${1}
+}
+endsnippet
+
+snippet cwu
+componentWillUpdate(nextProps, nextState) {
+	${1}
+}
+endsnippet
+
+snippet eslint-disable-default 
+/* eslint-disable import/prefer-default-export */
+endsnippet
+
+snippet eslint-ignore
+/* eslint-disable import/prefer-default-export */
+endsnippet
+
+snippet icon "icon import"
+import { Icon } from "@circle-react-shared/Icon";
+endsnippet
+
+snippet uikit "uikit import"
+import { $1 } from "@circle-react-uikit";
+endsnippet
