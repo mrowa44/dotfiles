@@ -27,6 +27,8 @@ endsnippet
 
 snippet comp "functional component" b
 import React from 'react';
+import {pxToRem} from '@/utils/typography-utils';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
 function $1(props) {
   return (

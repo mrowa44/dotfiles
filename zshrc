@@ -180,17 +180,17 @@ nvm use default
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 
-# make all apps in /Applications available from the command line
-# https://hamberg.no/erlend/posts/2014-02-15-make-mac-apps-available-from-cmd-line.html
-for a in {$HOME,}/Applications/*.app(N) ; do
-    eval "\${\${a:t:l:r}//[ -]/}() {\
-        if (( \$# == 0 )); then\
-            open ${(qq)a};\
-        else\
-            open -a ${(qq)a} \$@;\
-        fi\
-    }"
-done
+# # make all apps in /Applications available from the command line
+# # https://hamberg.no/erlend/posts/2014-02-15-make-mac-apps-available-from-cmd-line.html
+# for a in {$HOME,}/Applications/*.app(N) ; do
+#     eval "\${\${a:t:l:r}//[ -]/}() {\
+#         if (( \$# == 0 )); then\
+#             open ${(qq)a};\
+#         else\
+#             open -a ${(qq)a} \$@;\
+#         fi\
+#     }"
+# done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
 
