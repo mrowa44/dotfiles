@@ -62,6 +62,7 @@ alias sb="yarn storybook"
 alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && pbpaste && echo '\n\nCopied.'"
 alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
 alias ios="npx react-native run-ios"
+alias fix="yarn format && yarn lint && a"
 
 help() {
   tldr "$@"

@@ -30,15 +30,20 @@ import React from 'react';
 import {pxToRem} from '@/utils/typography-utils';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
-function $1(props) {
+const useStyles = makeStyles((theme: Theme) => createStyles({
+}));
+
+interface $1Props {
+}
+
+export const $1 = (props: $1Props) => {
+  const styles = useStyles();
   return (
     <div>
       dupa
     </div>
   );
 }
-
-export default $1;
 endsnippet
 
 snippet story "storybook story" b
@@ -96,9 +101,9 @@ endsnippet
 # `!p snip.rv = match.group()`Name={styles.$0}
 # endsnippet
 
-snippet "<[A-Za-z"={} ]* class" "react className" rA
-`!p snip.rv = match.group()`Name="">
-endsnippet
+# snippet "<[A-Za-z"={} ]* class" "react className" rA
+# `!p snip.rv = match.group()`Name={}>
+# endsnippet
 
 snippet iprop
 import PropTypes from 'prop-types';
