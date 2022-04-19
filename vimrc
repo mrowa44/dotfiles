@@ -13,10 +13,12 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-endwise'
   Plug 'farmergreg/vim-lastplace'
   " Plug 'kshenoy/vim-signature'
+  " Plug 'leafgarland/typescript-vim'
   Plug 'jiangmiao/auto-pairs'
     let g:AutoPairsFlyMode = 0
     let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```'}
     let g:AutoPairsMoveCharacter = ""
+  Plug 'github/copilot.vim'
   " Plug 'airblade/vim-gitgutter'
   "   set updatetime=100
   "   let g:gitgutter_override_sign_column_highlight = 0
@@ -277,6 +279,7 @@ augroup vimrcEx
   autocmd FocusGained,BufEnter,BufRead,CursorHold * checktime
   autocmd VimResized * execute "normal! \<c-w>="
   autocmd VimLeave   * execute "mksession!"
+  " autocmd VimEnter   * execute "source Session.vim"
   " autocmd BufLeave * set colorcolumn=
   " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
   " autocmd BufEnter * let &colorcolumn=&textwidth+1

@@ -46,5 +46,6 @@ defaults write com.apple.screencapture location ~/Downloads
 # https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
 
 # git submodule update --init --recursive
+# brew install zsh-async
 
 # sudo chown -R $(whoami) /usr/local/Cellar/node

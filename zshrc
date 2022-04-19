@@ -62,7 +62,10 @@ alias sb="yarn storybook"
 alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && pbpaste && echo '\n\nCopied.'"
 alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
 alias ios="npx react-native run-ios"
-alias fix="yarn format && yarn lint && a"
+alias fix="echo 'prettier + eslint + typescript' && yarn format && yarn lint && yarn ts-check && a && gst"
+alias 'yarn build'="yarn build && a"
+# alias 'gpsh'='gpsh && a'
+# alias 'gc'='gc && gst'
 
 help() {
   tldr "$@"
@@ -134,17 +137,16 @@ fix_circle() {
 
 ### ZSH setup stuff
 # https://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories#comment58565664_22753363
-autoload -U promptinit
-autoload -U compinit
-compinit;
-promptinit;
+fpath+=("/opt/homebrew/share/zsh/site-functions")
+autoload -U compinit; compinit;
+autoload -U promptinit; promptinit
 prompt pure
 
 # PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
 PATH="/usr/local/bin:$PATH"
+PATH="/opt/homebrew/bin:$PATH"
 # export PATH="$(yarn global bin):$PATH"
-# export PATH="$PATH:$(yarn global bin)"
-export PATH="node_modules/.bin:/usr/local/lib/node_modules/yarn/bin:$PATH"
+# export PATH="node_modules/.bin:/usr/local/lib/node_modules/yarn/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
 setopt append_history inc_append_history share_history histignorealldups # shared hist between sessions
@@ -168,16 +170,19 @@ jj() { # "jump" to directory of a project and start tmux session
 }
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PATH="$PATH:$HOME/.rvm/bin"
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
 
 autoload -U add-zsh-hook
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # eval $(thefuck --alias)
 
-nvm use default
+# nvm use default
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 
@@ -195,3 +200,6 @@ export PATH="/usr/local/sbin:$PATH"
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
 
+
+# The next line updates PATH for Netlify's Git Credential Helper.
+# test -f '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc' && source '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc'

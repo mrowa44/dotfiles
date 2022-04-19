@@ -28,8 +28,8 @@
 	process = git-lfs filter-process
 	required = true
 [alias]
-  unused = !git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d
-  unused-develop = !git branch --merged develop | grep -v '^[ *]*develop$' | xargs git branch -d
+  unused = !git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d
+  unused-prod = !git branch --merged prod | grep -v '^[ *]*prod$' | xargs git branch -d
   recent = !git branch --sort=-committerdate | HEAD -10
 [credential]
 	helper = osxkeychain
@@ -39,3 +39,7 @@
 	rebase = true
 [init]
 	defaultBranch = main
+
+# This next lines include Netlify's Git Credential Helper configuration in your Git configuration.
+; [include]
+;   path = /Users/jrachowicz/Library/Preferences/netlify/helper/git-config

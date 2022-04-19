@@ -48,25 +48,35 @@ endsnippet
 
 snippet story "storybook story" b
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import {ComponentStory, ComponentMeta} from '@storybook/react';
+import {$1} from '@/components/ui/$1';
 
-import { StoryDecorator, StoryItem, StorySection } from './components';
+export default {
+  title: 'UI/$1',
+  component: $1,
+  argTypes: {
+    size: {
+      options: ['large', 'medium', 'small'],
+      control: 'radio',
+    },
+    color: {
+      options: ['primary'],
+      control: 'radio',
+    },
+    disabled: {
+      control: 'boolean',
+    },
+  },
+  args: {
+    children: '$1',
+  },
+} as ComponentMeta<typeof $1>;
 
-// import from '../src/';
+const Template: ComponentStory<typeof $1> = (args) => <$1 {...args} />;
 
-storiesOf('test', module)
-  .addDecorator((storyFn) => (
-    <StoryDecorator>
-      {storyFn()}
-    </StoryDecorator>
-  ))
-  .add('normal', () => (
-    <StorySection>
-      <StoryItem>
-				test
-      </StoryItem>
-		</StorySection>
-  ));
+export const Default = Template.bind({});
+Default.args = {
+};
 endsnippet
 
 snippet useState "useState" b
