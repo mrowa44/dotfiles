@@ -203,3 +203,6 @@ source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
 
 # The next line updates PATH for Netlify's Git Credential Helper.
 # test -f '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc' && source '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc'
+
+
+nvm use 16.14

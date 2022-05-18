@@ -27,11 +27,10 @@ endsnippet
 
 snippet comp "functional component" b
 import React from 'react';
-import {pxToRem} from '@/utils/typography-utils';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {createUseStyles} from 'react-jss';
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-}));
+const useStyles = createUseStyles((theme) => ({
+}), { name: '$1' });
 
 interface $1Props {
 }
@@ -55,17 +54,6 @@ export default {
   title: 'UI/$1',
   component: $1,
   argTypes: {
-    size: {
-      options: ['large', 'medium', 'small'],
-      control: 'radio',
-    },
-    color: {
-      options: ['primary'],
-      control: 'radio',
-    },
-    disabled: {
-      control: 'boolean',
-    },
   },
   args: {
     children: '$1',

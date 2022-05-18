@@ -292,8 +292,8 @@ augroup vimrcEx
   autocmd FileType gitcommit      :normal A
   autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx,typescript,tsx setlocal textwidth=100
-  autocmd FileType javascript,jsx,typescript,tsx nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
+  autocmd FileType javascript,jsx,typescript,tsx,typescriptreact setlocal textwidth=100
+  autocmd FileType javascript,jsx,typescript,tsx,typescriptreact nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
   autocmd FileType javascript,jsx,json,typescript,typescriptreact nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry
   autocmd FileType ruby nnoremap sfs /binding.pry<cr>
