@@ -52,20 +52,20 @@ call plug#begin('~/.vim/bundle')
    " Files command with preview window
    command! -bang -nargs=? -complete=dir Files
      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-    let g:fzf_colors =
-    \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Statement'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
+    " let g:fzf_colors =
+    " \ { 'fg':      ['fg', 'Normal'],
+    "   \ 'bg':      ['bg', 'Normal'],
+    "   \ 'hl':      ['fg', 'Statement'],
+    "   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    "   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    "   \ 'hl+':     ['fg', 'Statement'],
+    "   \ 'info':    ['fg', 'PreProc'],
+    "   \ 'border':  ['fg', 'Ignore'],
+    "   \ 'prompt':  ['fg', 'Conditional'],
+    "   \ 'pointer': ['fg', 'Exception'],
+    "   \ 'marker':  ['fg', 'Keyword'],
+    "   \ 'spinner': ['fg', 'Label'],
+    "   \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
     " let g:javascript_plugin_flow = 0
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
@@ -100,6 +100,7 @@ call plug#begin('~/.vim/bundle')
       let g:coc_global_extensions += ['coc-eslint']
     endif
     set signcolumn=number
+    nmap <leader>f <Plug>(coc-codeaction)
 
     " function! ShowDocIfNoDiagnostic(timer_id)
     "   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
@@ -148,23 +149,6 @@ call plug#begin('~/.vim/bundle')
 
     Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
 
-    " let g:js_file_import_root_alias = '@/'
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  "   let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-css', 
-  "         \ 'coc-html', 'coc-eslint', 'coc-stylelint', 'coc-tslint', 'coc-tsserver',
-  "         \ 'coc-browser', 'coc-html-css-support']
-  "   set cmdheight=2
-  "   set updatetime=300
-  "   set shortmess+=c
-  "   " Use `[g` and `]g` to navigate diagnostics
-  "   " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-  "   nmap <silent> [g <Plug>(coc-diagnostic-prev)
-  "   nmap <silent> ]g <Plug>(coc-diagnostic-next)
-  "   " Make <CR> auto-select the first completion item and notify coc.nvim to
-  "   " format on enter, <cr> could be remapped by other vim plugin
-  "   inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-  "         \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-  "   inoremap <silent><expr> <c-space> coc#refresh()
 call plug#end()
 
 """ General
@@ -300,6 +284,8 @@ augroup vimrcEx
   " autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
 
+  autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+  autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
   autocmd CursorHold * silent call CocActionAsync('highlight')
   " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
