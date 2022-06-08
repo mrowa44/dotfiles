@@ -65,7 +65,7 @@ alias ios="npx react-native run-ios"
 alias fix="echo 'prettier + eslint + typescript' && yarn format && yarn lint && yarn ts-check && a && gst"
 alias 'yarn build'="yarn build && a"
 alias mkdir="mkdir -p"
-# alias 'gpsh'='gpsh && a'
+alias 'gpsh'='gpsh && a'
 # alias 'gc'='gc && gst'
 
 help() {

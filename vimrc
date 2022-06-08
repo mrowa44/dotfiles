@@ -50,22 +50,22 @@ call plug#begin('~/.vim/bundle')
    " https://github.com/junegunn/fzf.vim/issues/346
    command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
    " Files command with preview window
-   command! -bang -nargs=? -complete=dir Files
-     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-    " let g:fzf_colors =
-    " \ { 'fg':      ['fg', 'Normal'],
-    "   \ 'bg':      ['bg', 'Normal'],
-    "   \ 'hl':      ['fg', 'Statement'],
-    "   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    "   \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-    "   \ 'hl+':     ['fg', 'Statement'],
-    "   \ 'info':    ['fg', 'PreProc'],
-    "   \ 'border':  ['fg', 'Ignore'],
-    "   \ 'prompt':  ['fg', 'Conditional'],
-    "   \ 'pointer': ['fg', 'Exception'],
-    "   \ 'marker':  ['fg', 'Keyword'],
-    "   \ 'spinner': ['fg', 'Label'],
-    "   \ 'header':  ['fg', 'Comment'] }
+   " command! -bang -nargs=? -complete=dir Files
+   "   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+    let g:fzf_colors =
+    \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Statement'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
     " let g:javascript_plugin_flow = 0
   Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
@@ -93,9 +93,9 @@ call plug#begin('~/.vim/bundle')
     if isdirectory('./tsconfig.json')
       let g:coc_global_extensions += ['coc-tsserver']
     endif
-    if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-      let g:coc_global_extensions += ['coc-prettier']
-    endif
+    " if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+    "   let g:coc_global_extensions += ['coc-prettier']
+    " endif
     if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
       let g:coc_global_extensions += ['coc-eslint']
     endif
@@ -131,20 +131,37 @@ call plug#begin('~/.vim/bundle')
     set updatetime=4300
     set shortmess+=c
 
-    " nnoremap <silent> K :call <SID>show_documentation()<CR>
-    function! s:show_documentation()
-      if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-      elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
-      else
-        execute '!' . &keywordprg . " " . expand('<cword>')
+
+    """""""""""""""
+    function! ShowDocIfNoDiagnostic(timer_id)
+      if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+        silent call CocActionAsync('doHover')
       endif
     endfunction
 
+    function! s:show_hover_doc()
+      call timer_start(500, 'ShowDocIfNoDiagnostic')
+    endfunction
 
-    nmap <c-f>  <Plug>(coc-format-selected)
-    xmap <c-f>  <Plug>(coc-format-selected)
+    autocmd CursorHoldI * :call <SID>show_hover_doc()
+    autocmd CursorHold * :call <SID>show_hover_doc()
+    """""""""""""""
+
+
+    " nnoremap <silent> K :call <SID>show_documentation()<CR>
+    " function! s:show_documentation()
+    "   if (index(['vim','help'], &filetype) >= 0)
+    "     execute 'h '.expand('<cword>')
+    "   elseif (coc#rpc#ready())
+    "     call CocActionAsync('doHover')
+    "   else
+    "     execute '!' . &keywordprg . " " . expand('<cword>')
+    "   endif
+    " endfunction
+
+
+    " nmap <c-f>  <Plug>(coc-format-selected)
+    " xmap <c-f>  <Plug>(coc-format-selected)
 
 
     Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
@@ -284,10 +301,10 @@ augroup vimrcEx
   " autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
 
-  autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-  autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+  " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+  " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
-  autocmd CursorHold * silent call CocActionAsync('highlight')
+  " autocmd CursorHold * silent call CocActionAsync('highlight')
   " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
   " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
   " autocmd CursorHoldI * :call <SID>show_hover_doc()
