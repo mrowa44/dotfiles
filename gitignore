@@ -13,8 +13,10 @@ data/schema.json
 Session.vim*
 dump.rdb
 notes.*
+!notes.tsx
 npm-debug*
 .env.*
+.env
 dupa.*
 yolo.json*
 yolo.js
@@ -27,3 +29,6 @@ vim/*
 ctags
 dupa*
 .gitconfig
+tsconfig.tsbuildinfo
+.nvmrc
+dist

@@ -19,6 +19,10 @@ snippet lg "magic console.log" A
 console.log('%c `!v expand("%:t:r")`', 'color: teal; font-weight: bold;', $1);
 endsnippet
 
+snippet pg "magic console.log" A
+console.log('%c `!v expand("%:t:r")`', 'color: teal; font-weight: bold;', JSON.parse(JSON.stringify($1)));
+endsnippet
+
 snippet if "if (condition) { ... }"
 if (${1:true}) {
 	${0:${VISUAL}}
@@ -37,6 +41,22 @@ interface $1Props {
 
 export const $1 = (props: $1Props) => {
   const styles = useStyles();
+  return (
+    <div>
+      dupa
+    </div>
+  );
+}
+endsnippet
+
+snippet comp "functional styled component" b
+import * as React from 'react';
+import {styled} from '@mui/system';
+
+export interface $1Props {
+}
+
+export const $1 = (props: $1Props) => {
   return (
     <div>
       dupa

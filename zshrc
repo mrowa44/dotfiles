@@ -31,59 +31,41 @@ alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
 alias y='yarn'
 alias ys='yarn start'
-alias yw='yarn watch'
-alias ywlb='yarn whitelabel'
-alias yt='NODE_ENV=test yarn test'
-alias yti='NODE_ENV=test mocha --inspect-brk --recursive'
-alias ytd='node --inspect-brk ./node_modules/netguru-react-scripts/bin/react-scripts.js test --env=jsdom'
-alias sl='yarn stylelint'
 alias ysb='yarn storybook'
-alias fs='foreman start'
-alias el='eslint'
 alias gpshh='git push -u && open $(git remote get-url origin) && a'
-alias gpsh='gpsh && a || a'
+alias gpsh='gpsh && a'
 alias gpll='git pull && yarn && a'
 alias org='open $(git remote get-url origin)'
 alias origin='open $(git remote get-url origin)'
-alias touhc='touch' # please
+alias touhc='touch'
 alias eixt="exit"
 alias '?'='howdoi'
-alias md='open -a MacDown'
 alias alert="; osascript -e 'display notification \"completed!\" with title \"Done!\" sound name \"Purr\"'"
 alias 'a'='alert'
 alias -g icloud="/Users/$(whoami)/Library/Mobile\ Documents/com~apple~CloudDocs/"
-alias flowwatch="fswatch -o ./ | xargs -n1 -I{} sh -c 'clear; printf \"\033[3J\" && ./node_modules/flow-bin/cli.js'"
-alias lint_changed="gd --name-only develop | ag js | xargs ../gabi-react/node_modules/eslint/bin/eslint.js"
-alias circle_local="circleci local execute --job build"
-alias icons='open src/gabi-assets/images/icons'
-alias loki_changed='git ls-files -m --others --exclude-standard .loki | xargs open'
-alias t="touch"
-alias sb="yarn storybook"
-alias generate_release_notes="node ~/dotfiles/releaseNotesGenerator.js | pbcopy && pbpaste && echo '\n\nCopied.'"
-alias pritunl="/Applications/Pritunl.app/Contents/Resources/pritunl-client"
-alias ios="npx react-native run-ios"
 alias fix="echo 'prettier + eslint + typescript' && yarn format && yarn lint && yarn ts-check && a && gst"
 alias 'yarn build'="yarn build && a"
 alias mkdir="mkdir -p"
 alias 'gpsh'='gpsh && a'
-# alias 'gc'='gc && gst'
+alias 'gc'='gc && gst'
+alias nvm-set='node -v > .nvmrc'
+alias python='python3'
 
+ydf() {
+  yarn dev --filter="$@"...
+}
+ydff() {
+  yarn dev --filter=@layerzerolabs/"$@"...
+}
+ybf() {
+  yarn build --filter="$@"...
+}
 help() {
   tldr "$@"
   howdoi "$@"
 }
-comp() {
-  touch "$@".{js,cssmodule.scss}
-}
-tx() { # attach to a session with name of current directory or create one
-  dir=${PWD##*/}
-  tmux -CC a -t ${dir} || tmux -CC new -s ${dir}
-}
 copy() { # to clipboard
   pbcopy < $@
-}
-youtube_mp3() {
-  youtube-dl --extract-audio -i --audio-format mp3 "$@"
 }
 kill_them_all() {
   ps aux | ag "$@" | awk '{print $2}' | xargs kill
@@ -143,10 +125,8 @@ autoload -U compinit; compinit;
 autoload -U promptinit; promptinit
 prompt pure
 
-# PATH="$PATH:/usr/local/Cellar/ruby/2.5.1/bin"
 PATH="/usr/local/bin:$PATH"
 PATH="/opt/homebrew/bin:$PATH"
-# export PATH="$(yarn global bin):$PATH"
 # export PATH="node_modules/.bin:/usr/local/lib/node_modules/yarn/bin:$PATH"
 
 setopt MENU_COMPLETE # auto select first autocompl
@@ -165,11 +145,6 @@ source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-jj() { # "jump" to directory of a project and start tmux session
-  j "$@"
-  tx
-}
-
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
@@ -181,9 +156,7 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlightin
 autoload -U add-zsh-hook
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# eval $(thefuck --alias)
-
-# nvm use default
+nvm use default
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 
@@ -200,10 +173,3 @@ export PATH="/usr/local/sbin:$PATH"
 # done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
-
-
-# The next line updates PATH for Netlify's Git Credential Helper.
-# test -f '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc' && source '/Users/jrachowicz/Library/Preferences/netlify/helper/path.zsh.inc'
-
-
-nvm use 16.14

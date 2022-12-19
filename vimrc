@@ -13,12 +13,11 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-endwise'
   Plug 'farmergreg/vim-lastplace'
   " Plug 'kshenoy/vim-signature'
-  " Plug 'leafgarland/typescript-vim'
   Plug 'jiangmiao/auto-pairs'
     let g:AutoPairsFlyMode = 0
     let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```'}
     let g:AutoPairsMoveCharacter = ""
-  Plug 'github/copilot.vim'
+  " Plug 'github/copilot.vim'
   " Plug 'airblade/vim-gitgutter'
   "   set updatetime=100
   "   let g:gitgutter_override_sign_column_highlight = 0
@@ -42,13 +41,15 @@ call plug#begin('~/.vim/bundle')
   " Plug 'ervandew/supertab'
   "   set completeopt+=menuone,preview
   "   let g:SuperTabLongestHighlight = 1
+  Plug 'airblade/vim-rooter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
+   set shell=zsh
    nnoremap <c-p> :Files<cr>
-   imap <c-f> <plug>(fzf-complete-file-ag)
+   " imap <c-f> <plug>(fzf-complete-file-ag)
    let $FZF_DEFAULT_COMMAND = 'ag --hidden --vimgrep --literal -g ""'
    let g:fzf_layout = { 'down': '~30%' }
    " https://github.com/junegunn/fzf.vim/issues/346
-   command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+   " command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
    " Files command with preview window
    " command! -bang -nargs=? -complete=dir Files
    "   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -67,8 +68,7 @@ call plug#begin('~/.vim/bundle')
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
-    " let g:javascript_plugin_flow = 0
-  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css', 'ts', 'js'] }
   Plug 'atelierbram/Base2Tone-vim'
   Plug 'itchyny/lightline.vim'
     set noshowmode
@@ -86,7 +86,7 @@ call plug#begin('~/.vim/bundle')
       endif
       return expand('%')
     endfunction
-    
+
   " Plug 'jszakmeister/vim-togglecursor'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = []
@@ -101,16 +101,6 @@ call plug#begin('~/.vim/bundle')
     endif
     set signcolumn=number
     nmap <leader>f <Plug>(coc-codeaction)
-
-    " function! ShowDocIfNoDiagnostic(timer_id)
-    "   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-    "     silent call CocActionAsync('doHover')
-    "   endif
-    " endfunction
-
-    " function! s:show_hover_doc()
-    "   call timer_start(500, 'ShowDocIfNoDiagnostic')
-    " endfunction
 
     function! s:check_back_space() abort
       let col = col('.') - 1
@@ -132,7 +122,6 @@ call plug#begin('~/.vim/bundle')
     set shortmess+=c
 
 
-    """""""""""""""
     function! ShowDocIfNoDiagnostic(timer_id)
       if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
         silent call CocActionAsync('doHover')
@@ -145,7 +134,6 @@ call plug#begin('~/.vim/bundle')
 
     autocmd CursorHoldI * :call <SID>show_hover_doc()
     autocmd CursorHold * :call <SID>show_hover_doc()
-    """""""""""""""
 
 
     " nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -194,7 +182,8 @@ set termguicolors
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-color Base2Tone_EveningDark
+" color Base2Tone_EveningDark
+color Base2Tone_DrawbridgeDark
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi LineNr ctermbg=NONE guibg=NONE
@@ -206,7 +195,7 @@ highlight GitGutterDelete guibg=NONE ctermbg=NONE
 highlight GitGutterChangeDelete guibg=NONE ctermbg=NONE
 highlight ALEWarningSign ctermfg=yellow guifg=Orange
 highlight ALEErrorSign ctermfg=red guifg=Red
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
@@ -301,8 +290,8 @@ augroup vimrcEx
   " autocmd FileType qf unmap <cr>
   autocmd FileType crontab setlocal nowritebackup
 
-  " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
-  " autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+  " Remove whitespace on save
+  autocmd BufWritePre * :%s/\s\+$//e
 
   " autocmd CursorHold * silent call CocActionAsync('highlight')
   " autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -311,7 +300,4 @@ augroup vimrcEx
   " autocmd CursorHold * :call <SID>show_hover_doc()
 augroup END
 
-command Locales vs ../../../config/locales/en.yml
-command Icons vs ../../../app/assets/images/sprite/icons.svg
-command Uikit vs components/shared/uikit/index.js
 command Gblame Git blame
