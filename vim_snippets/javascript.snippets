@@ -29,25 +29,25 @@ if (${1:true}) {
 }
 endsnippet
 
-snippet comp "functional component" b
-import React from 'react';
-import {createUseStyles} from 'react-jss';
+# snippet comp "functional component" b
+# import React from 'react';
+# import {createUseStyles} from 'react-jss';
 
-const useStyles = createUseStyles((theme) => ({
-}), { name: '$1' });
+# const useStyles = createUseStyles((theme) => ({
+# }), { name: '$1' });
 
-interface $1Props {
-}
+# interface $1Props {
+# }
 
-export const $1 = (props: $1Props) => {
-  const styles = useStyles();
-  return (
-    <div>
-      dupa
-    </div>
-  );
-}
-endsnippet
+# export const $1 = (props: $1Props) => {
+#   const styles = useStyles();
+#   return (
+#     <div>
+#       dupa
+#     </div>
+#   );
+# }
+# endsnippet
 
 snippet comp "functional styled component" b
 import * as React from 'react';
@@ -125,6 +125,11 @@ snippet upxl "up xl" Ai
 [theme.breakpoints.up("xl")]: {
   $0
 },
+endsnippet
+
+snippet styled "styled comp" Ai
+styled($0)(({theme}) => ({
+}));
 endsnippet
 
 # snippet "<[A-Za-z"={} ]* class" "react className" rA

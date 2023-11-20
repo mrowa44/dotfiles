@@ -10,20 +10,23 @@ call plug#begin('~/.vim/bundle')
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-endwise'
+  " Plug 'tpope/vim-endwise'
   Plug 'farmergreg/vim-lastplace'
-  " Plug 'kshenoy/vim-signature'
+  " " Plug 'kshenoy/vim-signature'
   Plug 'jiangmiao/auto-pairs'
     let g:AutoPairsFlyMode = 0
     let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```'}
     let g:AutoPairsMoveCharacter = ""
-  " Plug 'github/copilot.vim'
-  " Plug 'airblade/vim-gitgutter'
-  "   set updatetime=100
-  "   let g:gitgutter_override_sign_column_highlight = 0
-  "   nmap ga <Plug>(GitGutterStageHunk)
+  " " Plug 'github/copilot.vim'
+  Plug 'airblade/vim-gitgutter'
+    set updatetime=100
+    let g:gitgutter_override_sign_column_highlight = 0
+    nmap ga <Plug>(GitGutterStageHunk)
   " Plug 'dense-analysis/ale'
-  "   let b:ale_fixers = {'javascript': ['eslint']}
+  "   let g:ale_fixers = {
+  "         \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+  "         \   'javascript': ['prettier', 'eslint']
+  "         \}
   "   let g:ale_fix_on_save = 1
   "   highlight clear ALEErrorSign
   "   highlight clear ALEWarningSign
@@ -38,9 +41,10 @@ call plug#begin('~/.vim/bundle')
     let g:UltiSnipsJumpForwardTrigger="<c-j>"
     let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
-  " Plug 'ervandew/supertab'
-  "   set completeopt+=menuone,preview
-  "   let g:SuperTabLongestHighlight = 1
+  Plug 'ervandew/supertab'
+    set completeopt+=menuone,preview
+    let g:SuperTabLongestHighlight = 1
+
   Plug 'airblade/vim-rooter'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } | Plug 'junegunn/fzf.vim'
    set shell=zsh
@@ -68,7 +72,7 @@ call plug#begin('~/.vim/bundle')
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
   Plug 'sheerun/vim-polyglot'
-  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css', 'ts', 'js'] }
+  Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css', 'ts', 'tsx', 'jsx', 'js', 'typescriptreact', 'javascriptreact'] }
   Plug 'atelierbram/Base2Tone-vim'
   Plug 'itchyny/lightline.vim'
     set noshowmode
@@ -87,73 +91,74 @@ call plug#begin('~/.vim/bundle')
       return expand('%')
     endfunction
 
-  " Plug 'jszakmeister/vim-togglecursor'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = []
-    if isdirectory('./tsconfig.json')
-      let g:coc_global_extensions += ['coc-tsserver']
-    endif
-    " if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
-    "   let g:coc_global_extensions += ['coc-prettier']
-    " endif
-    if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
-      let g:coc_global_extensions += ['coc-eslint']
-    endif
-    set signcolumn=number
-    nmap <leader>f <Plug>(coc-codeaction)
+  Plug 'jszakmeister/vim-togglecursor'
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " let g:coc_global_extensions = []
+  "   if isdirectory('./tsconfig.json')
+  "     let g:coc_global_extensions += ['coc-tsserver']
+  "   endif
+  "   " if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  "   "   let g:coc_global_extensions += ['coc-prettier']
+  "   " endif
+  "   if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  "     let g:coc_global_extensions += ['coc-eslint']
+  "   endif
+  "   set signcolumn=number
+  "   nmap <leader>f <Plug>(coc-codeaction)
 
-    function! s:check_back_space() abort
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction
+  "   function! s:check_back_space() abort
+  "     let col = col('.') - 1
+  "     return !col || getline('.')[col - 1]  =~ '\s'
+  "   endfunction
 
-    " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources
-    inoremap <silent><expr> <Tab>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<Tab>" :
-          \ coc#refresh()
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  "   " https://github.com/neoclide/coc.nvim/wiki/Completion-with-sources
+  "   inoremap <silent><expr> <Tab>
+  "         \ pumvisible() ? "\<C-n>" :
+  "         \ <SID>check_back_space() ? "\<Tab>" :
+  "         \ coc#refresh()
+  "   inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  "   inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-    nmap <silent> [g <Plug>(coc-diagnostic-prev)
-    nmap <silent> ]g <Plug>(coc-diagnostic-next)
-    set cmdheight=2
-    set updatetime=4300
-    set shortmess+=c
-
-
-    function! ShowDocIfNoDiagnostic(timer_id)
-      if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-        silent call CocActionAsync('doHover')
-      endif
-    endfunction
-
-    function! s:show_hover_doc()
-      call timer_start(500, 'ShowDocIfNoDiagnostic')
-    endfunction
-
-    autocmd CursorHoldI * :call <SID>show_hover_doc()
-    autocmd CursorHold * :call <SID>show_hover_doc()
+  "   nmap <silent> [g <Plug>(coc-diagnostic-prev)
+  "   nmap <silent> ]g <Plug>(coc-diagnostic-next)
+  "   set cmdheight=2
+  "   set updatetime=4300
+  "   set shortmess+=c
 
 
-    " nnoremap <silent> K :call <SID>show_documentation()<CR>
-    " function! s:show_documentation()
-    "   if (index(['vim','help'], &filetype) >= 0)
-    "     execute 'h '.expand('<cword>')
-    "   elseif (coc#rpc#ready())
-    "     call CocActionAsync('doHover')
-    "   else
-    "     execute '!' . &keywordprg . " " . expand('<cword>')
-    "   endif
-    " endfunction
+  "   function! ShowDocIfNoDiagnostic(timer_id)
+  "     if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+  "       silent call CocActionAsync('doHover')
+  "     endif
+  "   endfunction
+
+  "   function! s:show_hover_doc()
+  "     call timer_start(500, 'ShowDocIfNoDiagnostic')
+  "   endfunction
+
+  "   autocmd CursorHoldI * :call <SID>show_hover_doc()
+  "   autocmd CursorHold * :call <SID>show_hover_doc()
 
 
-    " nmap <c-f>  <Plug>(coc-format-selected)
-    " xmap <c-f>  <Plug>(coc-format-selected)
+  "   " nnoremap <silent> K :call <SID>show_documentation()<CR>
+  "   " function! s:show_documentation()
+  "   "   if (index(['vim','help'], &filetype) >= 0)
+  "   "     execute 'h '.expand('<cword>')
+  "   "   elseif (coc#rpc#ready())
+  "   "     call CocActionAsync('doHover')
+  "   "   else
+  "   "     execute '!' . &keywordprg . " " . expand('<cword>')
+  "   "   endif
+  "   " endfunction
 
 
-    Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
+  "   " nmap <c-f>  <Plug>(coc-format-selected)
+  "   " xmap <c-f>  <Plug>(coc-format-selected)
 
+
+  "   Plug 'iamcco/coc-tailwindcss',  {'do': 'yarn install --frozen-lockfile && yarn run build'}
+
+    Plug 'rakr/vim-two-firewatch'
 call plug#end()
 
 """ General
@@ -166,8 +171,8 @@ set backspace=indent,eol,start
 lang en_US
 filetype plugin indent on
 
-" """ UI
-set splitbelow splitright breakindent textwidth=80 nofoldenable
+""" UI
+set splitbelow splitright breakindent textwidth=100 nofoldenable
 set ruler noshowcmd nolist visualbell title
 set hlsearch incsearch ignorecase smartcase showmatch
 set wildmenu wildmode=longest,list,full
@@ -175,6 +180,7 @@ set wildignore+=*node_modules/**
 set laststatus=2
 set scroll=20
 set autoread
+set fillchars+=vert:\ 
 
 set background=dark
 set t_Co=256
@@ -184,18 +190,19 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 " color Base2Tone_EveningDark
 color Base2Tone_DrawbridgeDark
+" color Base2Tone_SpaceDark
+" color two-firewatch
 hi VertSplit ctermbg=NONE guibg=NONE
 hi SignColumn ctermbg=NONE guibg=NONE
 hi LineNr ctermbg=NONE guibg=NONE
 hi EndOfBuffer ctermbg=NONE guibg=NONE guifg=bg
 " GitGutter doesn't change sign bg color
-highlight GitGutterAdd    guibg=NONE ctermbg=NONE
-highlight GitGutterChange guibg=NONE ctermbg=NONE
-highlight GitGutterDelete guibg=NONE ctermbg=NONE
-highlight GitGutterChangeDelete guibg=NONE ctermbg=NONE
-highlight ALEWarningSign ctermfg=yellow guifg=Orange
-highlight ALEErrorSign ctermfg=red guifg=Red
-set fillchars+=vert:\
+" highlight GitGutterAdd    guibg=NONE ctermbg=NONE
+" highlight GitGutterChange guibg=NONE ctermbg=NONE
+" highlight GitGutterDelete guibg=NONE ctermbg=NONE
+" highlight GitGutterChangeDelete guibg=NONE ctermbg=NONE
+" highlight ALEWarningSign ctermfg=yellow guifg=Orange
+" highlight ALEErrorSign ctermfg=red guifg=Red
 
 """ Backups, undo
 set noswapfile backup backupdir=~/.vim/backup undofile undodir=~/.vim/undo
@@ -205,11 +212,11 @@ if !isdirectory(expand(&undodir))   | call mkdir(expand(&undodir), 'p')   | endi
 """ Mappings
 inoremap jj <esc>
 inoremap kk <esc>
-map § <esc>
-imap § <esc>
-nmap § <esc>
-cmap § <esc>
-vmap § <esc>
+" map § <esc>
+" imap § <esc>
+" nmap § <esc>
+" cmap § <esc>
+" vmap § <esc>
 nnoremap \ :q<cr>
 
 cnoremap <c-p> <up>
@@ -232,23 +239,23 @@ nnoremap - $
 nnoremap Y y$
 nnoremap K i<cr><esc>k$
 nnoremap <leader><leader> :wa<cr>
-nnoremap <bs> `[V`]
+" nnoremap <bs> `[V`]
 
 nnoremap <leader>'  :s/"/'<cr>:nohl<cr>
 nnoremap <leader>"  :s/'/"<cr>:nohl<cr>
-nnoremap <leader>W  :%s/\s\+$//<cr>
+" nnoremap <leader>W  :%s/\s\+$//<cr>
 nnoremap <leader>e  :edit!<cr>
 nnoremap <leader>ev :vs $MYVIMRC<cr>
 nnoremap <leader>g  :Ag<cr>
 nnoremap <leader>h  :nohlsearch<cr>
-nnoremap <leader>iv  :source $MYVIMRC<cr>:PlugInstall<cr>
-nnoremap <leader>p  o<esc>"+p
+" nnoremap <leader>iv  :source $MYVIMRC<cr>:PlugInstall<cr>
+" nnoremap <leader>p  o<esc>"+p
 nnoremap <leader>ss :source Session.vim<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
-nnoremap <leader>y  "+y
-vnoremap <leader>y  "+y
-nnoremap <leader>/  :BLines<cr>
-nnoremap <leader>c :set cursorcolumn!<cr>
+" nnoremap <leader>y  "+y
+" vnoremap <leader>y  "+y
+" nnoremap <leader>/  :BLines<cr>
+" nnoremap <leader>c :set cursorcolumn!<cr>
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap <c-i> <c-i>zz
@@ -274,15 +281,17 @@ augroup vimrcEx
   " autocmd BufEnter * let &colorcolumn=join(range(&textwidth+1,500),",")
   " autocmd BufEnter * let &colorcolumn=&textwidth+1
   autocmd BufRead,BufReadPost,BufNewFile,BufEnter,InsertEnter * nohlsearch
+
   autocmd BufRead,BufNewFile,BufEnter *.md setlocal ft=markdown spell
   autocmd BufRead,BufNewFile Dockerfile* setlocal ft=dockerfile
   autocmd BufRead,BufNewFile *.applescript setlocal ft=applescript
   autocmd BufRead,BufEnter vimrc setlocal ft=vim
   autocmd FileType gitcommit      setlocal textwidth=72 spell
-  autocmd FileType gitcommit      :normal A
-  autocmd FileType cs             setlocal textwidth=130
+  " autocmd FileType gitcommit      :normal A
+  " autocmd FileType cs             setlocal textwidth=130
   autocmd FileType html           setlocal textwidth=130
-  autocmd FileType javascript,jsx,typescript,tsx,typescriptreact setlocal textwidth=100
+  autocmd FileType css setlocal nowrap
+  " autocmd FileType javascript,jsx,typescript,tsx,typescriptreact setlocal textwidth=100
   autocmd FileType javascript,jsx,typescript,tsx,typescriptreact nnoremap sfs /\vconsole.log\|debugger\|console.table\|console.dir\|console.trace\|dupa<cr>
   autocmd FileType javascript,jsx,json,typescript,typescriptreact nnoremap so vi{:sort<cr><c-o>
   autocmd FileType ruby inoremap lg binding.pry

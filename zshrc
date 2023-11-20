@@ -24,8 +24,8 @@ alias open_ports='lsof -i -P | ag listen'
 whats_on_port() { lsof -i :$1 }
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
-# alias serve_this='python -m http.server'
-alias serve_this='python -m SimpleHTTPServer'
+alias serve_this='python3 -m http.server'
+# alias serve_this='python -m SimpleHTTPServer'
 alias static='watch_them_styles & serve_this & open http://localhost:8000'
 alias ip='ipconfig getifaddr en0'
 alias 'tmux ls'='tmux list-sessions'
@@ -50,6 +50,7 @@ alias 'gpsh'='gpsh && a'
 alias 'gc'='gc && gst'
 alias nvm-set='node -v > .nvmrc'
 alias python='python3'
+alias qgst='gst'
 
 ydf() {
   yarn dev --filter="$@"...
@@ -142,7 +143,7 @@ set completion-ignore-case on
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
-source `brew --prefix`/etc/profile.d/z.sh
+# source `brew --prefix`/etc/profile.d/z.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export NVM_DIR="$HOME/.nvm"

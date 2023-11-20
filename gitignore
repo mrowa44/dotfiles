@@ -32,3 +32,5 @@ dupa*
 tsconfig.tsbuildinfo
 .nvmrc
 dist
+storybook-static/*
+.vscode/*
