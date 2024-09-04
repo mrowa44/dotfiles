@@ -22,6 +22,9 @@ alias f="fd"
 alias cask="brew cask"
 alias open_ports='lsof -i -P | ag listen'
 whats_on_port() { lsof -i :$1 }
+whats_on_ports() {
+  lsof -iTCP -sTCP:LISTEN -n -P | awk 'NR>1 {print $9, $1, $2}' | sed 's/.*://' | while read port process pid; do echo "Port $port: $(ps -p $pid -o command= | sed 's/^-//') (PID: $pid)"; done | sort -n
+}
 alias progress='watch progress -q'
 alias watch_them_styles='sass --watch style.scss:style.css'
 alias serve_this='python3 -m http.server'
@@ -51,6 +54,7 @@ alias 'gc'='gc && gst'
 alias nvm-set='node -v > .nvmrc'
 alias python='python3'
 alias qgst='gst'
+alias fix='yarn biome check . --staged --write'
 
 ydf() {
   yarn dev --filter="$@"...
@@ -117,6 +121,12 @@ fix_circle() {
   gco -- app/*/*.rb db/*.rb
   alert
   foreman start
+}
+dev() {
+  npx turbo run dev --filter=$@
+}
+build() {
+  npx turbo run build --filter=$@...
 }
 
 ### ZSH setup stuff
