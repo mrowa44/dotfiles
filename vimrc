@@ -1,7 +1,7 @@
 """ Plugins
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
@@ -33,13 +33,13 @@ call plug#begin('~/.vim/bundle')
   "   nmap <silent> [e <Plug>(ale_previous_wrap)
   "   nmap <silent> ]e <Plug>(ale_next_wrap)
 
-  Plug 'SirVer/ultisnips'
-    set rtp^=$HOME/dotfiles
-    let g:UltiSnipsSnippetsDir='~dotfiles/vim_snippets'
-    let g:UltiSnipsSnippetDirectories=["vim_snippets"]
-    let g:UltiSnipsExpandTrigger="<c-]>"
-    let g:UltiSnipsJumpForwardTrigger="<c-j>"
-    let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+  " Plug 'SirVer/ultisnips'
+  "   set rtp^=$HOME/dotfiles
+  "   let g:UltiSnipsSnippetsDir='~dotfiles/vim_snippets'
+  "   let g:UltiSnipsSnippetDirectories=["vim_snippets"]
+  "   let g:UltiSnipsExpandTrigger="<c-]>"
+  "   let g:UltiSnipsJumpForwardTrigger="<c-j>"
+  "   let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
   Plug 'ervandew/supertab'
     set completeopt+=menuone,preview
@@ -180,7 +180,7 @@ set wildignore+=*node_modules/**
 set laststatus=2
 set scroll=20
 set autoread
-set fillchars+=vert:\ 
+set fillchars+=vert:\
 
 set background=dark
 set t_Co=256

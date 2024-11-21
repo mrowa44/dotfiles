@@ -9,7 +9,6 @@ bindkey "^N" down-line-or-history
 ### Aliases
 alias -g H='| head'
 alias -g T='| tail'
-alias -g cat="bat"
 alias ls="ls -GF"
 alias ll='ls -lh'
 alias la='ls -lha'
@@ -56,6 +55,10 @@ alias python='python3'
 alias qgst='gst'
 alias fix='yarn biome check . --staged --write'
 
+# alias -g cat="bat" // this fixes pure prompt branch
+cat() {
+  bat $@
+}
 ydf() {
   yarn dev --filter="$@"...
 }
@@ -154,11 +157,12 @@ export EDITOR=vim
 export LC_ALL=en_US.UTF-8
 source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
 # source `brew --prefix`/etc/profile.d/z.sh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 export PATH="$PATH:$HOME/.rvm/bin"
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -184,3 +188,4 @@ export PATH="/usr/local/sbin:$PATH"
 # done
 
 source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
