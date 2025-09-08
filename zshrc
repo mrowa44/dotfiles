@@ -73,4 +73,5 @@ nvm use default
 # Zoxide (smart cd)
 eval "$(zoxide init zsh)"
 
-source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+# Load secrets if file exists
+[ -f ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL ] && source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL

@@ -21,16 +21,17 @@ fi
 
 cd $dotfiles
 
-# Install packages
-brew bundle
-
-# Install Xcode Command Line Tools if not present
+# Install Xcode Command Line Tools first (required for git clone)
 if ! xcode-select -p >/dev/null 2>&1; then
   echo "Installing Xcode Command Line Tools..."
   xcode-select --install
   echo "Please wait for Xcode Command Line Tools to finish installing, then re-run this script."
   exit 0
 fi
+
+# Install packages
+echo "Installing packages via Homebrew..."
+brew bundle
 
 # Set zsh as default shell if not already
 [[ "$SHELL" != */zsh ]] && chsh -s $(which zsh)
@@ -87,8 +88,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   killall Dock SystemUIServer 2>/dev/null || true
 fi
 
-echo "✅ Dotfiles installed! Restart your terminal or run: exec zsh"
+echo "✅ Dotfiles installed!"
 echo ""
 echo "🔐 Next steps:"
-echo "1. Set up GitHub authentication: gh auth login"
-echo "2. Configure git to use GitHub CLI: gh auth setup-git"
+echo "1. Restart your terminal: exec zsh"
+echo "2. Set up GitHub authentication: gh auth login"
+echo "3. Configure git to use GitHub CLI: gh auth setup-git"
