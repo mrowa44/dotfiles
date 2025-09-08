@@ -21,7 +21,7 @@ fi
 cd $dotfiles
 
 # Install packages
-brew bundle --no-lock
+brew bundle
 
 # Install Xcode Command Line Tools if not present
 xcode-select -p >/dev/null 2>&1 || xcode-select --install
@@ -37,40 +37,48 @@ ln -sf ${dotfiles}/gitignore ~/.gitignore
 ln -sf ${dotfiles}/tmux.conf ~/.tmux.conf
 ln -sf ${dotfiles}/agignore ~/.agignore
 
+# Setup vim directories and fzf
+mkdir -p ~/.vim/{backup,swap,undo}
+if [ -f "$(brew --prefix)/opt/fzf/install" ]; then
+  $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc
+fi
+
 # macOS settings
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Screenshots to Downloads, no thumbnails
   defaults write com.apple.screencapture location ~/Downloads
   defaults write com.apple.screencapture show-thumbnail -bool false
-  
+
   # Hide dock
   defaults write com.apple.dock autohide -bool true
-  
+
   # Disable True Tone
   defaults write com.apple.CoreBrightness "DisplayAmbientUseShortTermAdaptation" -bool false
-  
+
   # Three finger drag
   defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
   defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
-  
+
   # Fast key repeat and short delay
   defaults write NSGlobalDomain KeyRepeat -int 2
   defaults write NSGlobalDomain InitialKeyRepeat -int 15
-  
+
   # Keyboard brightness in low light
   defaults write com.apple.BezelServices kDim -bool true
   defaults write com.apple.BezelServices kDimTime -int 10
-  
+
   # Lock screen after 5 seconds
   defaults write com.apple.screensaver askForPassword -int 1
   defaults write com.apple.screensaver askForPasswordDelay -int 5
-  
-  # Caps Lock to Control (requires logout)
-  # This creates the setting but user needs to apply it manually in System Preferences
-  echo "Note: Set Caps Lock to Control in System Preferences > Keyboard > Modifier Keys"
-  
+
+  # Import iTerm2 settings
+  if [ -f "${dotfiles}/iterm2-settings.plist" ]; then
+    defaults import com.googlecode.iterm2 "${dotfiles}/iterm2-settings.plist"
+    echo "Imported iTerm2 settings"
+  fi
+
   # Restart affected services
   killall Dock SystemUIServer 2>/dev/null || true
 fi
 
-echo "Dotfiles installed! Restart terminal or run: source ~/.zshrc"
+echo "✅ Dotfiles installed! Restart your terminal or run: exec zsh"

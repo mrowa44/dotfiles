@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Export current iTerm2 settings to dotfiles
+echo "Exporting current iTerm2 settings..."
+defaults export com.googlecode.iterm2 ~/dotfiles/iterm2-settings.plist
+plutil -convert xml1 ~/dotfiles/iterm2-settings.plist
+
+if [ $? -eq 0 ]; then
+    echo "✅ iTerm2 settings exported to ~/dotfiles/iterm2-settings.plist"
+    echo "💡 Commit this file to save your iTerm2 configuration"
+else
+    echo "❌ Failed to export iTerm2 settings"
+fi

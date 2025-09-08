@@ -18,9 +18,14 @@
   excludesfile = ~/.gitignore
   ignorecase = true
   autocrlf = input
-[pager]
-  diff = diff-so-fancy | less --tabs=1,5 -RFX
-  show = diff-so-fancy | less --tabs=1,5 -RFX
+  pager = delta
+  preloadindex = true
+  fscache = true
+  untrackedCache = true
+[delta]
+  navigate = true
+  line-numbers = true
+  syntax-theme = base16
 [rerere]
   enabled = true
 [filter "lfs"]
@@ -31,7 +36,7 @@
 [alias]
   unused = !git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d
   unused-prod = !git branch --merged prod | grep -v '^[ *]*prod$' | xargs git branch -d
-  recent = !git branch --sort=-committerdate | HEAD -10
+  recent = !git branch --sort=-committerdate | head -10
 [credential]
 	helper = osxkeychain
 [commit]
@@ -40,7 +45,12 @@
 	rebase = true
 [init]
 	defaultBranch = main
-
-# This next lines include Netlify's Git Credential Helper configuration in your Git configuration.
-; [include]
-;   path = /Users/jrachowicz/Library/Preferences/netlify/helper/git-config
+[diff]
+  algorithm = histogram
+  colorMoved = default
+[merge]
+  conflictstyle = diff3
+[branch]
+  sort = -committerdate
+[tag]
+  sort = -version:refname
