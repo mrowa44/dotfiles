@@ -3,6 +3,7 @@ brew 'git'
 brew 'vim'
 brew 'zsh'
 brew 'nvm'
+brew 'gh'
 
 # Shell
 brew 'zsh-syntax-highlighting'

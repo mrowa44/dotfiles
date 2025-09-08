@@ -4,12 +4,13 @@
 
 dotfiles="$HOME/dotfiles"
 
-# Install Homebrew
-which -s brew
-if [[ $? != 0 ]] ; then
+# Install Homebrew (Apple Silicon)
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # Add to PATH for Apple Silicon
-  [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+else
+  echo "Homebrew already installed"
 fi
 
 # Clone dotfiles
@@ -24,7 +25,12 @@ cd $dotfiles
 brew bundle
 
 # Install Xcode Command Line Tools if not present
-xcode-select -p >/dev/null 2>&1 || xcode-select --install
+if ! xcode-select -p >/dev/null 2>&1; then
+  echo "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  echo "Please wait for Xcode Command Line Tools to finish installing, then re-run this script."
+  exit 0
+fi
 
 # Set zsh as default shell if not already
 [[ "$SHELL" != */zsh ]] && chsh -s $(which zsh)
@@ -82,3 +88,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 echo "✅ Dotfiles installed! Restart your terminal or run: exec zsh"
+echo ""
+echo "🔐 Next steps:"
+echo "1. Set up GitHub authentication: gh auth login"
+echo "2. Configure git to use GitHub CLI: gh auth setup-git"
