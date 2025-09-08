@@ -29,14 +29,15 @@ if ! xcode-select -p >/dev/null 2>&1; then
   exit 0
 fi
 
-# Install packages
-echo "Installing packages via Homebrew..."
-brew bundle
-
 # Set zsh as default shell if not already
 [[ "$SHELL" != */zsh ]] && chsh -s $(which zsh)
 
-# Link dotfiles
+# Install packages BEFORE linking zshrc
+echo "Installing packages via Homebrew..."
+brew bundle
+
+# Link dotfiles AFTER packages are installed
+echo "Linking dotfiles..."
 ln -sf ${dotfiles}/zshrc ~/.zshrc
 ln -sf ${dotfiles}/vimrc ~/.vimrc
 ln -sf ${dotfiles}/gitconfig ~/.gitconfig
