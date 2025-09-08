@@ -1,13 +1,18 @@
-brew 'vim'
+# Dev
 brew 'git'
-brew 'z'
-brew 'bat'
-brew 'diff-so-fancy'
-brew 'nvm'
-brew 'the_silver_searcher'
+brew 'vim'
 brew 'zsh'
+brew 'nvm'
+
+# Shell
 brew 'zsh-syntax-highlighting'
+brew 'zsh-autosuggestions'
 brew 'pure'
-brew 'yarn'
-brew 'zplug'
+
+# Utils
+brew 'bat'
+brew 'fd'
+brew 'the_silver_searcher'
+brew 'diff-so-fancy'
 brew 'tldr'
+brew 'z'

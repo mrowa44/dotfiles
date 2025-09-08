@@ -7,45 +7,70 @@ dotfiles="$HOME/dotfiles"
 # Install Homebrew
 which -s brew
 if [[ $? != 0 ]] ; then
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  # Add to PATH for Apple Silicon
+  [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Clone dotfiles
 if [ ! -d $dotfiles ]; then
   cd $HOME
-  git clone --recursive git@github.com:mrowa44/dotfiles.git
+  git clone https://github.com/mrowa44/dotfiles.git
 fi
 
 cd $dotfiles
-# brew bundle
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd ~
-ln -sf ${DIR}/zshrc .zshrc
-# ln -sf ${DIR}/zpreztorc .zpreztorc
-ln -sf ${DIR}/zsh .zsh
-ln -sf ${DIR}/vimrc .vimrc
-ln -sf ${DIR}/vim .vim
-ln -sf ${DIR}/gitconfig .gitconfig
-ln -sf ${DIR}/gitignore .gitignore
-ln -sf ${DIR}/tmux.conf .tmux.conf
-# ln -sf ${DIR}/psqlrc .psqlrc
-# ln -sf ${DIR}/ctags .ctags
-ln -sf ${DIR}/agignore .agignore
-ln -sf ${DIR}/ctags .ctags
-# ln -sf ${DIR}/gemrc .gemrc
-# ln -sf ${DIR}/my.cnf .my.cnf
-cd $dotfiles
+# Install packages
+brew bundle --no-lock
 
-xcode-select --install
-defaults write com.apple.screencapture location ~/Downloads
+# Install Xcode Command Line Tools if not present
+xcode-select -p >/dev/null 2>&1 || xcode-select --install
 
-# rvm get stable --auto-dotfiles
-# chsh -s /bin/zsh
+# Set zsh as default shell if not already
+[[ "$SHELL" != */zsh ]] && chsh -s $(which zsh)
 
-# https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
+# Link dotfiles
+ln -sf ${dotfiles}/zshrc ~/.zshrc
+ln -sf ${dotfiles}/vimrc ~/.vimrc
+ln -sf ${dotfiles}/gitconfig ~/.gitconfig
+ln -sf ${dotfiles}/gitignore ~/.gitignore
+ln -sf ${dotfiles}/tmux.conf ~/.tmux.conf
+ln -sf ${dotfiles}/agignore ~/.agignore
 
-# git submodule update --init --recursive
-# brew install zsh-async
+# macOS settings
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Screenshots to Downloads, no thumbnails
+  defaults write com.apple.screencapture location ~/Downloads
+  defaults write com.apple.screencapture show-thumbnail -bool false
+  
+  # Hide dock
+  defaults write com.apple.dock autohide -bool true
+  
+  # Disable True Tone
+  defaults write com.apple.CoreBrightness "DisplayAmbientUseShortTermAdaptation" -bool false
+  
+  # Three finger drag
+  defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+  
+  # Fast key repeat and short delay
+  defaults write NSGlobalDomain KeyRepeat -int 2
+  defaults write NSGlobalDomain InitialKeyRepeat -int 15
+  
+  # Keyboard brightness in low light
+  defaults write com.apple.BezelServices kDim -bool true
+  defaults write com.apple.BezelServices kDimTime -int 10
+  
+  # Lock screen after 5 seconds
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 5
+  
+  # Caps Lock to Control (requires logout)
+  # This creates the setting but user needs to apply it manually in System Preferences
+  echo "Note: Set Caps Lock to Control in System Preferences > Keyboard > Modifier Keys"
+  
+  # Restart affected services
+  killall Dock SystemUIServer 2>/dev/null || true
+fi
 
-# sudo chown -R $(whoami) /usr/local/Cellar/node
+echo "Dotfiles installed! Restart terminal or run: source ~/.zshrc"

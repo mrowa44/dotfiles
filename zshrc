@@ -114,17 +114,8 @@ fix_postgres() {
   rm /usr/local/var/postgres/postmaster.pid
   brew services restart postgresql
 }
-fix_rubygems() { gem update --system }
 # set right path
 fix_xcode() { sudo xcode-select -s /Applications/Xcode.app/Contents/Developer }
-fix_circle() {
-  yarn
-  bundle
-  rake db:migrate
-  gco -- app/*/*.rb db/*.rb
-  alert
-  foreman start
-}
 dev() {
   npx turbo run dev --filter=$@
 }
@@ -155,17 +146,14 @@ set completion-ignore-case on
 
 export EDITOR=vim
 export LC_ALL=en_US.UTF-8
-source ~/dotfiles/vanilla-git-aliases/vanilla-git-aliases.zsh
+source ~/dotfiles/git-aliases.zsh
 # source `brew --prefix`/etc/profile.d/z.sh
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-export PATH="$PATH:$HOME/.rvm/bin"
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
 
 autoload -U add-zsh-hook

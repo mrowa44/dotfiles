@@ -1,9 +1,0 @@
-[submodule "vanilla-git-aliases"]
-	path = vanilla-git-aliases
-	url = https://github.com/mrowa44/vanilla-git-aliases
-[submodule "zsh-autosuggestions"]
-	path = zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "zsh-nvm"]
-	path = zsh-nvm
-	url = https://github.com/lukechilds/zsh-nvm
