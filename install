@@ -54,6 +54,8 @@ ln -sf ${dotfiles}/gitignore ~/.gitignore
 ln -sf ${dotfiles}/tmux.conf ~/.tmux.conf
 ln -sf ${dotfiles}/agignore ~/.agignore
 
+touch ${dotfiles}/SUPER_SECRETS_DONT_COMMIT_LOL
+
 # Setup vim directories and fzf
 mkdir -p ~/.vim/{backup,swap,undo}
 if command -v brew >/dev/null 2>&1 && [ -f "$(brew --prefix)/opt/fzf/install" ]; then
@@ -97,6 +99,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   # Restart affected services
   killall Dock SystemUIServer 2>/dev/null || true
 fi
+
+# Setup Node.js via nvm
+echo "Installing Node.js via nvm..."
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+nvm install node
+nvm alias default node
 
 echo "✅ Dotfiles installed!"
 echo ""
