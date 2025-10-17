@@ -5,6 +5,7 @@
   lineNumber = true
 [push]
   default = current
+	autoSetupRemote = true
 [color]
   ui     = auto
   status = auto
@@ -25,7 +26,8 @@
 [delta]
   navigate = true
   line-numbers = true
-  syntax-theme = base16
+  syntax-theme = Solarized (light)
+  true-color = always
 [rerere]
   enabled = true
 [filter "lfs"]

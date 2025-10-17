@@ -74,3 +74,10 @@ nvm use default
 eval "$(zoxide init zsh)"
 
 [ -f ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL ] && source ~/dotfiles/SUPER_SECRETS_DONT_COMMIT_LOL
+# pnpm
+export PNPM_HOME="/Users/jrachowicz/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
